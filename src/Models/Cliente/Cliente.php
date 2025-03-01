@@ -8,5 +8,6 @@ class Cliente {
 
     use Uuid;
 
-    
+    public $id;
+    public $uuid;
 }
