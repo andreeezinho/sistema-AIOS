@@ -25,4 +25,22 @@ class ProdutoController extends Controller {
         ]);
     }
 
+    public function create(Request $request){
+        return $this->router->view('produto/create', []);
+    }
+
+    public function store(Request $request){
+        $data = $request->getBodyParams();
+
+        $create = $this->produtoRepository->create($data);
+
+        if(is_null($create)){
+            return $this->router->view('produto/create', [
+                'erro' => 'Não foi possível criar o produto'
+            ]);
+        }
+
+        return $this->router->redirect('produtos');
+    }
+
 }

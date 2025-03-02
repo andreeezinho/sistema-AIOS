@@ -55,4 +55,43 @@ class ProdutoRepository {
         return $stmt->fetchAll(\PDO::FETCH_CLASS, self::CLASS_NAME);
     }
 
+    public function create(array $data){
+        $produto = $this->model->create($data);
+
+        try{
+            
+            $sql = "INSERT INTO " . self::TABLE . "
+                SET 
+                    uuid = :uuid,
+                    nome = :nome,
+                    codigo = :codigo,
+                    preco = :preco,
+                    estoque = :estoque,
+                    ativo = :ativo
+            ";
+
+            $stmt = $this->conn->prepare($sql);
+
+            $create = $stmt->execute([
+                ':uuid' => $produto->uuid, 
+                ':nome' => $produto->nome, 
+                ':codigo' => $produto->codigo, 
+                ':preco' => $produto->preco, 
+                ':estoque' => $produto->estoque, 
+                ':ativo' => $produto->ativo
+            ]);
+
+            if(!$create){
+                return null;
+            }
+
+            return $this->findByUuid($produto->uuid);
+
+        }catch(\Throwable $th){
+            return null;
+        }finally{
+            Database::getInstance()->closeConnection();
+        }
+    }
+
 }

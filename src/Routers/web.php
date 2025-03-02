@@ -85,6 +85,8 @@ $router->create("POST", "/servicos/{uuid}/deletar", [$servicoController, 'destro
 
 //produtos
 $router->create("GET", "/produtos", [$produtoController, 'index'], $auth);
+$router->create("GET", "/produtos/cadastro", [$produtoController, 'create'], $auth);
+$router->create("POST", "/produtos/cadastro", [$produtoController, 'store'], $auth);
 
 
 return $router;
