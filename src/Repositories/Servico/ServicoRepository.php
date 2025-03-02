@@ -53,36 +53,46 @@ class ServicoRepository {
     public function create(array $data){
         $servico = $this->model->create($data);
 
-        $sql = "INSERT INTO ". self::TABLE . "
+        try{
+
+            $sql = "INSERT INTO ". self::TABLE . "
             SET 
                 uuid = :uuid,
                 nome = :nome,
                 descricao = :descricao,
                 preco = :preco,
                 ativo = :ativo
-        ";
+            ";
 
-        $stmt = $this->conn->prepare($sql);
+            $stmt = $this->conn->prepare($sql);
 
-        $create = $stmt->execute([
-            ':uuid' => $servico->uuid,
-            ':nome' => $servico->nome,
-            ':descricao' => $servico->descricao,
-            ':preco' => $servico->preco,
-            ':ativo' => $servico->ativo
-        ]);
+            $create = $stmt->execute([
+                ':uuid' => $servico->uuid,
+                ':nome' => $servico->nome,
+                ':descricao' => $servico->descricao,
+                ':preco' => $servico->preco,
+                ':ativo' => $servico->ativo
+            ]);
 
-        if(!$create){
+            if(!$create){
+                return null;
+            }
+
+            return $this->findByUuid($servico->uuid);
+
+        }catch(\Throwable $th){
             return null;
+        }finally{
+            Database::getInstance()->closeConnection();
         }
-
-        return $this->findByUuid($servico->uuid);
     }
 
     public function update(array $data, int $id){
         $servico = $this->model->create($data);
 
-        $sql = "UPDATE " . self::TABLE . "
+        try{
+
+            $sql = "UPDATE " . self::TABLE . "
             SET 
                 nome = :nome,
                 descricao = :descricao,
@@ -90,23 +100,29 @@ class ServicoRepository {
                 ativo = :ativo
             WHERE
                 id = :id
-        ";
+            ";
 
-        $stmt = $this->conn->prepare($sql);
+            $stmt = $this->conn->prepare($sql);
 
-        $update = $stmt->execute([
-            ':nome' => $servico->nome,
-            ':descricao' => $servico->descricao,
-            ':preco' => $servico->preco,
-            ':ativo' => $servico->ativo,
-            ':id' => $id
-        ]);
+            $update = $stmt->execute([
+                ':nome' => $servico->nome,
+                ':descricao' => $servico->descricao,
+                ':preco' => $servico->preco,
+                ':ativo' => $servico->ativo,
+                ':id' => $id
+            ]);
 
-        if(!$update){
+            if(!$update){
+                return null;
+            }
+
+            return $this->findById($servico->id);
+
+        }catch(\Throwable $th){
             return null;
+        }finally{
+            Database::getInstance()->closeConnection();
         }
-
-        return $this->findById($servico->id);
     }
 
 }

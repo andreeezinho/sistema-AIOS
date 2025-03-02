@@ -79,6 +79,7 @@ $router->create("GET", "/servicos/cadastro", [$servicoController, 'create'], $au
 $router->create("POST", "/servicos/cadastro", [$servicoController, 'store'], $auth);
 $router->create("GET", "/servicos/{uuid}/editar", [$servicoController, 'edit'], $auth);
 $router->create("POST", "/servicos/{uuid}/editar", [$servicoController, 'update'], $auth);
+$router->create("POST", "/servicos/{uuid}/deletar", [$servicoController, 'destroy'], $auth);
 
 
 return $router;
