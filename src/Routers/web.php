@@ -10,6 +10,7 @@ use App\Controllers\Permissao\PermissaoController;
 use App\Controllers\Permissao\PermissaoUserController;
 use App\Controllers\User\UserPerfilController;
 use App\Controllers\Cliente\ClienteController;
+use App\Controllers\Servico\ServicoController;
 
 //instanciar
 $router = new Router();
@@ -21,6 +22,7 @@ $permissaoController = new PermissaoController();
 $permissaoUserController = new PermissaoUserController();
 $userPerfilController = new UserPerfilController();
 $clienteController = new ClienteController();
+$servicoController = new ServicoController();
 
 //rotas
 
@@ -70,6 +72,14 @@ $router->create("POST", "/clientes/cadastro", [$clienteController, 'store'], $au
 $router->create("GET", "/clientes/{uuid}/editar", [$clienteController, 'edit'], $auth);
 $router->create("POST", "/clientes/{uuid}/editar", [$clienteController, 'update'], $auth);
 $router->create("POST", "/clientes/{uuid}/deletar", [$clienteController, 'destroy'], $auth);
+
+//servicoes
+$router->create("GET", "/servicos", [$servicoController, 'index'], $auth);
+$router->create("GET", "/servicos/cadastro", [$servicoController, 'create'], $auth);
+$router->create("POST", "/servicos/cadastro", [$servicoController, 'store'], $auth);
+$router->create("GET", "/servicos/{uuid}/editar", [$servicoController, 'edit'], $auth);
+$router->create("POST", "/servicos/{uuid}/editar", [$servicoController, 'update'], $auth);
+$router->create("POST", "/servicos/{uuid}/deletar", [$servicoController, 'destroy'], $auth);
 
 
 return $router;

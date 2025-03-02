@@ -13,6 +13,7 @@ class Servico {
     public $nome;
     public $descricao;
     public $preco;
+    public $ativo;
     public $created_at;
     public $updated_at;
 
@@ -23,7 +24,7 @@ class Servico {
         $servico->nome = $data['nome'] ?? null;
         $servico->descricao = $data['descricao'] ?? null;
         $servico->preco = $data['preco'] ?? null;
-        $servico->ativo = $data['ativo'] ?? 1;
+        $servico->ativo = ($data['ativo'] == "") ? 1 : $data['ativo'];
         $servico->created_at = $data['created_at'] ?? null;
         $servico->updated_at = $data['updated_at'] ?? null;
         return $servico;

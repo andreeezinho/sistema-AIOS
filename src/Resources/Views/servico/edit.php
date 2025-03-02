@@ -13,18 +13,16 @@
 
                     <li class="breadcrumb-item">
                         <i class="lh-1"></i>
-                        <a href="/clientes" class="text-decoration-none text-muted">Clientes</a>
+                        <a href="/servicos" class="text-decoration-none text-muted">Serviços</a>
                     </li>
-                    
-                    <li class="breadcrumb-item"><?= explode(' ', trim($cliente->nome))[0] ?></li>
-
+                
                     <li class="breadcrumb-item">Editar</li>
                 </ol>
             </div>
         </div>
 
         <div class="row justify-content-center">
-            <form action="/clientes/<?= $cliente->uuid ?>/editar" method="POST" class="card col-11 col-sm-4 py-2 mt-md-5">
+            <form action="/servicos/<?= $servico->uuid ?>/editar" method="POST" class="card col-11 col-sm-4 py-2 mt-md-5">
                 <?php
                     if(isset($erro)){
                 ?>
@@ -36,12 +34,12 @@
                     }
                 ?>
                 <div class="row">
-                    <h3 class="text-center my-2">Editar Cliente</h3>
+                    <h3 class="text-center my-2">Editar Serviço</h3>
                     <?php 
                         include_once('form.php');
                     ?>
                     <div class="form-group text-center">
-                        <a href="/clientes" class="btn btn-secondary mx-1">Cancelar</a>
+                        <a href="/servicos" class="btn btn-secondary mx-1">Cancelar</a>
                         <button type="submit" class="btn btn-primary mx-1">Confirmar</button>
                     </div>
                 </div>

@@ -23,18 +23,12 @@
     <input type="text" name="endereco" id="endereco" class="form-control py-2" placeholder="Insira o endereco" value="<?= $cliente->endereco ?? '' ?>">
 </div>
 
-<?php
-    if(!isset($perfil)){
-?>
-    <div class="col-12 form-group my-2">
-        <label for="ativo">Situação</label>
-        <select name="ativo" id="ativo" class="form-select">
-            <option value="" <?= (isset($cliente) && $cliente->ativo == "") ? 'selected' : "" ?> >Selecione a situação</option>
-            <option value="1" <?= (isset($cliente) && $cliente->ativo == "1") ? 'selected' : "" ?>>Ativo</option>
-            <option value="0" <?= (isset($cliente) && $cliente->ativo == "0") ? 'selected' : "" ?>>Inativo</option>
-        </select>
-    </div>
-<?php
-    }
-?>
+<div class="col-12 form-group my-2">
+    <label for="ativo">Situação</label>
+    <select name="ativo" id="ativo" class="form-select">
+        <option value="" <?= (isset($cliente) && $cliente->ativo == "") ? 'selected' : "" ?> >Selecione a situação</option>
+        <option value="1" <?= (isset($cliente) && $cliente->ativo == "1") ? 'selected' : "" ?>>Ativo</option>
+        <option value="0" <?= (isset($cliente) && $cliente->ativo == "0") ? 'selected' : "" ?>>Inativo</option>
+    </select>
+</div>
 
