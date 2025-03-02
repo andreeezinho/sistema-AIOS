@@ -38,7 +38,7 @@
         </div>
 
         <div class="col-6 col-md-4 col-lg-3">
-            <a href='#' class="card bg-primary text-light text-decoration-none">
+            <a href='/clientes' class="card bg-primary text-light text-decoration-none">
                 <div class="card-body py-3">
                     <div class='d-flex'>
                         <h3><i class="bi-people-fill"></i></h3>
