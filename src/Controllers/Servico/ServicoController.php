@@ -75,4 +75,22 @@ class ServicoController extends Controller {
         return $this->router->redirect('servicos');
     }
 
+    public function destroy(Request $request, $uuid){
+        $servico = $this->servicoRepository->findByUuid($uuid);
+
+        if(!$servico){
+            return $this->router->redirect('servicos');
+        }
+
+        $delete = $this->servicoRepository->delete($servico->id);
+
+        if(!$delete){
+            return $this->router->view('servico/index', [
+                'erro' => 'Não foi possível deletar o serviço'
+            ]);
+        }
+
+        return $this->router->redirect('servicos');
+    }
+
 }

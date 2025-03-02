@@ -104,7 +104,7 @@
         </div>
 
         <div class="col-6 col-md-4 col-lg-3">
-            <a href='#' class="card bg-warning text-light text-decoration-none">
+            <a href='/servicos' class="card bg-warning text-light text-decoration-none">
                 <div class="card-body py-3">
                     <div class='d-flex'>
                         <h3><i class="bi-tools"></i></h3>

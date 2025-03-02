@@ -125,4 +125,21 @@ class ServicoRepository {
         }
     }
 
+    public function delete(int $id){
+        $sql = "UPDATE " . self::TABLE . "
+            SET
+                ativo = 0
+            WHERE
+                id = :id
+        ";
+
+        $stmt = $this->conn->prepare($sql);
+
+        $delete = $stmt->execute([
+            ':id' => $id
+        ]);
+
+        return $delete;
+    }
+
 }
