@@ -26,4 +26,22 @@ class ClienteController extends Controller {
         ]);
     }
 
+    public function create(Request $request){
+        return $this->router->view('cliente/create', []);
+    }
+
+    public function store(Request $request){
+        $data = $request->getBodyParams();
+
+        $create = $this->clienteRepository->create($data);
+
+        if(is_null($create)){
+            return $this->router->view('cliente/index', [
+                'erro' => 'Não foi possível criar o cliente'
+            ]);
+        }
+
+        return $this->router->redirect('clientes');
+    }
+
 }

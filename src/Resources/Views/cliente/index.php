@@ -51,8 +51,8 @@
                     </div>
 
                     <div class="col-12 form-group my-2">
-                        <label for="cpf">CPF</label>
-                        <input type="text" id="cpf" name="cpf" class="form-control py-2" placeholder="Insira o CPF">
+                        <label for="documento">CPF ou CNPJ</label>
+                        <input type="text" id="documento" name="documento" class="form-control py-2" placeholder="Insira o CPF ou CNPJ">
                     </div>
 
                     <div class="col-12 form-group my-2">
@@ -86,9 +86,8 @@
                 <div class="card">
                     <div class="card-body py-3">
                         <p class="mt-3 text-muted"><i class="bi-person-fill"></i> <?= $cliente->nome ?></p>
-
-                        <p class="mt-3 text-muted"><i class="bi-wallet-fill"></i> DOC: <?= $cliente->documento ?></p>
                         <p class="mt-3 text-muted"><i class="bi-envelope-fill"></i> Email: <?= $cliente->email ?></p>
+                        <p class="mt-3 text-muted"><i class="bi-telephone-fill"></i> Tel: <?= $cliente->telefone ?></p>
                         <p class="mt-3 text-muted">
                             <i class="bi-circle-fill small <?= ($cliente->ativo == 1) ? 'text-success' : 'text-danger' ?>"></i>  
                             <?= ($cliente->ativo == 1) ? 'Ativo' : 'Inativo' ?>

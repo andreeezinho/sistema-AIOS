@@ -32,9 +32,9 @@ class ClienteRepository {
             $bindings[':nome'] = "%" . $params['nome'] . "%";
         }
 
-        if(isset($params['cpf']) && !empty($params['cpf'])){
-            $conditions[] = "cpf LIKE :cpf";
-            $bindings[':cpf'] = "%" . $params['cpf'] . "%";
+        if(isset($params['documento']) && !empty($params['documento'])){
+            $conditions[] = "documento LIKE :documento";
+            $bindings[':documento'] = "%" . $params['documento'] . "%";
         }
     
         if(isset($params['ativo']) && $params['ativo'] != ""){
@@ -43,7 +43,7 @@ class ClienteRepository {
         }
 
         if(count($conditions) > 0){
-            $sql .= " WHERE " . implode(" AND ", $condiitons);
+            $sql .= " WHERE " . implode(" AND ", $conditions);
         }
 
         $sql .= " ORDER BY created_at DESC";
@@ -76,7 +76,7 @@ class ClienteRepository {
             $create = $stmt->execute([
                 ':uuid' => $cliente->uuid,
                 ':nome' => $cliente->nome,
-                ':email' => $cliente->uuid,
+                ':email' => $cliente->email,
                 ':documento' => $cliente->documento,
                 ':telefone' => $cliente->telefone,
                 ':endereco' => $cliente->endereco,

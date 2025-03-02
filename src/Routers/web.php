@@ -65,6 +65,8 @@ $router->create("POST", "/perfil/deletar", [$userPerfilController, 'destroy'], $
 
 //clientes
 $router->create("GET", "/clientes", [$clienteController, 'index'], $auth);
+$router->create("GET", "/clientes/cadastro", [$clienteController, 'create'], $auth);
+$router->create("POST", "/clientes/cadastro", [$clienteController, 'store'], $auth);
 
 
 return $router;
