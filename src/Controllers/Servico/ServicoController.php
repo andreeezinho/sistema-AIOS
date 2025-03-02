@@ -43,4 +43,36 @@ class ServicoController extends Controller {
         return $this->router->redirect('servicos');
     }
 
+    public function edit(Request $request, $uuid){
+        $servico = $this->servicoRepository->findByUuid($uuid);
+
+        if(!$servico){
+            return $this->router->redirect('servicos');
+        }
+
+        return $this->router->view('servico/edit', [
+            'servico' => $servico
+        ]);
+    }
+
+    public function update(Request $request, $uuid){
+        $servico = $this->servicoRepository->findByUuid($uuid);
+
+        if(!$servico){
+            return $this->router->redirect('servicos');
+        }
+        
+        $data = $request->getBodyParams();
+
+        $update = $this->servicoRepository->update($data, $servico->id);
+
+        if(is_null($update)){
+            return $this->router->view('servico/edit', [
+                'erro' => 'Não foi possível criar o serviço'
+            ]);
+        }
+
+        return $this->router->redirect('servicos');
+    }
+
 }

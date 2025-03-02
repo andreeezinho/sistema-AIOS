@@ -79,4 +79,34 @@ class ServicoRepository {
         return $this->findByUuid($servico->uuid);
     }
 
+    public function update(array $data, int $id){
+        $servico = $this->model->create($data);
+
+        $sql = "UPDATE " . self::TABLE . "
+            SET 
+                nome = :nome,
+                descricao = :descricao,
+                preco = :preco,
+                ativo = :ativo
+            WHERE
+                id = :id
+        ";
+
+        $stmt = $this->conn->prepare($sql);
+
+        $update = $stmt->execute([
+            ':nome' => $servico->nome,
+            ':descricao' => $servico->descricao,
+            ':preco' => $servico->preco,
+            ':ativo' => $servico->ativo,
+            ':id' => $id
+        ]);
+
+        if(!$update){
+            return null;
+        }
+
+        return $this->findById($servico->id);
+    }
+
 }

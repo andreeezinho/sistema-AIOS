@@ -36,7 +36,7 @@
                     }
                 ?>
                 <div class="row">
-                    <h3 class="text-center my-2">Cadastrar Cliente</h3>
+                    <h3 class="text-center my-2">Editar Cliente</h3>
                     <?php 
                         include_once('form.php');
                     ?>

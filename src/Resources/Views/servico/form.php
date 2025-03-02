@@ -5,7 +5,7 @@
 
 <div class="col-12 form-group my-2">
     <label for="descricao">Descrição</label>
-    <input type="text" name="descricao" id="descricao" class="form-control py-2" placeholder="Insira a descrição" value="<?= $servico->telefone ?? '' ?>">
+    <input type="text" name="descricao" id="descricao" class="form-control py-2" placeholder="Insira a descrição" value="<?= $servico->descricao ?? '' ?>">
 </div>
 
 <div class="col-12 form-group my-2">
