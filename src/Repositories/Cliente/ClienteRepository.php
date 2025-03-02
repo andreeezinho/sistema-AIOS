@@ -5,7 +5,6 @@ namespace App\Repositories\Cliente;
 use App\Config\Database;
 use App\Models\Cliente\Cliente;
 use App\Repositories\Traits\Find;
-use App\Repositories\User\UserRepository;
 
 class ClienteRepository {
 
@@ -16,12 +15,10 @@ class ClienteRepository {
 
     protected $conn;
     protected $model;
-    protected $userRepository;
 
     public function __construct(){
         $this->conn = Database::getInstance()->getConnection();
         $this->model = new Cliente();
-        $this->userRepository = new UserRepository();
     }
 
     public function all(array $params = []){
@@ -51,11 +48,11 @@ class ClienteRepository {
 
         $sql .= " ORDER BY created_at DESC";
 
-        $stmt = $this->conn->prepare();
+        $stmt = $this->conn->prepare($sql);
 
         $stmt->execute($bindings);
 
-        return $stmt->fecthAll(\PDO::FETCH_CLASS, self::CLASS_NAME);
+        return $stmt->fetchAll(\PDO::FETCH_CLASS, self::CLASS_NAME);
     }
 
     public function create(array $data){

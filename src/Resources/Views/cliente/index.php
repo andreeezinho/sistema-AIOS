@@ -13,14 +13,14 @@
 
                 <li class="breadcrumb-item">
                     <i class="icon-house_siding lh-1"></i>
-                    <a href="/usuarios" class="text-decoration-none text-muted">Usuários</a>
+                    <a href="/clientes" class="text-decoration-none text-muted">Clientes</a>
                 </li>
             </ol>
         </div>
 
         <div class="col-4 col-xl-6">
             <div class="float-end">
-                <a href="/usuarios/cadastro" class="btn btn-outline-dark" > + </a>
+                <a href="/clientes/cadastro" class="btn btn-outline-dark" > + </a>
             </div>
         </div>
     </div>
@@ -29,35 +29,30 @@
     <div class="col-12">
         <button type="button" class="btn btn-light border p-3 me-2" data-toggle="modal" data-target="#filtro-modal">
             <i class="bi-people-fill"></i>
-            Filtrar usuários
+            Filtrar clientes
         </button>
 
-        <a href="/usuarios" class="btn btn-secondary">Limpar</a>
+        <a href="/clientes" class="btn btn-secondary">Limpar</a>
     </div>
 
     <div class="modal fade" id="filtro-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <form action="/usuarios" method="GET" class="modal-content">
+            <form action="/clientes" method="GET" class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Filtrar usuário</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Filtrar clientes</h5>
                 </div>
 
                 <div class="modal-body">
                     <p class="mt-2 text-muted">Insira as informações para filtrar</p>
 
                     <div class="col-12 form-group my-2">
-                        <label for="nome_email">Nome ou Email</label>
-                        <input type="text" id="nome_email" name="nome_email" class="form-control py-2" placeholder="Insira o nome ou email">
+                        <label for="nome">Nome</label>
+                        <input type="text" id="nome" name="nome" class="form-control py-2" placeholder="Insira o nome">
                     </div>
 
                     <div class="col-12 form-group my-2">
                         <label for="cpf">CPF</label>
                         <input type="text" id="cpf" name="cpf" class="form-control py-2" placeholder="Insira o CPF">
-                    </div>
-
-                    <div class="col-12 form-group my-2">
-                        <label for="telefone">Telefone</label>
-                        <input type="text" id="telefone" name="telefone" class="form-control py-2" placeholder="Insira o telefone">
                     </div>
 
                     <div class="col-12 form-group my-2">
@@ -83,28 +78,26 @@
 
     <div class="row mt-3 g-3 pb-4">
         <?php
-            if(count($usuarios) > 0){
-                foreach($usuarios as $usuario){
+            if(count($clientes) > 0){
+                foreach($clientes as $cliente){
         ?>
 
             <div class="col-12 col-md-4 col-lg-3">
                 <div class="card">
                     <div class="card-body py-3">
-                        <img src="/public/img/user/icons/<?= $usuario->icone ?>" alt="Logo usuario" class="user-icone rounded-circle">
-                        
-                        <p class="mt-3 text-muted"><i class="bi-person-fill"></i> <?= $usuario->nome ?></p>
+                        <p class="mt-3 text-muted"><i class="bi-person-fill"></i> <?= $cliente->nome ?></p>
 
-                        <p class="mt-3 text-muted"><i class="bi-wallet-fill"></i> CPF: <?= $usuario->cpf ?></p>
-                        <p class="mt-3 text-muted"><i class="bi-envelope-fill"></i> Email: <?= $usuario->email ?></p>
+                        <p class="mt-3 text-muted"><i class="bi-wallet-fill"></i> DOC: <?= $cliente->documento ?></p>
+                        <p class="mt-3 text-muted"><i class="bi-envelope-fill"></i> Email: <?= $cliente->email ?></p>
                         <p class="mt-3 text-muted">
-                            <i class="bi-circle-fill small <?= ($usuario->ativo == 1) ? 'text-success' : 'text-danger' ?>"></i>  
-                            <?= ($usuario->ativo == 1) ? 'Ativo' : 'Inativo' ?>
+                            <i class="bi-circle-fill small <?= ($cliente->ativo == 1) ? 'text-success' : 'text-danger' ?>"></i>  
+                            <?= ($cliente->ativo == 1) ? 'Ativo' : 'Inativo' ?>
                         </p>
 
                         <div class="d-flex mt-3 pt-2 border-top justify-content-center">
-                            <a href="/usuarios/<?= $usuario->uuid ?>/editar" class="btn btn-primary mx-2"><i class="bi-pencil-fill"></i></a>
-                            <a href="/usuarios/<?= $usuario->uuid ?>/permissoes" class="btn btn-secondary mx-2"><i class="bi-sliders"></i></a>
-                            <button type="button" class="btn btn-danger mx-2" data-toggle="modal" data-target="#usuario-<?= $usuario->uuid ?>">
+                            <a href="/clientes/<?= $cliente->uuid ?>/editar" class="btn btn-primary mx-2"><i class="bi-pencil-fill"></i></a>
+                            <a href="/clientes/<?= $cliente->uuid ?>/informacoes" class="btn btn-secondary mx-2"><i class="bi-eye-fill"></i></a>
+                            <button type="button" class="btn btn-danger mx-2" data-toggle="modal" data-target="#cliente-<?= $cliente->uuid ?>">
                                 <i class="bi-trash-fill"></i>
                             </button>
                         </div>
@@ -112,20 +105,20 @@
                 </div>
             </div>
 
-            <div class="modal fade" id="usuario-<?= $usuario->uuid ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal fade" id="cliente-<?= $cliente->uuid ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Deletar usuario?</h5>
+                            <h5 class="modal-title" id="exampleModalLongTitle">Deletar cliente?</h5>
                         </div>
 
                         <div class="modal-body">
-                            <p class="my-auto">Deseja inativar o usuário <b><?= explode(' ', trim($usuario->nome))[0] ?></b>?</p>
+                            <p class="my-auto">Deseja inativar o cliente <b><?= explode(' ', trim($cliente->nome))[0] ?></b>?</p>
                         </div>
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <form action="/usuarios/<?= $usuario->uuid ?>/deletar" method="POST">
+                            <form action="/clientes/<?= $cliente->uuid ?>/deletar" method="POST">
                                 <button type="submit" class="btn btn-danger">Excluir</button>
                             </form>
                         </div>
@@ -138,7 +131,7 @@
             }else{
         ?>
 
-        <p class="mt-3 text-muted">Usuários não encontrados...</p>
+        <p class="mt-3 text-muted">Clientes não encontrados...</p>
 
         <?php
             }

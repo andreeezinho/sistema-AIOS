@@ -25,7 +25,6 @@ class Cliente {
         $cliente->uuid = $data['uuid'] ?? $this->generateUUID();
         $cliente->nome = $data['nome'] ?? null;
         $cliente->email = $data['email'] ?? null;
-        $cliente->email = $data['email'] ?? null;
         $cliente->documento = $data['documento'] ?? null;
         $cliente->telefone = $data['telefone'] ?? null;
         $cliente->endereco = $data['endereco'] ?? null;
