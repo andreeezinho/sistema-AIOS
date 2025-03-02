@@ -16,7 +16,7 @@
         <h3>Dashboard</h3>
 
         <div class="col-6 col-md-4 col-lg-3">
-            <a href='/usuarios' class="card bg-primary text-light text-decoration-none">
+            <a href='/usuarios' class="card bg-dark text-light text-decoration-none">
                 <div class="card-body py-3">
                     <div class='d-flex'>
                         <h3><i class="bi-person-lines-fill"></i></h3>
@@ -38,7 +38,7 @@
         </div>
 
         <div class="col-6 col-md-4 col-lg-3">
-            <a href='/clientes' class="card bg-primary text-light text-decoration-none">
+            <a href='/clientes' class="card bg-dark text-light text-decoration-none">
                 <div class="card-body py-3">
                     <div class='d-flex'>
                         <h3><i class="bi-people-fill"></i></h3>
@@ -60,7 +60,7 @@
         </div>
 
         <div class="col-6 col-md-4 col-lg-3">
-            <a href='#' class="card bg-success text-light text-decoration-none">
+            <a href='#' class="card bg-dark text-light text-decoration-none">
                 <div class="card-body py-3">
                     <div class='d-flex'>
                         <h3><i class="bi-box-seam-fill"></i></h3>
@@ -82,7 +82,7 @@
         </div>
 
         <div class="col-6 col-md-4 col-lg-3">
-            <a href='#' class="card bg-success text-light text-decoration-none">
+            <a href='#' class="card bg-dark text-light text-decoration-none">
                 <div class="card-body py-3">
                     <div class='d-flex'>
                         <h3><i class="bi-handbag-fill"></i></h3>
@@ -104,7 +104,7 @@
         </div>
 
         <div class="col-6 col-md-4 col-lg-3">
-            <a href='/servicos' class="card bg-warning text-light text-decoration-none">
+            <a href='/servicos' class="card bg-dark text-light text-decoration-none">
                 <div class="card-body py-3">
                     <div class='d-flex'>
                         <h3><i class="bi-tools"></i></h3>

@@ -20,20 +20,20 @@
                     </a>
                 </li>
 
-                <li class="nav-item d-none d-md-block">
-                    <a href="/dashboard" class="nav-link">Home</a>
+                <li class="nav-item">
+                    <a href="/dashboard" class="nav-link"><i class="bi-house-fill"></i> Home</a>
                 </li>
 
-                <li class="nav-item d-none d-md-block">
-                    <a href="/servicos" class="nav-link">Serviços</a>
+                <li class="nav-item">
+                    <a href="/servicos" class="nav-link"><i class="bi-tools"></i> Serviços</a>
                 </li>
 
-                <li class="nav-item d-none d-md-block">
-                    <a href="/produtos" class="nav-link">Produtos</a>
+                <li class="nav-item">
+                    <a href="/produtos" class="nav-link"><i class="bi-box-seam-fill"></i> Produtos</a>
                 </li>
 
                 <li class="nav-item dropdown">
-                    <span class="nav-link dropdown-toggle" id="dropdown-usuarios" data-bs-toggle="dropdown" aria-expanded="false">Site</span>
+                    <span class="nav-link dropdown-toggle" id="dropdown-usuarios" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi-clipboard-data-fill"></i> Site</span>
                     <ul class="dropdown-menu" aria-labelledby="dropdown-usuarios">
                         <li><a class="dropdown-item" href="/usuarios">Usuarios</a></li>
                         <li><a class="dropdown-item" href="/permissoes">Permissões</a></li>
@@ -51,7 +51,7 @@
                     </ul>
                 </li>
 
-                <li><a class="dropdown-item d-block d-md-none" href="/logout"><i class="bi-door-open-fill"></i> Sair</a></li>
+                <li><a class="dropdown-item d-block d-md-none text-muted mt-3" href="/logout"><i class="bi-door-open-fill"></i> Sair</a></li>
             </ul>
         </div>
     </div>
