@@ -33,36 +33,4 @@
     transition: all 0.3s ease;
     box-shadow: 0 0 10px black;
     cursor: pointer;
-}* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
-.vertical-size{
-    min-height: 90vh;
-}
-
-.bg-theme{
-    background-color: #f1f1f1;
-}
-
-.logo{
-    width: 120px;
-}
-
-.cadastro-icone{
-    width: 60px;
-    height: 60px;
-    cursor: pointer;
-}
-
-.user-icone{
-    width: 25px;
-}
-
-.hover-border:hover{
-    transition: all 0.3s ease;
-    box-shadow: 0 0 10px black;
-    cursor: pointer;
 }

@@ -7,6 +7,7 @@ use App\Config\Auth;
 use App\Repositories\User\UserRepository;
 use App\Repositories\Cliente\ClienteRepository;
 use App\Repositories\Servico\ServicoRepository;
+use App\Repositories\Produto\ProdutoRepository;
 
 class DashboardController extends Controller {
 
@@ -14,6 +15,7 @@ class DashboardController extends Controller {
     protected $userRepository;
     protected $clienteRepository;
     protected $servicoRepository;
+    protected $produtoRepository;
 
     public function __construct(){
         parent::__construct();
@@ -21,6 +23,7 @@ class DashboardController extends Controller {
         $this->userRepository = new UserRepository();
         $this->clienteRepository = new ClienteRepository();
         $this->servicoRepository = new ServicoRepository();
+        $this->produtoRepository = new ProdutoRepository();
     }
 
     public function index(){
@@ -29,12 +32,14 @@ class DashboardController extends Controller {
         $usuarios = $this->userRepository->all();
         $clientes = $this->clienteRepository->all();
         $servicos = $this->servicoRepository->all();
+        $produtos = $this->produtoRepository->all();
 
         return $this->router->view('dashboard/index', [
             'user' => $user,
             'usuarios' => $usuarios,
             'clientes' => $clientes,
-            'servicos' => $servicos
+            'servicos' => $servicos,
+            'produtos' => $produtos
         ]);
     }
 
