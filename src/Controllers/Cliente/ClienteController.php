@@ -3,7 +3,6 @@
 namespace App\Controllers\Cliente;
 
 use App\Request\Request;
-use App\Config\Auth;
 use App\Controllers\Controller;
 use App\Repositories\Cliente\ClienteRepository;
 
