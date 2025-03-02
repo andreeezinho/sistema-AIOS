@@ -11,6 +11,8 @@ class ServicoRepository {
     const CLASS_NAME = Servico::class;
     const TABLE = 'servicos';
 
+    use Find;
+
     protected $conn;
     protected $model;
 
@@ -49,7 +51,32 @@ class ServicoRepository {
     }
 
     public function create(array $data){
-        
+        $servico = $this->model->create($data);
+
+        $sql = "INSERT INTO ". self::TABLE . "
+            SET 
+                uuid = :uuid,
+                nome = :nome,
+                descricao = :descricao,
+                preco = :preco,
+                ativo = :ativo
+        ";
+
+        $stmt = $this->conn->prepare($sql);
+
+        $create = $stmt->execute([
+            ':uuid' => $servico->uuid,
+            ':nome' => $servico->nome,
+            ':descricao' => $servico->descricao,
+            ':preco' => $servico->preco,
+            ':ativo' => $servico->ativo
+        ]);
+
+        if(!$create){
+            return null;
+        }
+
+        return $this->findByUuid($servico->uuid);
     }
 
 }

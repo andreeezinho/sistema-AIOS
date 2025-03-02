@@ -89,7 +89,7 @@
 
                         <div class="d-flex mt-3 pt-2 border-top justify-content-center">
                             <a href="/servicos/<?= $servico->uuid ?>/editar" class="btn btn-primary mx-2"><i class="bi-pencil-fill"></i></a>
-                            <a href="/servicos/<?= $servico->uuid ?>/informacoes" class="btn btn-secondary mx-2"><i class="bi-eye-fill"></i></a>
+                            <a href="/servicos/<?= $servico->uuid ?>/produtos" class="btn btn-secondary mx-2"><i class="bi-tools"></i></a>
                             <button type="button" class="btn btn-danger mx-2" data-toggle="modal" data-target="#servico-<?= $servico->uuid ?>">
                                 <i class="bi-trash-fill"></i>
                             </button>

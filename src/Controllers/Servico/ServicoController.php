@@ -29,4 +29,18 @@ class ServicoController extends Controller {
         return $this->router->view('servico/create', []);
     }
 
+    public function store(Request $request){
+        $data = $request->getBodyParams();
+
+        $create = $this->servicoRepository->create($data);
+
+        if(is_null($create)){
+            return $this->router->view('servico/create', [
+                'erro' => 'Não foi possível criar o serviço'
+            ]);
+        }
+
+        return $this->router->redirect('servicos');
+    }
+
 }
