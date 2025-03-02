@@ -22,7 +22,7 @@
         </div>
 
         <div class="row justify-content-center">
-            <form action="/clientes/cadastro" method="POST" class="card col-12 col-sm-4 py-2 mt-5">
+            <form action="/clientes/cadastro" method="POST" class="card col-11 col-sm-4 py-2 mt-md-5">
                 <?php
                     if(isset($erro)){
                 ?>

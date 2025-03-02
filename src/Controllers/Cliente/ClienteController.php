@@ -36,7 +36,39 @@ class ClienteController extends Controller {
         $create = $this->clienteRepository->create($data);
 
         if(is_null($create)){
-            return $this->router->view('cliente/index', [
+            return $this->router->view('cliente/create', [
+                'erro' => 'Não foi possível criar o cliente'
+            ]);
+        }
+
+        return $this->router->redirect('clientes');
+    }
+
+    public function edit(Request $request, $uuid){
+        $cliente = $this->clienteRepository->findByUuid($uuid);
+
+        if(!$cliente){
+            return $this->router->redirect('clientes');
+        }
+
+        return $this->router->view('cliente/edit', [
+            'cliente' => $cliente
+        ]);
+    }
+
+    public function update(Request $request, $uuid){
+        $cliente = $this->clienteRepository->findByUuid($uuid);
+
+        if(!$cliente){
+            return $this->router->redirect('clientes');
+        }
+
+        $data = $request->getBodyParams();
+
+        $update = $this->clienteRepository->edit($data, $cliente->id);
+
+        if(is_null($update)){
+            return $this->router->view('cliente/edit', [
                 'erro' => 'Não foi possível criar o cliente'
             ]);
         }

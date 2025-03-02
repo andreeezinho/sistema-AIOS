@@ -97,4 +97,47 @@ class ClienteRepository {
         }
     }
 
+    public function edit(array $data, int $id){
+        $cliente = $this->model->create($data);
+
+        try{
+
+            $sql = "UPDATE " . self::TABLE . "
+                SET
+                    nome = :nome,
+                    email = :email,
+                    documento = :documento,
+                    telefone = :telefone,
+                    endereco = :endereco,
+                    ativo = :ativo
+                WHERE 
+                    id = :id
+            ";
+
+            $stmt = $this->conn->prepare($sql);
+
+            $update = $stmt->execute([
+                ':nome' => $cliente->nome,
+                ':email' => $cliente->email,
+                ':documento' => $cliente->documento,
+                ':telefone' => $cliente->telefone,
+                ':endereco' => $cliente->endereco,
+                ':endereco' => $cliente->endereco,
+                ':ativo' => $cliente->ativo,
+                ':id' => $id
+            ]);
+
+            if(!$update){
+                return null;
+            }
+
+            return $this->findById($id);
+
+        }catch(\Throwable $th){
+            return null;
+        }finally{
+            Database::getInstance()->closeConnection();
+        }
+    }
+
 }
