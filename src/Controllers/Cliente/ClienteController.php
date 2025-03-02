@@ -76,4 +76,22 @@ class ClienteController extends Controller {
         return $this->router->redirect('clientes');
     }
 
+    public function destroy(Request $request, $uuid){
+        $cliente = $this->clienteRepository->findByUuid($uuid);
+
+        if(!$cliente){
+            return $this->router->redirect('clientes');
+        }
+
+        $delete = $this->clienteRepository->delete($cliente->id);
+
+        if(!$delete){
+            return $this->router->view('cliente/index', [
+                'erro' => 'Não foi possível deletar o cliente'
+            ]);
+        }
+
+        return $this->router->redirect('clientes');
+    }
+
 }
