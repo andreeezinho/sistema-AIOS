@@ -17,6 +17,10 @@ class ClienteController extends Controller {
     }
 
     public function index(Request $request){
+        if(!userPermission('visualizar clientes')){
+            return $this->router->redirect('');
+        }
+
         $params = $request->getQueryParams();
 
         $clientes = $this->clienteRepository->all($params);
@@ -27,6 +31,10 @@ class ClienteController extends Controller {
     }
 
     public function create(Request $request){
+        if(!userPermission('cadastrar clientes')){
+            return $this->router->redirect('');
+        }
+
         return $this->router->view('cliente/create', []);
     }
 
@@ -45,6 +53,10 @@ class ClienteController extends Controller {
     }
 
     public function edit(Request $request, $uuid){
+        if(!userPermission('editar clientes')){
+            return $this->router->redirect('');
+        }
+
         $cliente = $this->clienteRepository->findByUuid($uuid);
 
         if(!$cliente){
@@ -77,6 +89,10 @@ class ClienteController extends Controller {
     }
 
     public function destroy(Request $request, $uuid){
+        if(!userPermission('deletar clientes')){
+            return $this->router->redirect('');
+        }
+
         $cliente = $this->clienteRepository->findByUuid($uuid);
 
         if(!$cliente){
