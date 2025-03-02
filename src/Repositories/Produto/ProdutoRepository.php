@@ -94,4 +94,61 @@ class ProdutoRepository {
         }
     }
 
+    public function update(array $data, int $id){
+        $produto = $this->model->create($data);
+
+        try{
+            
+            $sql = "UPDATE " . self::TABLE . "
+                SET 
+                    nome = :nome,
+                    codigo = :codigo,
+                    preco = :preco,
+                    estoque = :estoque,
+                    ativo = :ativo
+                WHERE
+                    id = :id
+            ";
+
+            $stmt = $this->conn->prepare($sql);
+
+            $update = $stmt->execute([
+                ':nome' => $produto->nome,
+                ':codigo' => $produto->codigo,
+                ':preco' => $produto->preco,
+                ':estoque' => $produto->estoque,
+                ':ativo' => $produto->ativo,
+                ':id' => $id
+            ]);
+
+            if(!$update){
+                return null;
+            }
+
+            return $this->findById($id);
+
+        }catch(\Thorwable $th){
+            return null;
+        }finally{
+            Database::getInstance()->closeConnection();
+        }
+    }
+
+    public function delete($id){
+        $sql = "UPDATE " . self::TABLE . "
+            SET
+                ativo = 0
+            WHERE
+                id = :id
+        ";
+
+        $stmt = $this->conn->prepare($sql);
+
+        $delete = $stmt->execute([
+            ':id' => $id
+        ]);
+
+        return $delete;
+    }
+
 }

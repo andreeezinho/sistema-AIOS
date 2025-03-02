@@ -87,6 +87,7 @@
                     <div class="card-body py-3">
                         <p class="mt-3 text-muted"><i class="bi-box-seam-fill"></i> <?= $produto->nome ?></p>
                         <p class="mt-3 text-muted"><i class="bi-list"></i> Código: <?= $produto->codigo ?></p>
+                        <p class="mt-3 text-muted"><i class="bi-boxes"></i> Estoque: <?= $produto->estoque ?></p>
                         <p class="mt-3 text-muted"><i class="bi-currency-dollar"></i> Preço: <?= number_format($produto->preco,2,",","."); ?></p>
                         <p class="mt-3 text-muted">
                             <i class="bi-circle-fill small <?= ($produto->ativo == 1) ? 'text-success' : 'text-danger' ?>"></i>  
