@@ -17,7 +17,7 @@ class UserController extends Controller {
     }
 
     public function index(Request $request){
-        if(userPermission('visualizar usuarios')){
+        if(!userPermission('visualizar usuarios')){
             return $this->router->redirect('');
         }
 
