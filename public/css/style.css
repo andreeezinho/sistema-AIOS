@@ -17,10 +17,6 @@
     background-color: #dddbdb;
 }
 
-.logo{
-    width: 300px;
-}
-
 .cadastro-icone{
     width: 60px;
 }
@@ -33,4 +29,8 @@
     transition: all 0.3s ease;
     box-shadow: 0 0 10px black;
     cursor: pointer;
+}
+
+.logo-site{
+    width: 200px;
 }

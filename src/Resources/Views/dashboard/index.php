@@ -4,11 +4,11 @@
 
 <div class="container">
     <div class="row">
-        <div class="text-muted border-bottom pb-3">
+        <div class="text-muted border-bottom border-secondary pb-sm-3">
             <img src="<?= URL_SITE ?>/public/img/user/icons/<?= $_SESSION['user']->icone ?>" alt="Icone" class="user-icone rounded-circle me-2">
             Olá, <?= explode(' ', trim($user->nome))[0] ?>
 
-            <div class="float-end d-flex">
+            <div class="float-sm-end mx-auto mt-2 mx-sm-0 mt-sm-0 d-flex">
                 <p class="p-0">Seus feitos |</p>
                 <p class="mx-2 p-0"><i class="bi-clipboard2-data-fill"></i> O.S - <b><?= count($servicos) ?></b></p>
                 <p class="mx-2 p-0"><i class="bi-handbag-fill"></i> Vendas - <b><?= count($servicos) ?></b></p>

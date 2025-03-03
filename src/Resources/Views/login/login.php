@@ -29,7 +29,7 @@
                 <div class="card-body">
                     <form action="/login" method="POST">
                         <div class="my-4 text-center">
-                            <img src="<?= URL_SITE ?>/public/img/site/logo-sem-fundo.png" alt="Logo site" class="col-3 mx-auto mb-3 logo">
+                            <img src="<?= URL_SITE ?>/public/img/site/logo-sem-fundo.png" alt="Logo site" class="col-3 mx-auto mb-3 logo-site">
                             <h3 class="my-3">Login</h3>
                         </div>
 
