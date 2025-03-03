@@ -34,7 +34,7 @@ class Venda {
         $venda->usuarios_id = $usuario_id ?? null;
         $venda->clientes_id = $cliente_id;
         $venda->created_at = $data['created_at'] ?? null;
-        $venda->updated = $data['updated'] ?? null;
+        $venda->updated_at = $data['updated_at'] ?? null;
         return $venda;
     }
 

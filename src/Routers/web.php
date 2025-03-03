@@ -13,6 +13,7 @@ use App\Controllers\Cliente\ClienteController;
 use App\Controllers\Servico\ServicoController;
 use App\Controllers\Produto\ProdutoController;
 use App\Controllers\Venda\VendaController;
+use App\Controllers\Venda\VendaProdutoController;
 
 //instanciar
 $router = new Router();
@@ -27,6 +28,7 @@ $clienteController = new ClienteController();
 $servicoController = new ServicoController();
 $produtoController = new ProdutoController();
 $vendaController = new VendaController();
+$vendaProdutoController = new VendaProdutoController();
 
 //rotas
 
@@ -97,8 +99,11 @@ $router->create("POST", "/produtos/{uuid}/deletar", [$produtoController, 'destro
 $router->create("GET", "/vendas", [$vendaController, 'index'], $auth);
 $router->create("GET", "/vendas/cadastro", [$vendaController, 'create'], $auth);
 $router->create("POST", "/vendas/cadastro", [$vendaController, 'store'], $auth);
-$router->create("GET", "/vendas/{uuid}/servicos", [$vendaController, 'linkServices'], $auth);
-$router->create("POST", "/vendas/{uuid}/servicos", [$vendaController, 'storeServiceInSale'], $auth);
+
+//vendas-produtos
+$router->create("GET", "/vendas/{uuid}/produtos", [$vendaProdutoController, 'linkProducts'], $auth);
+$router->create("POST", "/vendas/{uuid}/produtos", [$vendaProdutoController, 'storeProductsInSale'], $auth);
+$router->create("POST", "/vendas/{uuid}/produtos/{produto}", [$vendaProdutoController, 'linkProductInSale'], $auth);
 
 
 return $router;

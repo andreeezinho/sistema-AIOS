@@ -68,4 +68,41 @@ class VendaRepository {
         return $stmt->fetchAll(\PDO::FETCH_CLASS, self::CLASS_NAME);
     }
 
+    public function create(array $data, $usuario_id, $cliente_id){
+        $venda = $this->model->create($data, $usuario_id, $cliente_id);
+
+        try{
+
+            $sql = "INSERT INTO " . self::TABLE . "
+                SET
+                    uuid = :uuid,
+                    desconto = :desconto,
+                    situacao = :situacao,
+                    clientes_id = :clientes_id,
+                    usuarios_id = :usuarios_id
+            ";
+
+            $stmt = $this->conn->prepare($sql);
+
+            $create = $stmt->execute([
+                ':uuid' => $venda->uuid,
+                ':desconto' => $venda->desconto,
+                ':situacao' => $venda->situacao,
+                ':clientes_id' => $venda->clientes_id,
+                ':usuarios_id' => $venda->usuarios_id
+            ]);
+
+            if(!$create){
+                return null;
+            }
+
+            return $this->findByUuid($venda->uuid);
+
+        }catch(\Throwable $th){
+            return null;
+        }finally{
+            Database::getInstance()->closeConnection();
+        }
+    }
+
 }

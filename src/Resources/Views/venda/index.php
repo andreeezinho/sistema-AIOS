@@ -20,7 +20,7 @@
 
         <div class="col-4 col-xl-6">
             <div class="float-end">
-                <a href="/vendas/cadastro" class="btn btn-outline-dark" > + </a>
+                <a href="/vendas/cadastro" class="btn btn-outline-dark" > <i class="bi-handbag-fill"></i> + </a>
             </div>
         </div>
     </div>
