@@ -4,6 +4,7 @@ namespace App\Controllers\Venda;
 
 use App\Request\Request;
 use App\Controllers\Controller;
+use App\Repositories\Venda\VendaProdutoRepository;
 use App\Repositories\Venda\VendaRepository;
 use App\Repositories\Produto\ProdutoRepository;
 use App\Repositories\User\UserRepository;
@@ -11,6 +12,7 @@ use App\Repositories\Cliente\ClienteRepository;
 
 class VendaProdutoController extends Controller {
 
+    public $vendaProdutoRepository;
     public $vendaRepository;
     public $produtoRepository;
     public $usuarioRepository;
@@ -18,6 +20,7 @@ class VendaProdutoController extends Controller {
 
     public function __construct(){
         parent::__construct();
+        $this->vendaProdutoRepository = new VendaProdutoRepository();
         $this->vendaRepository = new VendaRepository();
         $this->produtoRepository = new ProdutoRepository();
         $this->usuarioRepository = new UserRepository();
@@ -30,11 +33,16 @@ class VendaProdutoController extends Controller {
         $params = array_merge($params, ['ativo' => 1]);
 
         $venda = $this->vendaRepository->findByUuid($uuid);
+        $cliente = $this->clienteRepository->findById($venda->clientes_id);
         $produtos = $this->produtoRepository->all($params);
+        $vendaProdutos = $this->vendaProdutoRepository->allProductsInSale($venda->id);
 
         return $this->router->view('venda/venda_produto/index', [
             'venda' => $venda,
             'produtos' => $produtos,
+            'vendaProdutos' => $vendaProdutos,
+            'cliente' => $cliente,
+            'total' => $total,
             'params' => $params
         ]);
     }
