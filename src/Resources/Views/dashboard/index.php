@@ -130,7 +130,7 @@
         </div>
 
         <div class="col-6 col-md-4 col-lg-3">
-            <a href='#' class="card bg-dark text-light text-decoration-none">
+            <a href='/produtos' class="card bg-dark text-light text-decoration-none">
                 <div class="card-body py-3 hover-border">
                     <div class='d-flex'>
                         <h3><i class="bi-box-seam-fill"></i></h3>

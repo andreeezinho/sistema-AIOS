@@ -93,4 +93,8 @@ class ServicoController extends Controller {
         return $this->router->redirect('servicos');
     }
 
+    public function updatePrice(float $price, int $id){
+        
+    }
+
 }
