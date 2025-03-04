@@ -64,5 +64,21 @@ function createImage($arquivo, $dir){
     }
 
     return null;
+}
+
+function priceWithDiscount(array $products, $discount){
+
+    $total = 0;
+
+    foreach($products as $product){
+        $total += $product->preco;
+    }
+
+    if($discount > 0){
+        $discount_price = ($discount * $total) / 100;
+        $total -= $discount_price;
+    }
+
+    return $total;
 
 }

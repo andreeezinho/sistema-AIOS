@@ -37,17 +37,7 @@ class VendaProdutoController extends Controller {
         $produtos = $this->produtoRepository->all($params);
         $vendaProdutos = $this->vendaProdutoRepository->allProductsInSale($venda->id);
 
-        $desconto = $venda->desconto;
-        $total = 0;
-
-        foreach($vendaProdutos as $produto){
-            $total += $produto->preco;
-        }
-
-        if($venda->desconto > 0){
-            $desconto = ($venda->desconto * $total) / 100;
-            $total -= $desconto;
-        }
+        $total = priceWithDiscount($vendaProdutos, $venda->desconto);
 
         return $this->router->view('venda/venda_produto/index', [
             'venda' => $venda,
