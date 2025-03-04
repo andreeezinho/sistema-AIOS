@@ -122,8 +122,7 @@
                         </p>
 
                         <div class="d-flex mt-3 pt-2 border-top justify-content-center">
-                            <a href="/vendas/<?= $venda->uuid ?>/produtos" class="btn btn-primary mx-2"><i class="bi-pencil-fill"></i></a>
-                            <a href="/vendas/<?= $venda->uuid ?>/detalhes" class="btn btn-secondary mx-2"><i class="bi-eye-fill"></i></a>
+                            <a href="/vendas/<?= $venda->uuid ?>/produtos" class="btn btn-dark mx-2"><i class="bi-eye-fill"></i></a>
                         </div>
                     </div>
                 </div>
