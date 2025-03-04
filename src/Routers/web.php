@@ -99,6 +99,9 @@ $router->create("POST", "/produtos/{uuid}/deletar", [$produtoController, 'destro
 
 //produtos_servicos
 $router->create("GET", "/servicos/{uuid}/produtos", [$produtoServicoController, 'linkProducts'], $auth);
+$router->create("POST", "/servicos/{uuid}/produtos/{uuid}", [$produtoServicoController, 'linkProductsInService'], $auth);
+$router->create("POST", "/servicos/{uuid}/produtos/{uuid}/deletar", [$produtoServicoController, 'unlinkProductsInService'], $auth);
+$router->create("POST", "/servicos/{uuid}/adicionar", [$produtoServicoController, 'updatePrice'], $auth);
 
 //vendas
 $router->create("GET", "/vendas", [$vendaController, 'index'], $auth);

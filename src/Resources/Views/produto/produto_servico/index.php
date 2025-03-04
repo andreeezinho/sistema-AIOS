@@ -147,7 +147,7 @@
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                <form action="/servicos/<?= $servico->uuid ?>/inserir" method="POST">
+                                <form action="/servicos/<?= $servico->uuid ?>/adicionar" method="POST">
                                     <button type="submit" class="btn btn-primary"><i class="bi-check"></i> Confirmar</button>
                                 </form>
                             </div>

@@ -56,12 +56,12 @@ class ServicoRepository {
         try{
 
             $sql = "INSERT INTO ". self::TABLE . "
-            SET 
-                uuid = :uuid,
-                nome = :nome,
-                descricao = :descricao,
-                preco = :preco,
-                ativo = :ativo
+                SET 
+                    uuid = :uuid,
+                    nome = :nome,
+                    descricao = :descricao,
+                    preco = :preco,
+                    ativo = :ativo
             ";
 
             $stmt = $this->conn->prepare($sql);
@@ -93,13 +93,13 @@ class ServicoRepository {
         try{
 
             $sql = "UPDATE " . self::TABLE . "
-            SET 
-                nome = :nome,
-                descricao = :descricao,
-                preco = :preco,
-                ativo = :ativo
-            WHERE
-                id = :id
+                SET 
+                    nome = :nome,
+                    descricao = :descricao,
+                    preco = :preco,
+                    ativo = :ativo
+                WHERE
+                    id = :id
             ";
 
             $stmt = $this->conn->prepare($sql);
@@ -140,6 +140,36 @@ class ServicoRepository {
         ]);
 
         return $delete;
+    }
+
+    public function updatePrice(float $total, int $id){
+        try{
+
+            $sql = "UPDATE " . self::TABLE . "
+                SET 
+                    preco = :preco
+                WHERE
+                    id = :id
+            ";
+
+            $stmt = $this->conn->prepare($sql);
+
+            $update = $stmt->execute([
+                ':preco' => $total,
+                ':id' => $id
+            ]);
+
+            if(!$update){
+                return null;
+            }
+
+            return $this->findById($id);
+
+        }catch(\Throwable $th){
+            return null;
+        }finally{
+            Database::getInstance()->closeConnection();
+        }
     }
 
 }
