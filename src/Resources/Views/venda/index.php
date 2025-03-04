@@ -92,6 +92,7 @@
             <div class="col-12 col-md-4 col-lg-3">
                 <div class="card">
                     <div class="card-body py-3">
+                        <p class="mt-3 text-muted"><i class="bi-calendar-fill"></i> <?= date('d/m/Y - H:i', strtotime($venda->created_at)) ?></p>
                         <p class="mt-3 text-muted"><i class="bi-person-fill"></i> Cliente: <?= $venda->cliente ?></p>
                         <p class="mt-3 text-muted"><i class="bi-currency-dollar"></i> Preço: R$<?= number_format($venda->total ?? 0,2,",",".") ?></p>
                         <p class="mt-3 text-muted">

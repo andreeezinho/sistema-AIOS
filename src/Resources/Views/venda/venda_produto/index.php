@@ -131,10 +131,14 @@
     <div class="row mb-3 border-bottom py-5 justify-content-center">
         <h3 class="my-b"><i class="bi-clipboard-data-fill"></i> Dados da venda</h3>
 
-        <form action="/vendas/<?= $venda->uuid ?>/editar" method="POST" class="col-11 col-sm-8 col-md-8 col-lg-6 mt-3">
-            <div class="form-group">
+        <form action="/vendas/<?= $venda->uuid ?>/editar" method="POST" class="row col-11 col-sm-8 col-md-8 col-lg-6 mt-3">
+            <div class="col-12 col-md-6 form-group my-2 border-top">
                 <span><i class="bi-person-fill"></i> Cliente</span>
-                <span class="form-control"><?= $cliente->nome ?></span>
+                <span class="form-control bg-theme px-0"><?= $cliente->nome ?></span>
+            </div>
+            <div class="col-12 col-md-6 form-group my-2">
+                <span><i class="bi-calendar-fill"></i> Data</span>
+                <span class="form-control bg-theme px-0"><?= date('d/m/Y - H:i', strtotime($venda->created_at)) ?></span>
             </div>
             <?php
                 require_once __DIR__ . '/../form.php';
