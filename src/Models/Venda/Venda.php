@@ -32,7 +32,7 @@ class Venda {
         $venda->total = $data['total'] ?? null;
         $venda->situacao = ($data['situacao'] == "") ? "em andamento" : $data['situacao'];
         $venda->usuarios_id = $usuario_id ?? null;
-        $venda->clientes_id = $cliente_id;
+        $venda->clientes_id = $cliente_id ?? null;
         $venda->created_at = $data['created_at'] ?? null;
         $venda->updated_at = $data['updated_at'] ?? null;
         return $venda;

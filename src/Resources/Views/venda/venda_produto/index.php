@@ -131,7 +131,7 @@
     <div class="row mb-3 border-bottom py-5 justify-content-center">
         <h3 class="my-b"><i class="bi-clipboard-data-fill"></i> Dados da venda</h3>
 
-        <form action="/vendas/<?= $venda->uuid ?>/produtos/editar" method="POST" class="col-11 col-sm-8 col-md-8 col-lg-6 mt-3">
+        <form action="/vendas/<?= $venda->uuid ?>/editar" method="POST" class="col-11 col-sm-8 col-md-8 col-lg-6 mt-3">
             <div class="form-group">
                 <span><i class="bi-person-fill"></i> Cliente</span>
                 <span class="form-control"><?= $cliente->nome ?></span>
@@ -166,7 +166,7 @@
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                <form action="perfil/deletar" method="POST">
+                                <form action="/vendas/<?= $venda->uuid ?>/finalizar" method="POST">
                                     <button type="submit" class="btn btn-primary"><i class="bi-check"></i> Finalizar</button>
                                 </form>
                             </div>

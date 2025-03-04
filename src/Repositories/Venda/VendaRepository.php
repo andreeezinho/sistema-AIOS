@@ -105,4 +105,38 @@ class VendaRepository {
         }
     }
 
+    public function update(array $data, int $id, int $usuario_id, int $cliente_id){
+        $venda = $this->model->create($data, $usuario_id, $cliente_id);
+
+        try{
+
+            $sql = "UPDATE " . self::TABLE . "
+                SET
+                    desconto = :desconto,
+                    situacao = :situacao
+                WHERE
+                    id = :id
+            ";
+
+            $stmt = $this->conn->prepare($sql);
+
+            $update = $stmt->execute([
+                ':desconto' => $venda->desconto,
+                ':situacao' => $venda->situacao,
+                ':id' => $id
+            ]);
+
+            if(!$update){
+                return null;
+            }
+
+            return $this->findById($id);
+
+        }catch(\Throwable $th){
+            return null;
+        }finally{
+            Database::getInstance()->closeConnection();
+        }
+    }
+
 }

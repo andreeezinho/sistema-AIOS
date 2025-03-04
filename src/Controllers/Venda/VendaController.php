@@ -60,7 +60,26 @@ class VendaController extends Controller {
         return $this->router->redirect('vendas/'. $create->uuid . '/produtos');
     }
 
-    public function update(Request $request, $uuid){}
+    public function update(Request $request, $uuid){
+        $venda = $this->vendaRepository->findByUuid($uuid);
+        if(!$venda){
+            return $this->router->redirect('vendas/'. $uuid .'/produtos');
+        }
+
+        $data = $request->getBodyParams();
+
+        $update = $this
+            ->vendaRepository
+            ->update(
+                $data, $venda->id, $venda->clientes_id, $venda->usuarios_id
+            );
+
+        if(is_null($update)){
+            return $this->router->redirect('vendas/'. $uuid .'/produtos');
+        }
+
+        return $this->router->redirect('vendas/'. $uuid .'/produtos');
+    }
 
     public function finish(Request $request, $uuid){}
 
