@@ -4,14 +4,14 @@
 
 <div class="container">
     <div class="row">
-        <div class="text-muted border-bottom border-secondary pb-sm-3">
+        <div class="text-muted border-bottom pb-sm-3">
             <img src="<?= URL_SITE ?>/public/img/user/icons/<?= $_SESSION['user']->icone ?>" alt="Icone" class="user-icone rounded-circle me-2">
             Olá, <?= explode(' ', trim($user->nome))[0] ?>
 
             <div class="float-sm-end mx-auto mt-2 mx-sm-0 mt-sm-0 d-flex">
                 <p class="p-0">Seus feitos |</p>
-                <p class="mx-2 p-0"><i class="bi-clipboard2-data-fill"></i> O.S - <b><?= count($servicos) ?></b></p>
-                <p class="mx-2 p-0"><i class="bi-handbag-fill"></i> Vendas - <b><?= count($servicos) ?></b></p>
+                <p class="mx-2 p-0"><i class="bi-clipboard2-data-fill"></i> O.S - <b><?= count($userVendas) ?></b></p>
+                <p class="mx-2 p-0"><i class="bi-handbag-fill"></i> Vendas - <b><?= count($userVendas) ?></b></p>
             </div>
         </div>
     </div>
@@ -86,10 +86,10 @@
         </div>
 
         <div class="col-6 col-md-4 col-lg-3">
-            <a href='#' class="card bg-dark text-light text-decoration-none">
+            <a href='vendas' class="card bg-dark text-light text-decoration-none">
                 <div class="card-body py-3 hover-border">
                     <div class='d-flex'>
-                        <h3><i class="bi-handbag-fill"></i></h3>
+                        <h3><i class="bi-cart-fill"></i></h3>
                         <p class="my-auto ms-2">Vendas</p>
                     </div>
                     <?php

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light bg-navbar px-0 px-md-5 border-bottom">
+<nav class="navbar navbar-expand-md navbar-light bg-light px-0 px-md-5 border-bottom">
     <div class="container-fluid">
         <a class="navbar-brand ml-5 me-0" href="/dashboard">
             <img src="<?= URL_SITE ?>/public/img/site/logo-sem-fundo.png" alt="Logo" class="logo-site">
@@ -30,6 +30,10 @@
 
                 <li class="nav-item">
                     <a href="/produtos" class="nav-link"><i class="bi-box-seam-fill"></i> Produtos</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/vendas" class="nav-link"><i class="bi-cart-fill"></i> Vendas</a>
                 </li>
 
                 <li class="nav-item dropdown">

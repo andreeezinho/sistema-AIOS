@@ -93,7 +93,7 @@
                 <div class="card">
                     <div class="card-body py-3">
                         <p class="mt-3 text-muted"><i class="bi-person-fill"></i> Cliente: <?= $venda->cliente ?></p>
-                        <p class="mt-3 text-muted"><i class="bi-currency-dollar"></i> Preço: R$<?= number_format($venda->total,2,",","."); ?></p>
+                        <p class="mt-3 text-muted"><i class="bi-currency-dollar"></i> Preço: R$<?= number_format($venda->total ?? 0,2,",",".") ?></p>
                         <p class="mt-3 text-muted">
                             <?php
                                 if($venda->situacao == 'cancelada'){
@@ -122,7 +122,7 @@
                         </p>
 
                         <div class="d-flex mt-3 pt-2 border-top justify-content-center">
-                            <a href="/vendas/<?= $venda->uuid ?>/editar" class="btn btn-primary mx-2"><i class="bi-pencil-fill"></i></a>
+                            <a href="/vendas/<?= $venda->uuid ?>/produtos" class="btn btn-primary mx-2"><i class="bi-pencil-fill"></i></a>
                             <a href="/vendas/<?= $venda->uuid ?>/detalhes" class="btn btn-secondary mx-2"><i class="bi-eye-fill"></i></a>
                         </div>
                     </div>
