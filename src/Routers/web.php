@@ -14,6 +14,7 @@ use App\Controllers\Servico\ServicoController;
 use App\Controllers\Produto\ProdutoController;
 use App\Controllers\Venda\VendaController;
 use App\Controllers\Venda\VendaProdutoController;
+use App\Controllers\Produto\ProdutoServicoController;
 
 //instanciar
 $router = new Router();
@@ -29,6 +30,7 @@ $servicoController = new ServicoController();
 $produtoController = new ProdutoController();
 $vendaController = new VendaController();
 $vendaProdutoController = new VendaProdutoController();
+$produtoServicoController = new ProdutoServicoController();
 
 //rotas
 
@@ -79,7 +81,7 @@ $router->create("GET", "/clientes/{uuid}/editar", [$clienteController, 'edit'], 
 $router->create("POST", "/clientes/{uuid}/editar", [$clienteController, 'update'], $auth);
 $router->create("POST", "/clientes/{uuid}/deletar", [$clienteController, 'destroy'], $auth);
 
-//servicoes
+//servicos
 $router->create("GET", "/servicos", [$servicoController, 'index'], $auth);
 $router->create("GET", "/servicos/cadastro", [$servicoController, 'create'], $auth);
 $router->create("POST", "/servicos/cadastro", [$servicoController, 'store'], $auth);
@@ -95,6 +97,9 @@ $router->create("GET", "/produtos/{uuid}/editar", [$produtoController, 'edit'], 
 $router->create("POST", "/produtos/{uuid}/editar", [$produtoController, 'update'], $auth);
 $router->create("POST", "/produtos/{uuid}/deletar", [$produtoController, 'destroy'], $auth);
 
+//produtos_servicos
+$router->create("GET", "/servicos/{uuid}/produtos", [$produtoServicoController, 'linkProducts'], $auth);
+
 //vendas
 $router->create("GET", "/vendas", [$vendaController, 'index'], $auth);
 $router->create("GET", "/vendas/cadastro", [$vendaController, 'create'], $auth);
@@ -106,6 +111,5 @@ $router->create("POST", "/vendas/{uuid}/finalizar", [$vendaController, 'finish']
 $router->create("GET", "/vendas/{uuid}/produtos", [$vendaProdutoController, 'linkProducts'], $auth);
 $router->create("POST", "/vendas/{uuid}/produtos/{produto}", [$vendaProdutoController, 'linkProductInSale'], $auth);
 $router->create("POST", "/vendas/{uuid}/produtos/{produto}/deletar", [$vendaProdutoController, 'unlinkProductInSale'], $auth);
-
 
 return $router;

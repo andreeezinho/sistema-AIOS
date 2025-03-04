@@ -11,6 +11,11 @@ class ProdutoServico {
     public $id;
     public $uuid;
     public $produtos_id;
+    public $nome;
+    public $codigo;
+    public $preco;
+    public $uuidProduto;
+    public $servico;
     public $servicos_id;
     public $created_at;
     public $updated_at;
