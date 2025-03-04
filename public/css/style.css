@@ -14,11 +14,7 @@
 }
 
 .bg-theme{
-    background-color: #dddbdb;
-}
-
-.logo{
-    width: 300px;
+    background-color: #e7e7e7;
 }
 
 .cadastro-icone{
@@ -33,4 +29,8 @@
     transition: all 0.3s ease;
     box-shadow: 0 0 10px black;
     cursor: pointer;
+}
+
+.logo-site{
+    width: 180px;
 }
