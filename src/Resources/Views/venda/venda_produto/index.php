@@ -16,9 +16,7 @@
                     <a href="/vendas" class="text-decoration-none text-muted">Vendas</a>
                 </li>
 
-                <li class="breadcrumb-item text-muted">Iniciar Venda</li>
-
-                <li class="breadcrumb-item">Produtos</li>
+                <li class="breadcrumb-item"><i class="bi-cart-fill"></i></li>
             </ol>
         </div>
     </div>
@@ -61,7 +59,7 @@
                     if(count($produtos) > 0){
                         foreach($produtos as $produto){
             ?>
-                <form action="/vendas/<?= $venda->uuid ?>/protudos/<?= $produto->uuid ?>" method="POST" class="d-flex">
+                <form action="/vendas/<?= $venda->uuid ?>/produtos/<?= $produto->uuid ?>" method="POST" class="d-flex">
                     <tr>
                         <th><?= $produto->nome ?></th>
                         <th class="d-none d-sm-table-cell"><?= $produto->codigo ?></th>
@@ -81,7 +79,7 @@
                     }
                 }else{
             ?>
-                <p class="text-muted my-2">Pesquise um protudo</p>
+                <p class="text-muted my-2">Pesquise um produto</p>
             <?php
                 }
             ?>
@@ -107,7 +105,7 @@
                 if(count($vendaProdutos) > 0){
                     foreach($vendaProdutos as $produto){
             ?>
-                <form action="/vendas/<?= $venda->uuid ?>/protudos/<?= $produto->uuid ?>/remover" method="POST" class="d-flex">
+                <form action="/vendas/<?= $venda->uuid ?>/produtos/<?= $produto->uuidProduto ?>/deletar" method="POST" class="d-flex">
                     <tr>
                         <th><?= $produto->nome ?></th>
                         <th class="d-none d-sm-table-cell"><?= $produto->codigo ?></th>

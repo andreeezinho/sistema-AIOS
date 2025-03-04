@@ -104,9 +104,8 @@ $router->create("POST", "/vendas/{uuid}/finalizar", [$vendaController, 'finish']
 
 //vendas-produtos
 $router->create("GET", "/vendas/{uuid}/produtos", [$vendaProdutoController, 'linkProducts'], $auth);
-$router->create("POST", "/vendas/{uuid}/produtos", [$vendaProdutoController, 'storeProductsInSale'], $auth);
 $router->create("POST", "/vendas/{uuid}/produtos/{produto}", [$vendaProdutoController, 'linkProductInSale'], $auth);
-$router->create("POST", "/vendas/{uuid}/produtos/{produto}", [$vendaProdutoController, 'unlinkProductInSale'], $auth);
+$router->create("POST", "/vendas/{uuid}/produtos/{produto}/deletar", [$vendaProdutoController, 'unlinkProductInSale'], $auth);
 
 
 return $router;

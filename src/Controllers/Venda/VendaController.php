@@ -60,4 +60,8 @@ class VendaController extends Controller {
         return $this->router->redirect('vendas/'. $create->uuid . '/produtos');
     }
 
+    public function update(Request $request, $uuid){}
+
+    public function finish(Request $request, $uuid){}
+
 }

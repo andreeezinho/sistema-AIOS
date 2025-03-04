@@ -43,4 +43,55 @@ class VendaProdutoRepository {
         return $stmt->fetchAll(\PDO::FETCH_CLASS, self::CLASS_NAME);
     }
 
+    public function linkProduct(int $venda_id, int $produto_id){
+        $data = ['quantidade' => 1];
+        $vendaProduto = $this->model->create($data);
+        try{
+            
+            $sql = "INSERT INTO ". self::TABLE . "
+                SET 
+                    uuid = :uuid,
+                    vendas_id = :vendas_id,
+                    produtos_id = :produtos_id
+            ";
+
+            $stmt = $this->conn->prepare($sql);
+
+            $create = $stmt->execute([
+                ':uuid' => $vendaProduto->uuid,
+                ':vendas_id' => $venda_id,
+                ':produtos_id' => $produto_id
+            ]);
+
+            if(!$create){
+                return null;
+            }
+
+            return $this->findByUuid($vendaProduto->uuid);
+
+        }catch(\Throwable $th){
+            return null;
+        }finally{
+            Database::getInstance()->closeConnection();
+        }
+    }
+
+    public function unlinkProduct(int $venda_id, int $produto_id){
+        $sql = "DELETE FROM " . self::TABLE . "
+            WHERE
+                vendas_id = :vendas_id
+                AND
+                produtos_id = :produtos_id
+        ";
+
+        $stmt = $this->conn->prepare($sql);
+
+        $delete = $stmt->execute([
+            ':vendas_id' => $venda_id,
+            ':produtos_id' => $produto_id
+        ]);
+
+        return $delete;
+    }
+
 }

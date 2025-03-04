@@ -59,4 +59,48 @@ class VendaProdutoController extends Controller {
         ]);
     }
 
+    public function linkProductInSale(Request $request, $venda_uuid, $produto_uuid){
+        $venda = $this->vendaRepository->findByUuid($venda_uuid);
+        if(!$venda){
+            return $this->router->redirect('vendas');
+        }
+
+        $produto = $this->produtoRepository->findByUuid($produto_uuid);
+        if(!$produto){
+            return $this->router->redirect('vendas');
+        }
+
+        $linkProductInSale = $this
+            ->vendaProdutoRepository
+            ->linkProduct($venda->id, $produto->id);
+
+        if(is_null($linkProductInSale)){
+            return $this->router->redirect('vendas');
+        }
+
+        return $this->router->redirect('vendas/'. $venda->uuid .'/produtos');
+    }
+
+    public function unlinkProductInSale(Request $request, $venda_uuid, $produto_uuid){
+        $venda = $this->vendaRepository->findByUuid($venda_uuid);
+        if(!$venda){
+            return $this->router->redirect('vendas');
+        }
+        
+        $produto = $this->produtoRepository->findByUuid($produto_uuid);
+        if(!$produto){
+            return $this->router->redirect('vendas');
+        }
+
+        $unlinkProductInSale = $this
+            ->vendaProdutoRepository
+            ->unlinkProduct($venda->id, $produto->id);
+
+        if(!$unlinkProductInSale){
+            return $this->router->redirect('vendas');
+        }
+
+        return $this->router->redirect('vendas/'. $venda->uuid .'/produtos');
+    }
+
 }
