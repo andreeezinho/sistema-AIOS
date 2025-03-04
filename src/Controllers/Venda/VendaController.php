@@ -5,18 +5,21 @@ namespace App\Controllers\Venda;
 use App\Request\Request;
 use App\Controllers\Controller;
 use App\Repositories\Venda\VendaRepository;
+use App\Repositories\Venda\VendaProdutoRepository;
 use App\Repositories\User\UserRepository;
 use App\Repositories\Cliente\ClienteRepository;
 
 class VendaController extends Controller {
 
     public $vendaRepository;
+    public $vendaProdutoRepository;
     public $usuarioRepository;
     public $clienteRepository;
 
     public function __construct(){
         parent::__construct();
         $this->vendaRepository = new VendaRepository();
+        $this->vendaProdutoRepository = new VendaProdutoRepository();
         $this->usuarioRepository = new UserRepository();
         $this->clienteRepository = new ClienteRepository();
     }
@@ -81,6 +84,23 @@ class VendaController extends Controller {
         return $this->router->redirect('vendas/'. $uuid .'/produtos');
     }
 
-    public function finish(Request $request, $uuid){}
+    public function finish(Request $request, $uuid){
+        $venda = $this->vendaRepository->findByUuid($uuid);
+        if(!$venda){
+            return $this->router->redirect('vendas/'. $uuid .'/produtos');
+        }
+
+        $vendaProdutos = $this->vendaProdutoRepository->allProductsInSale($venda->id);
+
+        $total = priceWithDiscount($vendaProdutos, $venda->desconto);
+
+        $finish = $this->vendaRepository->finish($total, $venda->id);
+
+        if(is_null($finish)){
+            return $this->router->redirect('vendas/'. $uuid .'/produtos');
+        }
+
+        return $this->router->redirect('vendas');
+    }
 
 }

@@ -139,4 +139,36 @@ class VendaRepository {
         }
     }
 
+    public function finish(float $total, int $id){
+        try{
+
+            $sql = "UPDATE " . self::TABLE . "
+                SET
+                    total = :total,
+                    situacao = :situacao
+                WHERE
+                    id = :id
+            ";
+
+            $stmt = $this->conn->prepare($sql);
+
+            $finish = $stmt->execute([
+                ':total' => $total,
+                ':situacao' => 'concluida',
+                ':id' => $id
+            ]);
+
+            if(!$finish){
+                return null;
+            }
+
+            return $this->findById($id);
+
+        }catch(\Throwable $th){
+            return null;
+        }finally{
+            Database::getInstance()->closeConnection();
+        }
+    }
+
 }
