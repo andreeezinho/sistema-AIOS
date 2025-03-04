@@ -4,7 +4,7 @@ namespace App\Models\Produto;
 
 use App\Models\Traits\Uuid;
 
-class ProdutoServico {
+class ProdutoServico { 
 
     use Uuid;
 
