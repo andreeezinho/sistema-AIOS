@@ -15,6 +15,7 @@ use App\Controllers\Produto\ProdutoController;
 use App\Controllers\Venda\VendaController;
 use App\Controllers\Venda\VendaProdutoController;
 use App\Controllers\Produto\ProdutoServicoController;
+use App\Controllers\OS\OSController;
 
 //instanciar
 $router = new Router();
@@ -31,6 +32,7 @@ $produtoController = new ProdutoController();
 $vendaController = new VendaController();
 $vendaProdutoController = new VendaProdutoController();
 $produtoServicoController = new ProdutoServicoController();
+$OSController = new OSController();
 
 //rotas
 
@@ -114,5 +116,9 @@ $router->create("POST", "/vendas/{uuid}/finalizar", [$vendaController, 'finish']
 $router->create("GET", "/vendas/{uuid}/produtos", [$vendaProdutoController, 'linkProducts'], $auth);
 $router->create("POST", "/vendas/{uuid}/produtos/{produto}", [$vendaProdutoController, 'linkProductInSale'], $auth);
 $router->create("POST", "/vendas/{uuid}/produtos/{produto}/deletar", [$vendaProdutoController, 'unlinkProductInSale'], $auth);
+
+//O.S
+$router->create("GET", "/os", [$OSController, 'index'], $auth);
+
 
 return $router;
