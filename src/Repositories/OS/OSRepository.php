@@ -73,4 +73,43 @@ class OSRepository {
         return $stmt->fetchAll(\PDO::FETCH_CLASS, self::CLASS_NAME);
     }
 
+    public function create(array $data, $usuario_id, $cliente_id){
+        $os = $this->model->create($data, $usuario_id, $cliente_id);
+        
+        try{
+
+            $sql = "INSERT INTO " . self::TABLE . "
+                SET
+                    uuid = :uuid,
+                    desconto = :desconto,
+                    dispositivo = :dispositivo,
+                    situacao = :situacao,
+                    clientes_id = :clientes_id,
+                    usuarios_id = :usuarios_id
+            ";
+
+            $stmt = $this->conn->prepare($sql);
+
+            $create = $stmt->execute([
+                ':uuid' => $os->uuid,
+                ':desconto' => $os->desconto,
+                ':dispositivo' => $os->dispositivo,
+                ':situacao' => $os->situacao,
+                ':clientes_id' => $os->clientes_id,
+                ':usuarios_id' => $os->usuarios_id
+            ]);
+
+            if(!$create){
+                return null;
+            }
+
+            return $this->findByUuid($os->uuid);
+
+        }catch(\Throwable $th){
+            dd($th);
+        }finally{
+            Database::getInstance()->closeConnection();
+        }
+    }
+
 }

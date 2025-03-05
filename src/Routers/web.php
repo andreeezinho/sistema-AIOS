@@ -119,6 +119,8 @@ $router->create("POST", "/vendas/{uuid}/produtos/{produto}/deletar", [$vendaProd
 
 //O.S
 $router->create("GET", "/os", [$OSController, 'index'], $auth);
+$router->create("GET", "/os/cadastro", [$OSController, 'create'], $auth);
+$router->create("POST", "/os/cadastro", [$OSController, 'store'], $auth);
 
 
 return $router;
