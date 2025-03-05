@@ -34,7 +34,7 @@
                     }
                 ?>
                 <div class="row">
-                    <h3 class="text-center my-2"><i class="bi-handbag-fill"></i> Iniciar O.S</h3>
+                    <h3 class="text-center my-2"><i class="bi-clipboard-data-fill"></i> Iniciar O.S</h3>
                     <?php 
                         include_once('form.php');
                     ?>

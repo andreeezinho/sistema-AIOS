@@ -36,7 +36,7 @@
 
     <form action="/vendas/<?= $venda->uuid ?>/produtos" method="GET" class="row mb-3 pt-3">
         <label for="nome_codigo"><i class="bi-search"></i> Nome ou Código</label>
-        <div class="form-group col-12 col-md-10 ps-0">
+        <div class="form-group col-12 col-md-10 ps-md-0">
             <input type="text" name="nome_codigo" id="nome_codigo" class="form-control mt-2" placeholder="Insira o nome ou o código do produto">
         </div>
         <button class="btn btn-primary mx-auto mx-md-0 my-2 col-4 col-md-2"><i class="bi-search"></i> Pesquisar</button>

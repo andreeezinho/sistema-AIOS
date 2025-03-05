@@ -9,6 +9,7 @@ use App\Repositories\Cliente\ClienteRepository;
 use App\Repositories\Servico\ServicoRepository;
 use App\Repositories\Produto\ProdutoRepository;
 use App\Repositories\Venda\VendaRepository;
+use App\Repositories\OS\OSRepository;
 
 class DashboardController extends Controller {
 
@@ -18,6 +19,7 @@ class DashboardController extends Controller {
     protected $servicoRepository;
     protected $produtoRepository;
     protected $vendaRepository;
+    protected $osRepository;
 
     public function __construct(){
         parent::__construct();
@@ -27,6 +29,7 @@ class DashboardController extends Controller {
         $this->servicoRepository = new ServicoRepository();
         $this->produtoRepository = new ProdutoRepository();
         $this->vendaRepository = new VendaRepository();
+        $this->osRepository = new OSRepository();
     }
 
     public function index(){
@@ -38,6 +41,8 @@ class DashboardController extends Controller {
         $produtos = $this->produtoRepository->all();
         $vendas = $this->vendaRepository->all();
         $userVendas = $this->vendaRepository->all(['usuario' => $_SESSION['user']->cpf]);
+        $os = $this->osRepository->all();
+        $userOs = $this->osRepository->all(['usuario' => $_SESSION['user']->cpf]);
 
         return $this->router->view('dashboard/index', [
             'user' => $user,
@@ -46,7 +51,9 @@ class DashboardController extends Controller {
             'servicos' => $servicos,
             'produtos' => $produtos,
             'vendas' => $vendas,
-            'userVendas' => $userVendas
+            'userVendas' => $userVendas,
+            'os' => $os,
+            'userOs' => $userOs
         ]);
     }
 
