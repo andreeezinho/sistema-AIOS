@@ -16,6 +16,7 @@ use App\Controllers\Venda\VendaController;
 use App\Controllers\Venda\VendaProdutoController;
 use App\Controllers\Produto\ProdutoServicoController;
 use App\Controllers\OS\OSController;
+use App\Controllers\OS\OSServicoController;
 
 //instanciar
 $router = new Router();
@@ -33,6 +34,7 @@ $vendaController = new VendaController();
 $vendaProdutoController = new VendaProdutoController();
 $produtoServicoController = new ProdutoServicoController();
 $OSController = new OSController();
+$osServicosController = new OSServicoController();
 
 //rotas
 
@@ -122,5 +124,9 @@ $router->create("GET", "/os", [$OSController, 'index'], $auth);
 $router->create("GET", "/os/cadastro", [$OSController, 'create'], $auth);
 $router->create("POST", "/os/cadastro", [$OSController, 'store'], $auth);
 
+//os_servicos
+$router->create("GET", "/os/{uuid}/servicos", [$osServicosController, 'linkServices'], $auth);
+$router->create("GET", "/os/{uuid}/servicos/{servico}/", [$osServicosController, 'linkServiceInOs'], $auth);
+$router->create("GET", "/os/{uuid}/servicos/{servico}/deletar", [$osServicosController, 'unlinkServiceInOs'], $auth);
 
 return $router;
