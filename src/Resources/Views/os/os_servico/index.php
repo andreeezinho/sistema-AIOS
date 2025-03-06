@@ -86,7 +86,7 @@
     </div>
 
     <div class="row mb-3 border-bottom py-5 table-responsive">
-        <h3 class="my-3"><i class="bi-tools"></i> Serviços da O.S</h3>
+        <h3 class="my-3"><i class="bi-ui-checks"></i> Serviços da O.S</h3>
         
         <table class="table table-striped mt-2">
             <thead>
@@ -156,7 +156,7 @@
             <div class="col-12 form-group text-center mt-3">
                 <div class="d-flex float-start float-md-end">
                     <h5 class="p-0 m-0 mx-2 my-auto">Valor Total: <b>R$ <?= number_format($total,2,",",".") ?></b></h5>
-                    <button type="submit" class="btn btn-primary mx-1" data-toggle="modal" data-target="#finalizar"><i class="bi-cart-check-fill"></i> Finalizar</button>
+                    <button type="submit" class="btn btn-primary mx-1" data-toggle="modal" data-target="#finalizar"><i class="bi-clipboard2-check-fill"></i> Finalizar</button>
                 </div>
 
                 <div class="modal fade" id="finalizar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

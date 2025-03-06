@@ -73,7 +73,7 @@ class OSRepository {
         return $stmt->fetchAll(\PDO::FETCH_CLASS, self::CLASS_NAME);
     }
 
-    public function create(array $data, $usuario_id, $cliente_id){
+    public function create(array $data, int $usuario_id, int $cliente_id){
         $os = $this->model->create($data, $usuario_id, $cliente_id);
         
         try{
@@ -106,6 +106,76 @@ class OSRepository {
             }
 
             return $this->findByUuid($os->uuid);
+
+        }catch(\Throwable $th){
+            return null;
+        }finally{
+            Database::getInstance()->closeConnection();
+        }
+    }
+
+    public function update(array $data, int $usuarios_id, int $clientes_id, int $id){
+        $os = $this->model->create($data, $usuarios_id, $clientes_id);
+        
+        try{
+
+            $sql = "UPDATE " . self::TABLE . "
+                SET
+                    desconto = :desconto,
+                    dispositivo = :dispositivo,
+                    observacao = :observacao,
+                    situacao = :situacao
+                WHERE 
+                    id = :id
+            "; 
+
+            $stmt = $this->conn->prepare($sql);
+
+            $update = $stmt->execute([
+                ':desconto' => $os->desconto,
+                ':dispositivo' => $os->dispositivo,
+                ':observacao' => $os->observacao,
+                ':situacao' => $os->situacao,
+                ':id' => $id
+            ]);
+
+            if(!$update){
+                return null;
+            }
+
+            return $this->findById($id);
+
+        }catch(\Throwable $th){
+            dd($th);
+        }finally{
+            Database::getInstance()->closeConnection();
+        }
+    }
+
+    public function finish(float $total, int $id){
+        try{
+
+            $sql = "UPDATE " . self::TABLE . "
+                SET
+                    total = :total,
+                    situacao = :situacao
+                WHERE 
+                    id = :id
+            "; 
+
+            $stmt = $this->conn->prepare($sql);
+
+            $finish = $stmt->execute([
+                ':total' => $total,
+                ':situacao' => 'concluida',
+                ':id' => $id
+            ]);
+
+            if(!$finish){
+                return null;
+            }
+
+            return $this->findById($id);
 
         }catch(\Throwable $th){
             dd($th);

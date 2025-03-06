@@ -24,7 +24,7 @@ class OS {
     public $created_at;
     public $updated_at;
 
-    public function create(array $data, int $clientes_id, int $usuarios_id){
+    public function create(array $data, int $usuarios_id, int $clientes_id){
         $os = new OS();
         $os->id = $data['id'] ?? null;
         $os->uuid = $data['uuid'] ?? $this->generateUUID();
@@ -33,7 +33,7 @@ class OS {
         $os->observacao = $data['observacao'] ?? null;
         $os->desconto = $data['desconto'] ?? null;
         $os->total = $data['total'] ?? null;
-        $os->situacao = $data['situacao'] ?? null;
+        $os->situacao = $data['situacao'] ?? 'em andamento';
         $os->usuarios_id = $usuarios_id ?? null;
         $os->created_at = $data['created_at'] ?? null;
         $os->updated_at = $data['updated_at'] ?? null;
