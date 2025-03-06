@@ -44,7 +44,8 @@ class OSServicoRepository {
     }
 
     public function linkService(int $os_id, int $servicos_id){
-        $osServico = $this->model->create($os_id, $servicos_id);
+        $osServico = $this->model->create();
+
         try{
             
             $sql = "INSERT INTO ". self::TABLE . "
@@ -67,6 +68,36 @@ class OSServicoRepository {
             }
 
             return $this->findByUuid($osServico->uuid);
+
+        }catch(\Throwable $th){
+            return null;
+        }finally{
+            Database::getInstance()->closeConnection();
+        }
+    }
+
+    public function unlinkService(int $os_id, int $servicos_id, int $id){
+
+        try{
+            
+            $sql = "DELETE FROM ". self::TABLE . "
+                WHERE
+                    id = :id
+                AND
+                    os_id = :os_id
+                AND
+                    servicos_id = :servicos_id
+            ";
+
+            $stmt = $this->conn->prepare($sql);
+
+            $delete = $stmt->execute([
+                ':id' => $id,
+                ':os_id' => $os_id,
+                ':servicos_id' => $servicos_id
+            ]);
+
+            return $delete;
 
         }catch(\Throwable $th){
             return null;

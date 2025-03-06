@@ -20,14 +20,12 @@ class OSServico {
     public $created_at;
     public $updated_at;
 
-    public function create(int $os_id, int $servicos_id){
+    public function create(array $data = []){
         $osServico = new OS();
-        $os->id = $data['id'] ?? null;
-        $os->uuid = $data['uuid'] ?? $this->generateUUID();
-        $os->os_id = $os_id ?? null;
-        $os->servicos_id = $servicos_id ?? null;
-        $os->created_at = $data['created_at'] ?? null;
-        $os->updated_at = $data['updated_at'] ?? null;
+        $osServico->id = $data['id'] ?? null;
+        $osServico->uuid = $data['uuid'] ?? $this->generateUUID();
+        $osServico->created_at = $data['created_at'] ?? null;
+        $osServico->updated_at = $data['updated_at'] ?? null;
         return $osServico;
     }
 

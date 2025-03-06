@@ -126,7 +126,7 @@ $router->create("POST", "/os/cadastro", [$OSController, 'store'], $auth);
 
 //os_servicos
 $router->create("GET", "/os/{uuid}/servicos", [$osServicosController, 'linkServices'], $auth);
-$router->create("GET", "/os/{uuid}/servicos/{servico}/", [$osServicosController, 'linkServiceInOs'], $auth);
-$router->create("GET", "/os/{uuid}/servicos/{servico}/deletar", [$osServicosController, 'unlinkServiceInOs'], $auth);
+$router->create("POST", "/os/{uuid}/servicos/{servico}/", [$osServicosController, 'linkServiceInOs'], $auth);
+$router->create("POST", "/os/{os}/servicos/{servico}/deletar/{uuid}", [$osServicosController, 'unlinkServiceInOs'], $auth);
 
 return $router;

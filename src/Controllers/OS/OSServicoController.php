@@ -55,4 +55,53 @@ class OSServicoController extends Controller {
         ]);
     }
 
+    public function linkServiceInOs(Request $request, $os_uuid, $servico_uuid){
+        $os = $this->osRepository->findByUuid($os_uuid);
+        if(!$os){
+            return $this->router->redirect('os');
+        }
+
+        $servico = $this->servicoRepository->findByUuid($servico_uuid);
+        if(!$servico){
+            return $this->router->redirect('os');
+        }
+
+        $linkServiceInOs = $this
+            ->osServicoRepository
+            ->linkService($os->id, $servico->id);
+
+        if(is_null($linkServiceInOs)){
+            return $this->router->redirect('os');
+        }
+
+        return $this->router->redirect('os/'. $os->uuid .'/servicos');
+    }
+
+    public function unlinkServiceInOs(Request $request, $os_uuid, $servico_uuid, $uuid){
+        $os = $this->osRepository->findByUuid($os_uuid);
+        if(!$os){
+            return $this->router->redirect('os');
+        }
+
+        $servico = $this->servicoRepository->findByUuid($servico_uuid);
+        if(!$servico){
+            return $this->router->redirect('os');
+        }
+
+        $osServico = $this->osServicoRepository->findByUuid($uuid);
+        if(!$osServico){
+            return $this->router->redirect('os');
+        }
+
+        $unlinkServiceInOs = $this
+            ->osServicoRepository
+            ->unlinkService($os->id, $servico->id, $osServico->id);
+
+        if(!$unlinkServiceInOs){
+            return $this->router->redirect('os');
+        }
+
+        return $this->router->redirect('os/'. $os->uuid .'/servicos');
+    }
+
 }
