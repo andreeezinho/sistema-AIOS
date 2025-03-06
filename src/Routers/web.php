@@ -15,6 +15,8 @@ use App\Controllers\Produto\ProdutoController;
 use App\Controllers\Venda\VendaController;
 use App\Controllers\Venda\VendaProdutoController;
 use App\Controllers\Produto\ProdutoServicoController;
+use App\Controllers\OS\OSController;
+use App\Controllers\OS\OSServicoController;
 
 //instanciar
 $router = new Router();
@@ -31,6 +33,8 @@ $produtoController = new ProdutoController();
 $vendaController = new VendaController();
 $vendaProdutoController = new VendaProdutoController();
 $produtoServicoController = new ProdutoServicoController();
+$OSController = new OSController();
+$osServicosController = new OSServicoController();
 
 //rotas
 
@@ -114,5 +118,17 @@ $router->create("POST", "/vendas/{uuid}/finalizar", [$vendaController, 'finish']
 $router->create("GET", "/vendas/{uuid}/produtos", [$vendaProdutoController, 'linkProducts'], $auth);
 $router->create("POST", "/vendas/{uuid}/produtos/{produto}", [$vendaProdutoController, 'linkProductInSale'], $auth);
 $router->create("POST", "/vendas/{uuid}/produtos/{produto}/deletar", [$vendaProdutoController, 'unlinkProductInSale'], $auth);
+
+//O.S
+$router->create("GET", "/os", [$OSController, 'index'], $auth);
+$router->create("GET", "/os/cadastro", [$OSController, 'create'], $auth);
+$router->create("POST", "/os/cadastro", [$OSController, 'store'], $auth);
+$router->create("POST", "/os/{uuid}/editar", [$OSController, 'update'], $auth);
+$router->create("POST", "/os/{uuid}/finalizar", [$OSController, 'finish'], $auth);
+
+//os_servicos
+$router->create("GET", "/os/{uuid}/servicos", [$osServicosController, 'linkServices'], $auth);
+$router->create("POST", "/os/{uuid}/servicos/{servico}/", [$osServicosController, 'linkServiceInOs'], $auth);
+$router->create("POST", "/os/{os}/servicos/{servico}/deletar/{uuid}", [$osServicosController, 'unlinkServiceInOs'], $auth);
 
 return $router;

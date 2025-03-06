@@ -25,6 +25,10 @@
                 </li>
 
                 <li class="nav-item">
+                    <a href="/os" class="nav-link"><i class="bi-clipboard-data-fill"></i> O.S</a>
+                </li>
+
+                <li class="nav-item">
                     <a href="/servicos" class="nav-link"><i class="bi-tools"></i> Serviços</a>
                 </li>
 

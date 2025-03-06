@@ -4,7 +4,7 @@
     <div class="col-12 form-group my-2">
         <label for="cliente">Cliente</label>
         <select name="cliente" id="cliente" class="form-select">
-            <option value="" <?= (isset($venda) && $venda->cliente == "") ? 'selected' : "" ?> >Selecione a situação</option>
+            <option value="" <?= (isset($venda) && $venda->cliente == "") ? 'selected' : "" ?> >Selecione o cliente</option>
             <?php
                 foreach($clientes as $cliente){
             ?>

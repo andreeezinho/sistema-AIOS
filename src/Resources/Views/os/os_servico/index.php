@@ -13,10 +13,10 @@
 
                 <li class="breadcrumb-item">
                     <i class="icon-house_siding lh-1"></i>
-                    <a href="/vendas" class="text-decoration-none text-muted">Vendas</a>
+                    <a href="/os" class="text-decoration-none text-muted">O.S</a>
                 </li>
 
-                <li class="breadcrumb-item"><i class="bi-cart-fill"></i></li>
+                <li class="breadcrumb-item"><i class="bi-clipboard-data-fill"></i></li>
             </ol>
         </div>
     </div>
@@ -32,12 +32,12 @@
         }
     ?>
 
-    <h3 class="my-3"><i class="bi-boxes"></i> Inserir Produtos</h3>
+    <h3 class="my-3"><i class="bi-tools"></i> Inserir Serviços</h3>
 
-    <form action="/vendas/<?= $venda->uuid ?>/produtos" method="GET" class="row mb-3 pt-3">
-        <label for="nome_codigo"><i class="bi-search"></i> Nome ou Código</label>
+    <form action="/os/<?= $os->uuid ?>/servicos" method="GET" class="row mb-3 pt-3">
+        <label for="nome"><i class="bi-search"></i> Nome ou Código</label>
         <div class="form-group col-12 col-md-10 ps-md-0">
-            <input type="text" name="nome_codigo" id="nome_codigo" class="form-control mt-2" placeholder="Insira o nome ou o código do produto">
+            <input type="text" name="nome" id="nome" class="form-control mt-2" placeholder="Insira o nome do serviço">
         </div>
         <button class="btn btn-primary mx-auto mx-md-0 my-2 col-4 col-md-2"><i class="bi-search"></i> Pesquisar</button>
     </form>
@@ -47,24 +47,22 @@
             <thead>
                 <tr>
                     <th>Nome</th>
-                    <th class="d-none d-sm-table-cell">Código</th>
+                    <th class="d-none d-sm-table-cell">Descrição</th>
                     <th>R$</th>
-                    <th class="d-none d-sm-table-cell">Quant.</th>
                     <th></th>
                 </tr>
             </thead>
             
             <?php
-                if(isset($params['nome_codigo'])){
-                    if(count($produtos) > 0){
-                        foreach($produtos as $produto){
+                if(isset($params['nome'])){
+                    if(count($servicos) > 0){
+                        foreach($servicos as $servico){
             ?>
-                <form action="/vendas/<?= $venda->uuid ?>/produtos/<?= $produto->uuid ?>" method="POST" class="d-flex">
+                <form action="/os/<?= $os->uuid ?>/servicos/<?= $servico->uuid ?>" method="POST" class="d-flex">
                     <tr>
-                        <th><?= $produto->nome ?></th>
-                        <th class="d-none d-sm-table-cell"><?= $produto->codigo ?></th>
-                        <th><?= number_format($produto->preco,2,",",".") ?></th>
-                        <th class="d-none d-sm-table-cell"><?= $produto->estoque ?></th>
+                        <th><?= $servico->nome ?></th>
+                        <th class="d-none d-sm-table-cell"><?= $servico->descricao ?></th>
+                        <th><?= number_format($servico->preco,2,",",".") ?></th>
                         <th class="text-center">
                             <button type="submit" class="btn btn-primary"><i class="bi-cart-plus-fill"></i></button>
                         </th>
@@ -74,43 +72,41 @@
                         }
                     }else{
             ?>
-                <p class="text-muted my-2">Produto não encontrado...</p>
+                <p class="text-muted my-2">Serviço não encontrado...</p>
             <?php
                     }
                 }else{
             ?>
-                <p class="text-muted my-2">Pesquise um produto</p>
+                <p class="text-muted my-2">Pesquise um serviço</p>
             <?php
                 }
             ?>
         </table>
-        <a href="/vendas/<?= $venda->uuid ?>/produtos" class="btn btn-secondary col-4 col-sm-1">Limpar</a>
+        <a href="/os/<?= $os->uuid ?>/servicos" class="btn btn-secondary col-4 col-sm-1">Limpar</a>
     </div>
 
     <div class="row mb-3 border-bottom py-5 table-responsive">
-        <h3 class="my-3"><i class="bi-cart-fill"></i> Produtos</h3>
+        <h3 class="my-3"><i class="bi-ui-checks"></i> Serviços da O.S</h3>
         
         <table class="table table-striped mt-2">
             <thead>
                 <tr>
                     <th>Nome</th>
-                    <th class="d-none d-sm-table-cell">Código</th>
+                    <th class="d-none d-sm-table-cell">Descrição</th>
                     <th>R$</th>
-                    <th class="d-none d-sm-table-cell">Quant.</th>
                     <th></th>
                 </tr>
             </thead>
             
             <?php
-                if(count($vendaProdutos) > 0){
-                    foreach($vendaProdutos as $produto){
+                if(count($osServicos) > 0){
+                    foreach($osServicos as $servico){
             ?>
-                <form action="/vendas/<?= $venda->uuid ?>/produtos/<?= $produto->uuidProduto ?>/deletar" method="POST" class="d-flex">
+                <form action="/os/<?= $os->uuid ?>/servicos/<?= $servico->uuidServico ?>/deletar/<?= $servico->uuid?>" method="POST" class="d-flex">
                     <tr>
-                        <th><?= $produto->nome ?></th>
-                        <th class="d-none d-sm-table-cell"><?= $produto->codigo ?></th>
-                        <th><?= number_format($produto->preco,2,",",".") ?></th>
-                        <th class="d-none d-sm-table-cell"><?= $produto->quantidade ?></th>
+                        <th><?= $servico->nome ?></th>
+                        <th class="d-none d-sm-table-cell"><?= $servico->descricao ?></th>
+                        <th><?= number_format($servico->preco,2,",",".") ?></th>
                         <th class="text-center">
                             <button type="submit" class="btn btn-danger"><i class="bi-cart-x-fill"></i></button>
                         </th>
@@ -120,7 +116,7 @@
                         }
                     }else{
             ?>
-                <p class="text-muted my-2">Ainda não há produtos na venda...</p>
+                <p class="text-muted my-2">Ainda não há serviços na O.S...</p>
             <?php
                 }
             ?>
@@ -129,16 +125,22 @@
     </div>
 
     <div class="row mb-3 border-bottom py-5 justify-content-center">
-        <h3 class="my-b"><i class="bi-clipboard-data-fill"></i> Dados da venda</h3>
+        <h3 class="my-b"><i class="bi-clipboard-data-fill"></i> Dados da O.S</h3>
 
-        <form action="/vendas/<?= $venda->uuid ?>/editar" method="POST" class="row col-11 col-sm-8 col-md-8 col-lg-6 mt-3">
-            <div class="col-12 col-md-6 form-group my-2 border-top">
+        <form action="/os/<?= $os->uuid ?>/editar" method="POST" class="row col-11 col-sm-8 col-md-8 col-lg-6 mt-3">
+            <div class="col-12 form-group my-2">
+                <span><i class="bi-calendar-fill"></i> Data</span>
+                <span class="form-control bg-theme px-0"><?= date('d/m/Y - H:i', strtotime($os->created_at)) ?></span>
+            </div>
+
+            <div class="col-12 col-md-6 form-group my-2 border-end">
                 <span><i class="bi-person-fill"></i> Cliente</span>
                 <span class="form-control bg-theme px-0"><?= $cliente->nome ?></span>
             </div>
+            
             <div class="col-12 col-md-6 form-group my-2">
-                <span><i class="bi-calendar-fill"></i> Data</span>
-                <span class="form-control bg-theme px-0"><?= date('d/m/Y - H:i', strtotime($venda->created_at)) ?></span>
+                <span><i class="bi-person-vcard-fill"></i> Reponsável</span>
+                <span class="form-control bg-theme px-0"><?= $usuario->nome ?></span>
             </div>
             <?php
                 require_once __DIR__ . '/../form.php';
@@ -154,23 +156,23 @@
             <div class="col-12 form-group text-center mt-3">
                 <div class="d-flex float-start float-md-end">
                     <h5 class="p-0 m-0 mx-2 my-auto">Valor Total: <b>R$ <?= number_format($total,2,",",".") ?></b></h5>
-                    <button type="submit" class="btn btn-primary mx-1" data-toggle="modal" data-target="#finalizar"><i class="bi-cart-check-fill"></i> Finalizar</button>
+                    <button type="submit" class="btn btn-primary mx-1" data-toggle="modal" data-target="#finalizar"><i class="bi-clipboard2-check-fill"></i> Finalizar</button>
                 </div>
 
                 <div class="modal fade" id="finalizar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content text-dark">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle"><i class="bi-cart-check-fill"></i> Finalizar venda?</h5>
+                                <h5 class="modal-title" id="exampleModalLongTitle"><i class="bi-cart-check-fill"></i> Finalizar O.S?</h5>
                             </div>
 
                             <div class="modal-body">
-                                <p class="my-auto">Deseja finalizar a venda no valor de <b>R$ <?= number_format($total,2,",",".") ?></b>?</p>
+                                <p class="my-auto">Deseja finalizar a O.S no valor de <b>R$ <?= number_format($total,2,",",".") ?></b>?</p>
                             </div>
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                <form action="/vendas/<?= $venda->uuid ?>/finalizar" method="POST">
+                                <form action="/os/<?= $os->uuid ?>/finalizar" method="POST">
                                     <button type="submit" class="btn btn-primary"><i class="bi-check"></i> Finalizar</button>
                                 </form>
                             </div>
