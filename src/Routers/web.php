@@ -113,6 +113,7 @@ $router->create("GET", "/vendas/cadastro", [$vendaController, 'create'], $auth);
 $router->create("POST", "/vendas/cadastro", [$vendaController, 'store'], $auth);
 $router->create("POST", "/vendas/{uuid}/editar", [$vendaController, 'update'], $auth);
 $router->create("POST", "/vendas/{uuid}/finalizar", [$vendaController, 'finish'], $auth);
+$router->create("POST", "/vendas/{uuid}/cancelar", [$vendaController, 'cancel'], $auth);
 
 //vendas-produtos
 $router->create("GET", "/vendas/{uuid}/produtos", [$vendaProdutoController, 'linkProducts'], $auth);
@@ -125,6 +126,7 @@ $router->create("GET", "/os/cadastro", [$OSController, 'create'], $auth);
 $router->create("POST", "/os/cadastro", [$OSController, 'store'], $auth);
 $router->create("POST", "/os/{uuid}/editar", [$OSController, 'update'], $auth);
 $router->create("POST", "/os/{uuid}/finalizar", [$OSController, 'finish'], $auth);
+$router->create("POST", "/os/{uuid}/cancelar", [$OSController, 'cancel'], $auth);
 
 //os_servicos
 $router->create("GET", "/os/{uuid}/servicos", [$osServicosController, 'linkServices'], $auth);

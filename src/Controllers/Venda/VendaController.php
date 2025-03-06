@@ -103,4 +103,26 @@ class VendaController extends Controller {
         return $this->router->redirect('vendas');
     }
 
+    public function cancel(Request $request, $uuid){
+        $params = $request->getQueryParams();
+
+        $vendas = $this->vendaRepository->all($params);
+
+        $venda = $this->vendaRepository->findByUuid($uuid);
+        if(!$venda){
+            return $this->router->redirect('vendas/'. $uuid .'/produtos');
+        }
+
+        $cancel = $this->vendaRepository->cancel($venda->id);
+
+        if(is_null($cancel)){
+            return $this->router->view('venda/index', [
+                'erro' => 'Não foi possível cancelar a venda',
+                'vendas' => $vendas
+            ]);
+        }
+
+        return $this->router->redirect('vendas');
+    }
+
 }

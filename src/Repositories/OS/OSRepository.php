@@ -184,4 +184,34 @@ class OSRepository {
         }
     }
 
+    public function cancel(int $id){
+        try{
+
+            $sql = "UPDATE " . self::TABLE . "
+                SET
+                    situacao = :situacao
+                WHERE 
+                    id = :id
+            "; 
+
+            $stmt = $this->conn->prepare($sql);
+
+            $cancel = $stmt->execute([
+                ':situacao' => 'cancelada',
+                ':id' => $id
+            ]);
+
+            if(!$cancel){
+                return null;
+            }
+
+            return $this->findById($id);
+
+        }catch(\Throwable $th){
+            dd($th);
+        }finally{
+            Database::getInstance()->closeConnection();
+        }
+    }
+
 }

@@ -103,4 +103,26 @@ class OSController extends Controller {
         return $this->router->redirect('os'); 
     }
 
+    public function cancel(Request $request, $uuid){
+        $params = $request->getQueryParams();
+
+        $all_os = $this->osRepository->all($params);
+
+        $os = $this->osRepository->findByUuid($uuid);
+        if(!$os){
+            return $this->router->redirect('os');
+        }
+
+        $cancel = $this->osRepository->cancel($os->id);
+
+        if(is_null($cancel)){
+            return $this->router->view('os/index', [
+                'erro' => 'Não foi possível cancelar a O.S',
+                'all_os' => $all_os
+            ]);
+        }
+
+        return $this->router->redirect('os'); 
+    }
+
 }

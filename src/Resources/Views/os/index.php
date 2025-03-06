@@ -145,7 +145,7 @@
 
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                            <form action="/vendas/<?= $os->uuid ?>/cancelar" method="POST">
+                                            <form action="/os/<?= $os->uuid ?>/cancelar" method="POST">
                                                 <button type="submit" class="btn btn-danger"><i class="bi-clipboard-x-fill"></i> Cancelar</button>
                                             </form>
                                         </div>
