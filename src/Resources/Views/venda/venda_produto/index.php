@@ -44,18 +44,19 @@
 
     <div class="row mb-3 border-bottom pt-3">
         <table class="table table-striped mt-2 col-11 col-sm-12">
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th class="d-none d-sm-table-cell">Código</th>
-                    <th>R$</th>
-                    <th class="d-none d-sm-table-cell">Quant.</th>
-                    <th></th>
-                </tr>
-            </thead>
-            
             <?php
                 if(isset($params['nome_codigo'])){
+            ?>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th class="d-none d-sm-table-cell">Código</th>
+                        <th>R$</th>
+                        <th class="d-none d-sm-table-cell">Quant.</th>
+                        <th></th>
+                    </tr>
+                </thead>
+            <?php
                     if(count($produtos) > 0){
                         foreach($produtos as $produto){
             ?>
@@ -77,18 +78,41 @@
                 <p class="text-muted my-2">Produto não encontrado...</p>
             <?php
                     }
-                }else{
-            ?>
-                <p class="text-muted my-2">Pesquise um produto</p>
-            <?php
                 }
             ?>
         </table>
-        <a href="/vendas/<?= $venda->uuid ?>/produtos" class="btn btn-secondary col-4 col-sm-1">Limpar</a>
+        <?php
+            if(isset($params['nome_codigo'])){
+        ?>
+            <a href="/vendas/<?= $venda->uuid ?>/produtos" class="btn btn-secondary col-4 col-sm-1">Limpar</a>
+        <?php
+            }
+        ?>
     </div>
 
-    <div class="row mb-3 border-bottom py-5 table-responsive">
-        <h3 class="my-3"><i class="bi-cart-fill"></i> Produtos</h3>
+    <div class="row mb-3 border-bottom py-5 justify-content-center">
+        <h3 class="my-b"><i class="bi-clipboard-data-fill"></i> Dados da venda</h3>
+
+        <form action="/vendas/<?= $venda->uuid ?>/editar" method="POST" class="row col-11 col-sm-8 col-md-8 col-lg-6 mt-3">
+            <div class="col-12 col-md-6 form-group my-2 border-top">
+                <span><i class="bi-person-fill"></i> Cliente</span>
+                <span class="form-control bg-theme px-0"><?= $cliente->nome ?></span>
+            </div>
+            <div class="col-12 col-md-6 form-group my-2">
+                <span><i class="bi-calendar-fill"></i> Data</span>
+                <span class="form-control bg-theme px-0"><?= date('d/m/Y - H:i', strtotime($venda->created_at)) ?></span>
+            </div>
+            <?php
+                require_once __DIR__ . '/../form.php';
+            ?>
+            <div class="form-group text-center mt-3">
+                <button type="submit" class="btn btn-primary mx-1">Atualizar</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="row mb-3 border-bottom pt-3 table-responsive">
+        <h3 class="mt-3"><i class="bi-cart-fill"></i> Produtos</h3>
         
         <table class="table table-striped mt-2">
             <thead>
@@ -126,27 +150,6 @@
             ?>
 
         </table>
-    </div>
-
-    <div class="row mb-3 border-bottom py-5 justify-content-center">
-        <h3 class="my-b"><i class="bi-clipboard-data-fill"></i> Dados da venda</h3>
-
-        <form action="/vendas/<?= $venda->uuid ?>/editar" method="POST" class="row col-11 col-sm-8 col-md-8 col-lg-6 mt-3">
-            <div class="col-12 col-md-6 form-group my-2 border-top">
-                <span><i class="bi-person-fill"></i> Cliente</span>
-                <span class="form-control bg-theme px-0"><?= $cliente->nome ?></span>
-            </div>
-            <div class="col-12 col-md-6 form-group my-2">
-                <span><i class="bi-calendar-fill"></i> Data</span>
-                <span class="form-control bg-theme px-0"><?= date('d/m/Y - H:i', strtotime($venda->created_at)) ?></span>
-            </div>
-            <?php
-                require_once __DIR__ . '/../form.php';
-            ?>
-            <div class="form-group text-center mt-3">
-                <button type="submit" class="btn btn-primary mx-1">Atualizar</button>
-            </div>
-        </form>
     </div>
 
     <div class="row my-3 border-bottom mt-5 pt-0">

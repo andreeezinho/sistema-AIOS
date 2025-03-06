@@ -42,19 +42,20 @@
         <button class="btn btn-primary mx-auto mx-md-0 my-2 col-4 col-md-2"><i class="bi-search"></i> Pesquisar</button>
     </form>
 
-    <div class="row mb-3 border-bottom pt-3">
+    <div class="row border-bottom pt-3">
         <table class="table table-striped mt-2 col-11 col-sm-12">
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th class="d-none d-sm-table-cell">Descrição</th>
-                    <th>R$</th>
-                    <th></th>
-                </tr>
-            </thead>
-            
             <?php
-                if(isset($params['nome'])){
+                if(isset($params['nome'])){   
+            ?>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th class="d-none d-sm-table-cell">Descrição</th>
+                        <th>R$</th>
+                        <th></th>
+                    </tr>
+                </thead>
+            <?php
                     if(count($servicos) > 0){
                         foreach($servicos as $servico){
             ?>
@@ -75,14 +76,43 @@
                 <p class="text-muted my-2">Serviço não encontrado...</p>
             <?php
                     }
-                }else{
-            ?>
-                <p class="text-muted my-2">Pesquise um serviço</p>
-            <?php
                 }
             ?>
         </table>
-        <a href="/os/<?= $os->uuid ?>/servicos" class="btn btn-secondary col-4 col-sm-1">Limpar</a>
+        <?php
+            if(isset($params['nome'])){
+        ?>  
+            <a href="/os/<?= $os->uuid ?>/servicos" class="btn btn-secondary col-4 col-sm-1 mb-3">Limpar</a>
+        <?php
+            }
+        ?>
+    </div>
+
+    <div class="row mb-3 border-bottom py-3 justify-content-center">
+        <h3 class="mb-3"><i class="bi-clipboard-data-fill"></i> Dados da O.S</h3>
+
+        <form action="/os/<?= $os->uuid ?>/editar" method="POST" class="row col-11 col-sm-8 col-md-8 col-lg-6 mt-3">
+            <div class="col-12 form-group my-2">
+                <span><i class="bi-calendar-fill"></i> Data</span>
+                <span class="form-control bg-theme px-0"><?= date('d/m/Y - H:i', strtotime($os->created_at)) ?></span>
+            </div>
+
+            <div class="col-12 col-md-6 form-group my-2 border-end">
+                <span><i class="bi-person-fill"></i> Cliente</span>
+                <span class="form-control bg-theme px-0"><?= $cliente->nome ?></span>
+            </div>
+            
+            <div class="col-12 col-md-6 form-group my-2">
+                <span><i class="bi-person-vcard-fill"></i> Reponsável</span>
+                <span class="form-control bg-theme px-0"><?= $usuario->nome ?></span>
+            </div>
+            <?php
+                require_once __DIR__ . '/../form.php';
+            ?>
+            <div class="form-group text-center mt-3">
+                <button type="submit" class="btn btn-primary mx-1">Atualizar</button>
+            </div>
+        </form>
     </div>
 
     <div class="row mb-3 border-bottom py-5 table-responsive">
@@ -122,33 +152,6 @@
             ?>
 
         </table>
-    </div>
-
-    <div class="row mb-3 border-bottom py-5 justify-content-center">
-        <h3 class="my-b"><i class="bi-clipboard-data-fill"></i> Dados da O.S</h3>
-
-        <form action="/os/<?= $os->uuid ?>/editar" method="POST" class="row col-11 col-sm-8 col-md-8 col-lg-6 mt-3">
-            <div class="col-12 form-group my-2">
-                <span><i class="bi-calendar-fill"></i> Data</span>
-                <span class="form-control bg-theme px-0"><?= date('d/m/Y - H:i', strtotime($os->created_at)) ?></span>
-            </div>
-
-            <div class="col-12 col-md-6 form-group my-2 border-end">
-                <span><i class="bi-person-fill"></i> Cliente</span>
-                <span class="form-control bg-theme px-0"><?= $cliente->nome ?></span>
-            </div>
-            
-            <div class="col-12 col-md-6 form-group my-2">
-                <span><i class="bi-person-vcard-fill"></i> Reponsável</span>
-                <span class="form-control bg-theme px-0"><?= $usuario->nome ?></span>
-            </div>
-            <?php
-                require_once __DIR__ . '/../form.php';
-            ?>
-            <div class="form-group text-center mt-3">
-                <button type="submit" class="btn btn-primary mx-1">Atualizar</button>
-            </div>
-        </form>
     </div>
 
     <div class="row my-3 border-bottom mt-5 pt-0">
