@@ -31,7 +31,7 @@ class OS {
         $os->clientes_id = $clientes_id ?? null;
         $os->dispositivo = $data['dispositivo'] ?? null;
         $os->observacao = $data['observacao'] ?? null;
-        $os->desconto = $data['desconto'] ?? null;
+        $os->desconto = $data['desconto'] ?? 0;
         $os->total = $data['total'] ?? null;
         $os->situacao = $data['situacao'] ?? 'em andamento';
         $os->usuarios_id = $usuarios_id ?? null;

@@ -48,6 +48,10 @@ class OSController extends Controller {
 
         $data = $request->getBodyParams();
 
+        if(!is_null($data['situacao'])){
+            $data['situacao'] = 'em andamento';
+        }
+
         $cliente = $this->clienteRepository->findByUuid($data['cliente']);
 
         $create = $this->osRepository->create($data, $_SESSION['user']->id, $cliente->id);
