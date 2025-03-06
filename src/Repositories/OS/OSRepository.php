@@ -83,6 +83,7 @@ class OSRepository {
                     uuid = :uuid,
                     desconto = :desconto,
                     dispositivo = :dispositivo,
+                    observacao = :observacao,
                     situacao = :situacao,
                     clientes_id = :clientes_id,
                     usuarios_id = :usuarios_id
@@ -94,6 +95,7 @@ class OSRepository {
                 ':uuid' => $os->uuid,
                 ':desconto' => $os->desconto,
                 ':dispositivo' => $os->dispositivo,
+                ':observacao' => $os->observacao,
                 ':situacao' => $os->situacao,
                 ':clientes_id' => $os->clientes_id,
                 ':usuarios_id' => $os->usuarios_id

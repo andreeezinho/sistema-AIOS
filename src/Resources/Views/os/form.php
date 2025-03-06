@@ -24,6 +24,11 @@
 </div>
 
 <div class="col-12 col-md-12 form-group my-2">
+    <label for="observacao">Observação</label>
+    <input type="text" name="observacao" id="observacao" class="form-control py-2" max=100 placeholder="Insira a observação" value="<?= $os->observacao ?? '' ?>">
+</div>
+
+<div class="col-12 col-md-12 form-group my-2">
     <label for="desconto">Desconto</label>
     <input type="number" name="desconto" id="desconto" class="form-control py-2" max=100 placeholder="Insira o desconto" value="<?= $os->desconto ?? '' ?>">
 </div>

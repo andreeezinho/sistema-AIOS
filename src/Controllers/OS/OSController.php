@@ -57,7 +57,7 @@ class OSController extends Controller {
             ]);
         }
 
-        return $this->router->redirect('os/'. $create->uuid . '/produtos');
+        return $this->router->redirect('os/'. $create->uuid . '/servicos');
     }
 
 }

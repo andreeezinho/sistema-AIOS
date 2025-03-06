@@ -14,6 +14,7 @@ class OS {
     public $cliente;
     public $documento;
     public $dispositivo;
+    public $observacao;
     public $desconto;
     public $total;
     public $situacao;
@@ -29,6 +30,7 @@ class OS {
         $os->uuid = $data['uuid'] ?? $this->generateUUID();
         $os->clientes_id = $clientes_id ?? null;
         $os->dispositivo = $data['dispositivo'] ?? null;
+        $os->observacao = $data['observacao'] ?? null;
         $os->desconto = $data['desconto'] ?? null;
         $os->total = $data['total'] ?? null;
         $os->situacao = $data['situacao'] ?? null;
