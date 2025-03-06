@@ -76,11 +76,13 @@ class ProdutoServicoRepository {
         }
     }
 
-    public function unlinkProduct(int $servico_id, int $produto_id){
+    public function unlinkProduct(int $servico_id, int $produto_id, int $id){
         try{
             
             $sql = "DELETE FROM ". self::TABLE . "
-                WHERE 
+                WHERE
+                    id = :id 
+                AND
                     servicos_id = :servicos_id
                 AND
                     produtos_id = :produtos_id
@@ -89,6 +91,7 @@ class ProdutoServicoRepository {
             $stmt = $this->conn->prepare($sql);
 
             $delete = $stmt->execute([
+                ':id' => $id,
                 ':servicos_id' => $servico_id,
                 ':produtos_id' => $produto_id
             ]);

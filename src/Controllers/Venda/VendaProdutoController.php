@@ -71,7 +71,7 @@ class VendaProdutoController extends Controller {
         return $this->router->redirect('vendas/'. $venda->uuid .'/produtos');
     }
 
-    public function unlinkProductInSale(Request $request, $venda_uuid, $produto_uuid){
+    public function unlinkProductInSale(Request $request, $venda_uuid, $produto_uuid, $uuid){
         $venda = $this->vendaRepository->findByUuid($venda_uuid);
         if(!$venda){
             return $this->router->redirect('vendas');
@@ -82,9 +82,11 @@ class VendaProdutoController extends Controller {
             return $this->router->redirect('vendas');
         }
 
+        $vendaProduto = $this->vendaProdutoRepository->findByUuid($uuid);
+
         $unlinkProductInSale = $this
             ->vendaProdutoRepository
-            ->unlinkProduct($venda->id, $produto->id);
+            ->unlinkProduct($venda->id, $produto->id, $vendaProduto->id);
 
         if(!$unlinkProductInSale){
             return $this->router->redirect('vendas');

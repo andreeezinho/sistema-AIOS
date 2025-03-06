@@ -104,7 +104,7 @@ $router->create("POST", "/produtos/{uuid}/deletar", [$produtoController, 'destro
 //produtos_servicos
 $router->create("GET", "/servicos/{uuid}/produtos", [$produtoServicoController, 'linkProducts'], $auth);
 $router->create("POST", "/servicos/{uuid}/produtos/{uuid}", [$produtoServicoController, 'linkProductsInService'], $auth);
-$router->create("POST", "/servicos/{uuid}/produtos/{uuid}/deletar", [$produtoServicoController, 'unlinkProductsInService'], $auth);
+$router->create("POST", "/servicos/{uuid}/produtos/{uuid}/deletar/{servico_uuid}", [$produtoServicoController, 'unlinkProductsInService'], $auth);
 $router->create("POST", "/servicos/{uuid}/adicionar", [$produtoServicoController, 'updatePrice'], $auth);
 
 //vendas
@@ -117,7 +117,7 @@ $router->create("POST", "/vendas/{uuid}/finalizar", [$vendaController, 'finish']
 //vendas-produtos
 $router->create("GET", "/vendas/{uuid}/produtos", [$vendaProdutoController, 'linkProducts'], $auth);
 $router->create("POST", "/vendas/{uuid}/produtos/{produto}", [$vendaProdutoController, 'linkProductInSale'], $auth);
-$router->create("POST", "/vendas/{uuid}/produtos/{produto}/deletar", [$vendaProdutoController, 'unlinkProductInSale'], $auth);
+$router->create("POST", "/vendas/{uuid}/produtos/{produto}/deletar/{uuid}", [$vendaProdutoController, 'unlinkProductInSale'], $auth);
 
 //O.S
 $router->create("GET", "/os", [$OSController, 'index'], $auth);

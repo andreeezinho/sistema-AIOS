@@ -61,7 +61,7 @@ class ProdutoServicoController extends Controller {
         return $this->router->redirect('servicos/'. $servico->uuid .'/produtos');
     }
 
-    public function unlinkProductsInService(Request $request, $servico_uuid, $produto_uuid){
+    public function unlinkProductsInService(Request $request, $servico_uuid, $produto_uuid, $uuid){
         $servico = $this->servicoRepository->findByUuid($servico_uuid);
         if(!$servico){
             return $this->router->redirect('servicos');
@@ -72,9 +72,11 @@ class ProdutoServicoController extends Controller {
             return $this->router->redirect('servicos');
         }
 
+        $produtoServico = $this->produtoServicoRepository->findByUuid($uuid);
+
         $unlinkProductInService = $this
             ->produtoServicoRepository
-            ->unlinkProduct($servico->id, $produto->id);
+            ->unlinkProduct($servico->id, $produto->id, $produtoServico->id);
 
         if(!$unlinkProductInService){
             return $this->router->redirect('servicos');

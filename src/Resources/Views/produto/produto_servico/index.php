@@ -109,7 +109,7 @@
                 if(count($produtoServicos) > 0){
                     foreach($produtoServicos as $produto){
             ?>
-                <form action="/servicos/<?= $servico->uuid ?>/produtos/<?= $produto->uuidProduto ?>/deletar" method="POST" class="d-flex">
+                <form action="/servicos/<?= $servico->uuid ?>/produtos/<?= $produto->uuidProduto ?>/deletar/<?= $produto->uuid ?>" method="POST" class="d-flex">
                     <tr>
                         <th><?= $produto->nome ?></th>
                         <th class="d-none d-sm-table-cell"><?= $produto->codigo ?></th>
