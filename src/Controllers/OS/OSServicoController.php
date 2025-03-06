@@ -39,7 +39,7 @@ class OSServicoController extends Controller {
 
         $servicos = $this->servicoRepository->all($params);
         $cliente = $this->clienteRepository->findById($os->clientes_id);
-        $usuario = $this->clienteRepository->findById($os->usuarios_id);
+        $usuario = $this->usuarioRepository->findById($os->usuarios_id);
         $osServicos = $this->osServicoRepository->allServicesInOS($os->id);
 
         $total = priceWithDiscount($osServicos, $os->desconto);

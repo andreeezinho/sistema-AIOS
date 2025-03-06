@@ -157,9 +157,13 @@
     <div class="row my-3 border-bottom mt-5 pt-0">
         <div class="col-11 col-sm-12">
             <div class="col-12 form-group text-center mt-3">
+                <div class="d-flex float-start">
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelar"><i class="bi-x-circle-fill"></i> Cancelar</button>
+                </div>
+
                 <div class="d-flex float-start float-md-end">
                     <h5 class="p-0 m-0 mx-2 my-auto">Valor Total: <b>R$ <?= number_format($total,2,",",".") ?></b></h5>
-                    <button type="submit" class="btn btn-primary mx-1" data-toggle="modal" data-target="#finalizar"><i class="bi-clipboard2-check-fill"></i> Finalizar</button>
+                    <button type="button" class="btn btn-primary mx-1" data-toggle="modal" data-target="#finalizar"><i class="bi-clipboard2-check-fill"></i> Finalizar</button>
                 </div>
 
                 <div class="modal fade" id="finalizar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -182,9 +186,30 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="modal fade" id="cancelar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content text-dark">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle"><i class="bi-clipboard-x-fill"></i> Cancelar O.S?</h5>
+                            </div>
+
+                            <div class="modal-body">
+                                <p class="my-auto">Deseja cancelar a O.S no valor de <b>R$ <?= number_format($total,2,",",".") ?></b>?</p>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <form action="/vendas/<?= $os->uuid ?>/cancelar" method="POST">
+                                    <button type="submit" class="btn btn-danger"><i class="bi-clipboard-x-fill"></i> Cancelar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 
 <?php
     require_once __DIR__ . '/../../layout/bottom.php';
