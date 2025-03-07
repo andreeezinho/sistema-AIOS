@@ -28,6 +28,10 @@ class VendaProdutoController extends Controller {
     }
 
     public function linkProducts(Request $request, $uuid){
+        if(!userPermission('editar vendas')){
+            return $this->router->redirect('');
+        }
+
         $params = $request->getQueryParams();
 
         $params = array_merge($params, ['ativo' => 1]);
@@ -50,6 +54,10 @@ class VendaProdutoController extends Controller {
     }
 
     public function linkProductInSale(Request $request, $venda_uuid, $produto_uuid){
+        if(!userPermission('editar vendas')){
+            return $this->router->redirect('');
+        }
+
         $venda = $this->vendaRepository->findByUuid($venda_uuid);
         if(!$venda){
             return $this->router->redirect('vendas');
@@ -72,6 +80,10 @@ class VendaProdutoController extends Controller {
     }
 
     public function unlinkProductInSale(Request $request, $venda_uuid, $produto_uuid, $uuid){
+        if(!userPermission('editar vendas')){
+            return $this->router->redirect('');
+        }
+
         $venda = $this->vendaRepository->findByUuid($venda_uuid);
         if(!$venda){
             return $this->router->redirect('vendas');

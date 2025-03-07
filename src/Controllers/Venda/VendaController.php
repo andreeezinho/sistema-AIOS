@@ -25,6 +25,10 @@ class VendaController extends Controller {
     }
 
     public function index(Request $request){
+        if(!userPermission('visualizar vendas')){
+            return $this->router->redirect('');
+        }
+
         $params = $request->getQueryParams();
 
         $vendas = $this->vendaRepository->all($params);
@@ -35,6 +39,9 @@ class VendaController extends Controller {
     }
 
     public function create(Request $request){
+        if(!userPermission('cadastrar vendas')){
+            return $this->router->redirect('');
+        }
         $clientes = $this->clienteRepository->all(['ativo' => 1]);
 
         return $this->router->view('venda/create', [
@@ -44,6 +51,10 @@ class VendaController extends Controller {
     }
 
     public function store(Request $request){
+        if(!userPermission('cadastrar vendas')){
+            return $this->router->redirect('');
+        }
+
         $clientes = $this->clienteRepository->all(['ativo' => 1]);
 
         $data = $request->getBodyParams();
@@ -64,6 +75,10 @@ class VendaController extends Controller {
     }
 
     public function update(Request $request, $uuid){
+        if(!userPermission('editar vendas')){
+            return $this->router->redirect('');
+        }
+
         $venda = $this->vendaRepository->findByUuid($uuid);
         if(!$venda){
             return $this->router->redirect('vendas/'. $uuid .'/produtos');
@@ -85,6 +100,10 @@ class VendaController extends Controller {
     }
 
     public function finish(Request $request, $uuid){
+        if(!userPermission('editar vendas')){
+            return $this->router->redirect('');
+        }
+
         $venda = $this->vendaRepository->findByUuid($uuid);
         if(!$venda){
             return $this->router->redirect('vendas/'. $uuid .'/produtos');
@@ -104,6 +123,10 @@ class VendaController extends Controller {
     }
 
     public function cancel(Request $request, $uuid){
+        if(!userPermission('deletar vendas')){
+            return $this->router->redirect('');
+        }
+
         $params = $request->getQueryParams();
 
         $vendas = $this->vendaRepository->all($params);
