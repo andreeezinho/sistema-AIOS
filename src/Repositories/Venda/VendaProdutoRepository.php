@@ -76,17 +76,20 @@ class VendaProdutoRepository {
         }
     }
 
-    public function unlinkProduct(int $venda_id, int $produto_id){
+    public function unlinkProduct(int $venda_id, int $produto_id, int $id){
         $sql = "DELETE FROM " . self::TABLE . "
             WHERE
+                id = :id
+            AND
                 vendas_id = :vendas_id
-                AND
+            AND
                 produtos_id = :produtos_id
         ";
 
         $stmt = $this->conn->prepare($sql);
 
         $delete = $stmt->execute([
+            ':id' => $id,
             ':vendas_id' => $venda_id,
             ':produtos_id' => $produto_id
         ]);

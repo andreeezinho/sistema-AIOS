@@ -104,7 +104,7 @@ $router->create("POST", "/produtos/{uuid}/deletar", [$produtoController, 'destro
 //produtos_servicos
 $router->create("GET", "/servicos/{uuid}/produtos", [$produtoServicoController, 'linkProducts'], $auth);
 $router->create("POST", "/servicos/{uuid}/produtos/{uuid}", [$produtoServicoController, 'linkProductsInService'], $auth);
-$router->create("POST", "/servicos/{uuid}/produtos/{uuid}/deletar", [$produtoServicoController, 'unlinkProductsInService'], $auth);
+$router->create("POST", "/servicos/{uuid}/produtos/{uuid}/deletar/{servico_uuid}", [$produtoServicoController, 'unlinkProductsInService'], $auth);
 $router->create("POST", "/servicos/{uuid}/adicionar", [$produtoServicoController, 'updatePrice'], $auth);
 
 //vendas
@@ -113,11 +113,12 @@ $router->create("GET", "/vendas/cadastro", [$vendaController, 'create'], $auth);
 $router->create("POST", "/vendas/cadastro", [$vendaController, 'store'], $auth);
 $router->create("POST", "/vendas/{uuid}/editar", [$vendaController, 'update'], $auth);
 $router->create("POST", "/vendas/{uuid}/finalizar", [$vendaController, 'finish'], $auth);
+$router->create("POST", "/vendas/{uuid}/cancelar", [$vendaController, 'cancel'], $auth);
 
 //vendas-produtos
 $router->create("GET", "/vendas/{uuid}/produtos", [$vendaProdutoController, 'linkProducts'], $auth);
 $router->create("POST", "/vendas/{uuid}/produtos/{produto}", [$vendaProdutoController, 'linkProductInSale'], $auth);
-$router->create("POST", "/vendas/{uuid}/produtos/{produto}/deletar", [$vendaProdutoController, 'unlinkProductInSale'], $auth);
+$router->create("POST", "/vendas/{uuid}/produtos/{produto}/deletar/{uuid}", [$vendaProdutoController, 'unlinkProductInSale'], $auth);
 
 //O.S
 $router->create("GET", "/os", [$OSController, 'index'], $auth);
@@ -125,6 +126,7 @@ $router->create("GET", "/os/cadastro", [$OSController, 'create'], $auth);
 $router->create("POST", "/os/cadastro", [$OSController, 'store'], $auth);
 $router->create("POST", "/os/{uuid}/editar", [$OSController, 'update'], $auth);
 $router->create("POST", "/os/{uuid}/finalizar", [$OSController, 'finish'], $auth);
+$router->create("POST", "/os/{uuid}/cancelar", [$OSController, 'cancel'], $auth);
 
 //os_servicos
 $router->create("GET", "/os/{uuid}/servicos", [$osServicosController, 'linkServices'], $auth);

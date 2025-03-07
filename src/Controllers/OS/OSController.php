@@ -25,6 +25,10 @@ class OSController extends Controller {
     }
 
     public function index(Request $request){
+        if(!userPermission('visualizar os')){
+            return $this->router->redirect('');
+        }
+
         $params = $request->getQueryParams();
 
         $os = $this->osRepository->all($params);
@@ -35,6 +39,10 @@ class OSController extends Controller {
     }
 
     public function create(Request $request){
+        if(!userPermission('cadastrar os')){
+            return $this->router->redirect('');
+        }
+
         $clientes = $this->clienteRepository->all(['ativo' => 1]);
 
         return $this->router->view('os/create', [
@@ -44,6 +52,10 @@ class OSController extends Controller {
     }
 
     public function store(Request $request){
+        if(!userPermission('cadastrar os')){
+            return $this->router->redirect('');
+        }
+
         $clientes = $this->clienteRepository->all(['ativo' => 1]);
 
         $data = $request->getBodyParams();
@@ -68,6 +80,10 @@ class OSController extends Controller {
     }
 
     public function update(Request $request, $uuid){
+        if(!userPermission('editar os')){
+            return $this->router->redirect('');
+        }
+
         $os = $this->osRepository->findByUuid($uuid);
         if(!$os){
             return $this->router->redirect('os');
@@ -85,6 +101,10 @@ class OSController extends Controller {
     }
 
     public function finish(Request $request, $uuid){
+        if(!userPermission('editar os')){
+            return $this->router->redirect('');
+        }
+
         $os = $this->osRepository->findByUuid($uuid);
         if(!$os){
             return $this->router->redirect('os');
@@ -98,6 +118,32 @@ class OSController extends Controller {
 
         if(is_null($finish)){
             return $this->router->redirect('os/'. $os->uuid . '/servicos');
+        }
+
+        return $this->router->redirect('os'); 
+    }
+
+    public function cancel(Request $request, $uuid){
+        if(!userPermission('deletar os')){
+            return $this->router->redirect('');
+        }
+
+        $params = $request->getQueryParams();
+
+        $all_os = $this->osRepository->all($params);
+
+        $os = $this->osRepository->findByUuid($uuid);
+        if(!$os){
+            return $this->router->redirect('os');
+        }
+
+        $cancel = $this->osRepository->cancel($os->id);
+
+        if(is_null($cancel)){
+            return $this->router->view('os/index', [
+                'erro' => 'Não foi possível cancelar a O.S',
+                'all_os' => $all_os
+            ]);
         }
 
         return $this->router->redirect('os'); 

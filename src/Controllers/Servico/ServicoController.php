@@ -16,6 +16,10 @@ class ServicoController extends Controller {
     }
 
     public function index(Request $request){
+        if(!userPermission('visualizar servicos')){
+            return $this->router->redirect('');
+        }
+
         $params = $request->getQueryParams();
 
         $servicos = $this->servicoRepository->all($params);
@@ -26,10 +30,18 @@ class ServicoController extends Controller {
     }
 
     public function create(Request $request){
+        if(!userPermission('cadastrar servicos')){
+            return $this->router->redirect('');
+        }
+
         return $this->router->view('servico/create', []);
     }
 
     public function store(Request $request){
+        if(!userPermission('cadastrar servicos')){
+            return $this->router->redirect('');
+        }
+
         $data = $request->getBodyParams();
 
         $create = $this->servicoRepository->create($data);
@@ -44,6 +56,10 @@ class ServicoController extends Controller {
     }
 
     public function edit(Request $request, $uuid){
+        if(!userPermission('editar servicos')){
+            return $this->router->redirect('');
+        }
+
         $servico = $this->servicoRepository->findByUuid($uuid);
 
         if(!$servico){
@@ -56,6 +72,10 @@ class ServicoController extends Controller {
     }
 
     public function update(Request $request, $uuid){
+        if(!userPermission('editar servicos')){
+            return $this->router->redirect('');
+        }
+
         $servico = $this->servicoRepository->findByUuid($uuid);
 
         if(!$servico){
@@ -76,6 +96,10 @@ class ServicoController extends Controller {
     }
 
     public function destroy(Request $request, $uuid){
+        if(!userPermission('deletar servicos')){
+            return $this->router->redirect('');
+        }
+
         $servico = $this->servicoRepository->findByUuid($uuid);
 
         if(!$servico){

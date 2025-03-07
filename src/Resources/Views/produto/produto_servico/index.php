@@ -44,19 +44,22 @@
 
     <div class="row mb-3 pt-3">
         <table class="table table-striped mt-2 col-11 col-sm-12">
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th class="d-none d-sm-table-cell">Código</th>
-                    <th>R$</th>
-                    <th class="d-none d-sm-table-cell">Quant.</th>
-                    <th></th>
-                </tr>
-            </thead>
             
             <?php
                 if(isset($params['nome_codigo'])){
                     if(count($produtos) > 0){
+
+            ?>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th class="d-none d-sm-table-cell">Código</th>
+                        <th>R$</th>
+                        <th class="d-none d-sm-table-cell">Quant.</th>
+                        <th></th>
+                    </tr>
+                </thead>
+            <?php
                         foreach($produtos as $produto){
             ?>
                 <form action="/servicos/<?= $servico->uuid ?>/produtos/<?= $produto->uuid ?>" method="POST" class="d-flex">
@@ -77,14 +80,16 @@
                 <p class="text-muted my-2">Produto não encontrado...</p>
             <?php
                     }
-                }else{
-            ?>
-                <p class="text-muted my-2">Pesquise um produto</p>
-            <?php
                 }
             ?>
         </table>
-        <a href="/servicos/<?= $servico->uuid ?>/produtos" class="btn btn-secondary col-4 col-sm-1">Limpar</a>
+        <?php
+            if(isset($params['nome_codigo'])){
+        ?>
+            <a href="/servicos/<?= $servico->uuid ?>/produtos" class="btn btn-secondary col-4 col-sm-1">Limpar</a>
+        <?php
+            }
+        ?>
     </div>
 
     <div class="row mb-3 border-bottom py-5 table-responsive">
@@ -104,7 +109,7 @@
                 if(count($produtoServicos) > 0){
                     foreach($produtoServicos as $produto){
             ?>
-                <form action="/servicos/<?= $servico->uuid ?>/produtos/<?= $produto->uuidProduto ?>/deletar" method="POST" class="d-flex">
+                <form action="/servicos/<?= $servico->uuid ?>/produtos/<?= $produto->uuidProduto ?>/deletar/<?= $produto->uuid ?>" method="POST" class="d-flex">
                     <tr>
                         <th><?= $produto->nome ?></th>
                         <th class="d-none d-sm-table-cell"><?= $produto->codigo ?></th>

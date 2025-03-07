@@ -44,18 +44,19 @@
 
     <div class="row mb-3 border-bottom pt-3">
         <table class="table table-striped mt-2 col-11 col-sm-12">
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th class="d-none d-sm-table-cell">Código</th>
-                    <th>R$</th>
-                    <th class="d-none d-sm-table-cell">Quant.</th>
-                    <th></th>
-                </tr>
-            </thead>
-            
             <?php
                 if(isset($params['nome_codigo'])){
+            ?>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th class="d-none d-sm-table-cell">Código</th>
+                        <th>R$</th>
+                        <th class="d-none d-sm-table-cell">Quant.</th>
+                        <th></th>
+                    </tr>
+                </thead>
+            <?php
                     if(count($produtos) > 0){
                         foreach($produtos as $produto){
             ?>
@@ -77,55 +78,16 @@
                 <p class="text-muted my-2">Produto não encontrado...</p>
             <?php
                     }
-                }else{
-            ?>
-                <p class="text-muted my-2">Pesquise um produto</p>
-            <?php
                 }
             ?>
         </table>
-        <a href="/vendas/<?= $venda->uuid ?>/produtos" class="btn btn-secondary col-4 col-sm-1">Limpar</a>
-    </div>
-
-    <div class="row mb-3 border-bottom py-5 table-responsive">
-        <h3 class="my-3"><i class="bi-cart-fill"></i> Produtos</h3>
-        
-        <table class="table table-striped mt-2">
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th class="d-none d-sm-table-cell">Código</th>
-                    <th>R$</th>
-                    <th class="d-none d-sm-table-cell">Quant.</th>
-                    <th></th>
-                </tr>
-            </thead>
-            
-            <?php
-                if(count($vendaProdutos) > 0){
-                    foreach($vendaProdutos as $produto){
-            ?>
-                <form action="/vendas/<?= $venda->uuid ?>/produtos/<?= $produto->uuidProduto ?>/deletar" method="POST" class="d-flex">
-                    <tr>
-                        <th><?= $produto->nome ?></th>
-                        <th class="d-none d-sm-table-cell"><?= $produto->codigo ?></th>
-                        <th><?= number_format($produto->preco,2,",",".") ?></th>
-                        <th class="d-none d-sm-table-cell"><?= $produto->quantidade ?></th>
-                        <th class="text-center">
-                            <button type="submit" class="btn btn-danger"><i class="bi-cart-x-fill"></i></button>
-                        </th>
-                    </tr>
-                </form>
-            <?php
-                        }
-                    }else{
-            ?>
-                <p class="text-muted my-2">Ainda não há produtos na venda...</p>
-            <?php
-                }
-            ?>
-
-        </table>
+        <?php
+            if(isset($params['nome_codigo'])){
+        ?>
+            <a href="/vendas/<?= $venda->uuid ?>/produtos" class="btn btn-secondary col-4 col-sm-1">Limpar</a>
+        <?php
+            }
+        ?>
     </div>
 
     <div class="row mb-3 border-bottom py-5 justify-content-center">
@@ -149,12 +111,57 @@
         </form>
     </div>
 
+    <div class="row mb-3 border-bottom pt-3 table-responsive">
+        <h3 class="mt-3"><i class="bi-cart-fill"></i> Produtos</h3>
+        
+        <table class="table table-striped mt-2">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th class="d-none d-sm-table-cell">Código</th>
+                    <th>R$</th>
+                    <th class="d-none d-sm-table-cell">Quant.</th>
+                    <th></th>
+                </tr>
+            </thead>
+            
+            <?php
+                if(count($vendaProdutos) > 0){
+                    foreach($vendaProdutos as $produto){
+            ?>
+                <form action="/vendas/<?= $venda->uuid ?>/produtos/<?= $produto->uuidProduto ?>/deletar/<?= $produto->uuid ?>" method="POST" class="d-flex">
+                    <tr>
+                        <th><?= $produto->nome ?></th>
+                        <th class="d-none d-sm-table-cell"><?= $produto->codigo ?></th>
+                        <th><?= number_format($produto->preco,2,",",".") ?></th>
+                        <th class="d-none d-sm-table-cell"><?= $produto->quantidade ?></th>
+                        <th class="text-center">
+                            <button type="submit" class="btn btn-danger"><i class="bi-cart-x-fill"></i></button>
+                        </th>
+                    </tr>
+                </form>
+            <?php
+                        }
+                    }else{
+            ?>
+                <p class="text-muted my-2">Ainda não há produtos na venda...</p>
+            <?php
+                }
+            ?>
+
+        </table>
+    </div>
+
     <div class="row my-3 border-bottom mt-5 pt-0">
         <div class="col-11 col-sm-12">
             <div class="col-12 form-group text-center mt-3">
+                <div class="d-flex float-start">
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelar"><i class="bi-x-circle-fill"></i> Cancelar</button>
+                </div>
+
                 <div class="d-flex float-start float-md-end">
                     <h5 class="p-0 m-0 mx-2 my-auto">Valor Total: <b>R$ <?= number_format($total,2,",",".") ?></b></h5>
-                    <button type="submit" class="btn btn-primary mx-1" data-toggle="modal" data-target="#finalizar"><i class="bi-cart-check-fill"></i> Finalizar</button>
+                    <button type="button" class="btn btn-primary mx-1" data-toggle="modal" data-target="#finalizar"><i class="bi-cart-check-fill"></i> Finalizar</button>
                 </div>
 
                 <div class="modal fade" id="finalizar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -177,9 +184,30 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="modal fade" id="cancelar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content text-dark">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle"><i class="bi-cart-x-fill"></i> Cancelar venda?</h5>
+                            </div>
+
+                            <div class="modal-body">
+                                <p class="my-auto">Deseja cancelar a venda no valor de <b>R$ <?= number_format($total,2,",",".") ?></b>?</p>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <form action="/vendas/<?= $venda->uuid ?>/cancelar" method="POST">
+                                    <button type="submit" class="btn btn-danger"><i class="bi-clipboard-x-fill"></i> Cancelar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 
 <?php
     require_once __DIR__ . '/../../layout/bottom.php';
