@@ -28,6 +28,10 @@ class OSServicoController extends Controller {
     }
 
     public function linkServices(Request $request, $uuid){
+        if(!userPermission('visualizar os')){
+            return $this->router->redirect('');
+        }
+
         $params = $request->getQueryParams();
 
         $params = array_merge($params, ['ativo' => 1]);
@@ -56,6 +60,10 @@ class OSServicoController extends Controller {
     }
 
     public function linkServiceInOs(Request $request, $os_uuid, $servico_uuid){
+        if(!userPermission('editar os')){
+            return $this->router->redirect('');
+        }
+
         $os = $this->osRepository->findByUuid($os_uuid);
         if(!$os){
             return $this->router->redirect('os');
@@ -78,6 +86,10 @@ class OSServicoController extends Controller {
     }
 
     public function unlinkServiceInOs(Request $request, $os_uuid, $servico_uuid, $uuid){
+        if(!userPermission('deletar os')){
+            return $this->router->redirect('');
+        }
+
         $os = $this->osRepository->findByUuid($os_uuid);
         if(!$os){
             return $this->router->redirect('os');

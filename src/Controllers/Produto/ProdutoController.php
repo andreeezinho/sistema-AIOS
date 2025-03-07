@@ -16,6 +16,10 @@ class ProdutoController extends Controller {
     }
 
     public function index(Request $request){
+        if(!userPermission('visualizar produtos')){
+            return $this->router->redirect('');
+        }
+
         $params = $request->getQueryParams();
 
         $produtos = $this->produtoRepository->all($params);
@@ -26,10 +30,18 @@ class ProdutoController extends Controller {
     }
 
     public function create(Request $request){
+        if(!userPermission('cadastrar produtos')){
+            return $this->router->redirect('');
+        }
+
         return $this->router->view('produto/create', []);
     }
 
     public function store(Request $request){
+        if(!userPermission('cadastrar produtos')){
+            return $this->router->redirect('');
+        }
+
         $data = $request->getBodyParams();
 
         $create = $this->produtoRepository->create($data);
@@ -44,6 +56,10 @@ class ProdutoController extends Controller {
     }
 
     public function edit(Request $request, $uuid){
+        if(!userPermission('editar produtos')){
+            return $this->router->redirect('');
+        }
+
         $produto = $this->produtoRepository->findByUuid($uuid);
 
         if(!$produto){
@@ -56,6 +72,10 @@ class ProdutoController extends Controller {
     }
 
     public function update(Request $request, $uuid){
+        if(!userPermission('editar produtos')){
+            return $this->router->redirect('');
+        }
+
         $produto = $this->produtoRepository->findByUuid($uuid);
 
         if(!$produto){
@@ -76,6 +96,10 @@ class ProdutoController extends Controller {
     }
 
     public function destroy(Request $request, $uuid){
+        if(!userPermission('deletar produtos')){
+            return $this->router->redirect('');
+        }
+
         $produto = $this->produtoRepository->findByUuid($uuid);
 
         if(!$produto){
