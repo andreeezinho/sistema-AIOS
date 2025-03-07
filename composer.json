@@ -8,5 +8,8 @@
             "src/env/app.php",
             "src/Utils/helpers.php"
         ]
+    },
+    "require": {
+        "dompdf/dompdf": "^3.1"
     }
 }
