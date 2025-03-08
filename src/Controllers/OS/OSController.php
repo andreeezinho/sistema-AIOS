@@ -3,6 +3,7 @@
 namespace App\Controllers\OS;
 
 use App\Request\Request;
+use App\Controllers\Traits\GeneratePdf;
 use App\Controllers\Controller;
 use App\Repositories\OS\OSRepository;
 use App\Repositories\OS\OSServicoRepository;
@@ -15,6 +16,8 @@ class OSController extends Controller {
     protected $osServicoRepository;
     protected $clienteRepository;
     protected $userRepository;
+
+    use GeneratePdf;
 
     public function __construct(){
         parent::__construct();
@@ -147,6 +150,31 @@ class OSController extends Controller {
         }
 
         return $this->router->redirect('os'); 
+    }
+
+    public function generatePdf(Request $request, $uuid){
+        $os = $this->osRepository->findByUuid($uuid);
+        if(!$os){
+            return $this->router->redirect('os');
+        }
+
+        $cliente = $this->clienteRepository->findById($os->clientes_id);
+        if(!$cliente){
+            return $this->router->redirect('os');
+        }
+
+        $services = $this->osServicoRepository->allServicesInOS($os->id);
+        if(!$cliente){
+            return $this->router->redirect('os');
+        }
+
+        $pdf = $this->generateOs($cliente, $os, $services);
+
+        if(!$pdf){
+            return $this->router->redirect('');
+        }
+
+        return $this->router->redirect('os');
     }
 
 }
