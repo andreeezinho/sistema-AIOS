@@ -10,6 +10,7 @@
     <title>Ordem de Serviço</title>
 
     <style>
+
         .bg-services{
             background-color: #EBEBEB;
         }
@@ -25,34 +26,48 @@
         .borda-linha{
             border-bottom: 1px solid #313131;
         }
+
+        .services-container{
+            min-height: 550px;
+        }
     </style>
 </head>
 <body class="bg-theme">
 
     <div class="container">
         <div class="col-12">
-            <h3 style="margin-bottom:20px"
-                <img src="data:image/png;base64,<?=base64_encode(file_get_contents($_SERVER['DOCUMENT_ROOT'].'/public/img/site/logo-pdf.jpg'))?>" width="100" style="margin-right:120px;">
+            <p style="font-size: 30px;margin-bottom:20px"
+                <img src="data:image/png;base64,<?=base64_encode(file_get_contents($_SERVER['DOCUMENT_ROOT'].'/public/img/site/logo-pdf.jpg'))?>" width="100" style="margin-right:80px;">
                 Orçamento
-            </h3>
+            </p>
         </div>
 
         
         <table>
             <tr>
-                <td width="300px" height="50px" class="colunas">Data: <?= date('d/m/Y - h:i', strtotime($os->created_at)) ?></td>
+                <td width="300px" height="25px" class="colunas"><b>Data:</b> <?= date('d/m/Y - h:i', strtotime($os->created_at)) ?></td>
             </tr>
+
             <tr>
-                <td width="300px" height="50px" class="colunas">Cliente: <?= $nome_cliente ?></td>
-                <td width="300px" height="50px" class="colunas">Documento: <?= $doc_cliente ?></td>
+                <td width="350px" height="50px" class="colunas"><b>Cliente:</b> <?= $nome_cliente ?></td>
+                <td width="200px" height="50px" class="colunas"><b>Doc.:</b> <?= $doc_cliente ?></td>
+            </tr>
+            
+            <tr>
+                <td width="300px" height="25px" class="colunas"><b>Dispositivo:</b> <?= $os->dispositivo ?></td>
             </tr>
         </table>
-        <div class="">
-            <table style="border-collapse:collapse;">
+
+        <div class="col-12 text-center">
+            <p style='font-size: 20px; margin: 30px 0 30px 0'>Serviços</p>
+        </div>
+
+        <div class="services-container bg-services">
+            <table class="" style="border-collapse:collapse;">
                 <thead>
                     <tr>
-                        <td width="400px" height="50px" class="colunas borda borda-linha">Serviço</td>
-                        <td width="100px" height="50px" class="colunas borda-linha">Preço</td>
+                        <td width="400px" height="60px" class="colunas borda borda-linha"><b style="font-size: 18px">Serviço</b></td>
+                        <td width="117px" height="60px" class="colunas borda-linha"><b style="font-size: 18px">Preço</b></td>
                     </tr>
                 </thead>
                 <tbody>
@@ -61,8 +76,8 @@
                         foreach($servicos as $servico){
                 ?>
                     <tr>
-                        <td width="400px" height="50px" class="colunas borda borda-linha"><?= $servico->nome ?></td>
-                        <td width="100px" height="50px" class="colunas borda-linha"><?= $servico->preco ?></td>
+                        <td width="400px" height="50px" class="colunas borda "><?= $servico->nome ?></td>
+                        <td width="117px" height="50px" class="colunas ">R$ <?= number_format($servico->preco,2,",",".") ?></td>
                     </tr>
                 <?php
                         }
@@ -76,7 +91,18 @@
             </table>
         </div>
 
-    </div>
+        <div class="col-12 pt-3">
+            <div class="float-start">
+                <p style="font-size: 16px" class="my-1"><b>PIX:</b> 103.171.015-95</p>
+                <p style="font-size: 16px" class="my-1"><b>Contato:</b> (75) 99116-4106</p>
+            </div>
 
+            <div class="float-end">
+                <p style="font-size: 18px" class="my-1"><b>Desconto:</b> <?= $os->desconto ?>%</p>
+                <p style="font-size: 18px" class="my-1"><b>Total:</b> R$: <?= number_format($os->total,2,",",".") ?></p>
+            </div>
+        </div>
+
+    </div>
 </body>
 </html>

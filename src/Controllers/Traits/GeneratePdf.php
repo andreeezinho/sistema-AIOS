@@ -30,7 +30,7 @@ trait GeneratePdf {
         $dompdf->loadHtml($pdf);
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
-        $dompdf->stream('Venda.pdf', ['Attachment' => false]);
+        $dompdf->stream('O.S.pdf');
 
         return true;
     }
