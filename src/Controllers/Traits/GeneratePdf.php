@@ -35,23 +35,30 @@ trait GeneratePdf {
         return true;
     }
 
-    public function generateSale($cliente, $venda, $produtos){
+    public function generateSale($clientes, $venda, $produtos) : bool{
         $path = __DIR__ . '/../../Resources/pdf/venda.php';
 
+        $nome_cliente = $clientes->nome;
+        $doc_cliente = $clientes->documento;
+
         ob_start();
-            extract(json_decode($cliente, true));
-            extract(json_decode($venda, true));
-            extract(json_decode($produtos, true));
+            extract((array)$nome_cliente);
+            extract((array)$doc_cliente);
+            extract((array)$venda);
+            extract((array)$produtos);
             
             include $path;
         $pdf = ob_get_clean();
 
-        $dompdf = new Dompdf();
+        $options = new Options();
+        $options->set('isRemoteEnabled', true);
+
+        $dompdf = new Dompdf($options);
         $dompdf->loadHtml($pdf);
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
-        $dompdf->stream('O.S.pdf', ['Attachment' => false]);
-        
+        $dompdf->stream('Venda.pdf', ['Attachment' => false]);
+
         return true;
     }
 

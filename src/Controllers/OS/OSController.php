@@ -164,7 +164,7 @@ class OSController extends Controller {
         }
 
         $services = $this->osServicoRepository->allServicesInOS($os->id);
-        if(!$cliente){
+        if(!$services){
             return $this->router->redirect('os');
         }
 

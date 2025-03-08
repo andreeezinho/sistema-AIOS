@@ -111,6 +111,7 @@ $router->create("POST", "/servicos/{uuid}/adicionar", [$produtoServicoController
 $router->create("GET", "/vendas", [$vendaController, 'index'], $auth);
 $router->create("GET", "/vendas/cadastro", [$vendaController, 'create'], $auth);
 $router->create("POST", "/vendas/cadastro", [$vendaController, 'store'], $auth);
+$router->create("GET", "/vendas/{uuid}/gerar", [$vendaController, 'generatePdf'], $auth);
 $router->create("POST", "/vendas/{uuid}/editar", [$vendaController, 'update'], $auth);
 $router->create("POST", "/vendas/{uuid}/finalizar", [$vendaController, 'finish'], $auth);
 $router->create("POST", "/vendas/{uuid}/cancelar", [$vendaController, 'cancel'], $auth);
