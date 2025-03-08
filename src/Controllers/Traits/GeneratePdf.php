@@ -4,22 +4,29 @@ namespace App\Controllers\Traits;
 
 //importar lib DOMPDF
 use Dompdf\Dompdf;
+use Dompdf\Options;
 
 trait GeneratePdf {
 
     public function generateOs($clientes, $os, $servicos) : bool{
         $path = __DIR__ . '/../../Resources/pdf/os.php';
-        $cliente_data = json_encode($clientes);
-        
+
+        $nome_cliente = $clientes->nome;
+        $doc_cliente = $clientes->documento;
+
         ob_start();
-            extract((array)$cliente_data);
+            extract((array)$nome_cliente);
+            extract((array)$doc_cliente);
             extract((array)$os);
             extract((array)$servicos);
             
             include $path;
         $pdf = ob_get_clean();
 
-        $dompdf = new Dompdf();
+        $options = new Options();
+        $options->set('isRemoteEnabled', true);
+
+        $dompdf = new Dompdf($options);
         $dompdf->loadHtml($pdf);
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
