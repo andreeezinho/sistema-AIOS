@@ -163,9 +163,6 @@ class VendaController extends Controller {
         }
 
         $produtos = $this->vendaProdutoRepository->allProductsInSale($venda->id);
-        if(!$produtos){
-            return $this->router->redirect('vendas');
-        }
 
         $pdf = $this->generateSale($cliente, $venda, $produtos);
 

@@ -164,9 +164,6 @@ class OSController extends Controller {
         }
 
         $services = $this->osServicoRepository->allServicesInOS($os->id);
-        if(!$services){
-            return $this->router->redirect('os');
-        }
 
         $pdf = $this->generateOs($cliente, $os, $services);
 
