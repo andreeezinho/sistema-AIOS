@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,11 +20,15 @@
         }
 
         .borda{
-            border-right: 1px solid #313131;
+            border-right: 3px solid #313131;
         }
 
         .borda-linha{
             border-bottom: 1px solid #313131;
+        }
+
+        .borda-linha-titulo{
+            border-bottom: 3px solid #313131;
         }
 
         .services-container{
@@ -66,8 +70,8 @@
             <table class="" style="border-collapse:collapse;">
                 <thead>
                     <tr>
-                        <td width="400px" height="60px" class="colunas borda borda-linha"><b style="font-size: 18px">Serviço</b></td>
-                        <td width="117px" height="60px" class="colunas borda-linha"><b style="font-size: 18px">Preço</b></td>
+                        <td width="400px" height="60px" class="colunas borda borda-linha-titulo"><b style="font-size: 18px">Serviço</b></td>
+                        <td width="115px" height="60px" class="colunas borda-linha-titulo"><b style="font-size: 18px">Preço</b></td>
                     </tr>
                 </thead>
                 <tbody>
@@ -76,8 +80,8 @@
                         foreach($servicos as $servico){
                 ?>
                     <tr>
-                        <td width="400px" height="50px" class="colunas borda "><?= $servico->nome ?></td>
-                        <td width="117px" height="50px" class="colunas ">R$ <?= number_format($servico->preco,2,",",".") ?></td>
+                        <td width="400px" height="50px" class="colunas borda borda-linha"><?= $servico->nome ?></td>
+                        <td width="115px" height="50px" class="colunas borda-linha">R$ <?= number_format($servico->preco,2,",",".") ?></td>
                     </tr>
                 <?php
                         }
@@ -93,8 +97,8 @@
 
         <div class="col-12 pt-3">
             <div class="float-start">
-                <p style="font-size: 16px" class="my-1"><b>PIX:</b> 103.171.015-95</p>
-                <p style="font-size: 16px" class="my-1"><b>Contato:</b> (75) 99116-4106</p>
+                <p style="font-size: 18px" class="my-1"><b>PIX:</b> 103.171.015-95</p>
+                <p style="font-size: 18px" class="my-1"><b>Contato:</b> (75) 99116-4106</p>
             </div>
 
             <div class="float-end">
