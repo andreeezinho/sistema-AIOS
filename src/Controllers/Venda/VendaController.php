@@ -127,18 +127,7 @@ class VendaController extends Controller {
 
         $all_products = $this->produtoRepository->all();
 
-        foreach($all_products as $produto_estoque){
-            foreach($vendaProdutos as $produto){
-                if($produto_estoque->id == $produto->produtos_id){
-                    $quantidade = $produto_estoque->estoque;
-                    if($produto_estoque->estoque > 0){
-                        $quantidade = $quantidade - $produto->quantidade;
-                    }
-    
-                    $subtractProduct = $this->produtoRepository->subtractProduct($produto->produtos_id, $quantidade);
-                }
-            }
-        }
+        $subtractProduct = $this->produtoRepository->verifyProductQuantity($all_products, $vendaProdutos);
 
         return $this->router->redirect('vendas');
     }
