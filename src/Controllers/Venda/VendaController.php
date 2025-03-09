@@ -7,6 +7,7 @@ use App\Controllers\Traits\GeneratePdf;
 use App\Controllers\Controller;
 use App\Repositories\Venda\VendaRepository;
 use App\Repositories\Venda\VendaProdutoRepository;
+use App\Repositories\Produto\ProdutoRepository;
 use App\Repositories\User\UserRepository;
 use App\Repositories\Cliente\ClienteRepository;
 
@@ -14,6 +15,7 @@ class VendaController extends Controller {
 
     public $vendaRepository;
     public $vendaProdutoRepository;
+    public $produtoRepository;
     public $usuarioRepository;
     public $clienteRepository;
 
@@ -23,6 +25,7 @@ class VendaController extends Controller {
         parent::__construct();
         $this->vendaRepository = new VendaRepository();
         $this->vendaProdutoRepository = new VendaProdutoRepository();
+        $this->produtoRepository = new ProdutoRepository();
         $this->usuarioRepository = new UserRepository();
         $this->clienteRepository = new ClienteRepository();
     }
@@ -120,6 +123,21 @@ class VendaController extends Controller {
 
         if(is_null($finish)){
             return $this->router->redirect('vendas/'. $uuid .'/produtos');
+        }
+
+        $all_products = $this->produtoRepository->all();
+
+        foreach($all_products as $produto_estoque){
+            foreach($vendaProdutos as $produto){
+                if($produto_estoque->id == $produto->produtos_id){
+                    $quantidade = $produto_estoque->estoque;
+                    if($produto_estoque->estoque > 0){
+                        $quantidade = $quantidade - $produto->quantidade;
+                    }
+    
+                    $subtractProduct = $this->produtoRepository->subtractProduct($produto->produtos_id, $quantidade);
+                }
+            }
         }
 
         return $this->router->redirect('vendas');

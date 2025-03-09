@@ -151,4 +151,30 @@ class ProdutoRepository {
         return $delete;
     }
 
+    public function subtractProduct(int $id, int $quantity){
+        try{
+            
+            $sql = "UPDATE " . self::TABLE . "
+                SET 
+                    estoque = :estoque
+                WHERE
+                    id = :id
+            ";
+
+            $stmt = $this->conn->prepare($sql);
+
+            $update = $stmt->execute([
+                ':estoque' => $quantity,
+                ':id' => $id
+            ]);
+
+            return $update;
+
+        }catch(\Thorwable $th){
+            return null;
+        }finally{
+            Database::getInstance()->closeConnection();
+        }
+    }
+
 }
