@@ -129,7 +129,7 @@
 
                         <div class="d-flex mt-3 pt-2 border-top justify-content-center">
                             <a href="/os/<?= $os->uuid ?>/servicos" class="btn btn-dark mx-2"><i class="bi-eye-fill"></i></a>
-                            <a href="/os/<?= $os->uuid ?>/servicos" class="btn btn-primary mx-2"><i class="bi-file-text-fill"></i></a>
+                            <a href="/os/<?= $os->uuid ?>/gerar" class="btn btn-primary mx-2"><i class="bi-file-text-fill"></i></a>
                             <button type="button" class="btn btn-danger mx-2" data-toggle="modal" data-target="#cancelar-<?= $os->uuid ?>"><i class="bi-x-circle-fill"></i></button>
 
                             <div class="modal fade" id="cancelar-<?= $os->uuid ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

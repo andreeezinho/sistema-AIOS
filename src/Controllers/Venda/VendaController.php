@@ -3,6 +3,7 @@
 namespace App\Controllers\Venda;
 
 use App\Request\Request;
+use App\Controllers\Traits\GeneratePdf;
 use App\Controllers\Controller;
 use App\Repositories\Venda\VendaRepository;
 use App\Repositories\Venda\VendaProdutoRepository;
@@ -15,6 +16,8 @@ class VendaController extends Controller {
     public $vendaProdutoRepository;
     public $usuarioRepository;
     public $clienteRepository;
+
+    use GeneratePdf;
 
     public function __construct(){
         parent::__construct();
@@ -143,6 +146,28 @@ class VendaController extends Controller {
                 'erro' => 'Não foi possível cancelar a venda',
                 'vendas' => $vendas
             ]);
+        }
+
+        return $this->router->redirect('vendas');
+    }
+
+    public function generatePdf(Request $request, $uuid){
+        $venda = $this->vendaRepository->findByUuid($uuid);
+        if(!$venda){
+            return $this->router->redirect('vendas');
+        }
+
+        $cliente = $this->clienteRepository->findById($venda->clientes_id);
+        if(!$cliente){
+            return $this->router->redirect('vendas');
+        }
+
+        $produtos = $this->vendaProdutoRepository->allProductsInSale($venda->id);
+
+        $pdf = $this->generateSale($cliente, $venda, $produtos);
+
+        if(!$pdf){
+            return $this->router->redirect('');
         }
 
         return $this->router->redirect('vendas');
