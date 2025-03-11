@@ -68,6 +68,20 @@ class VendaProdutoController extends Controller {
             return $this->router->redirect('vendas');
         }
 
+        $verifyProduct = $this->vendaProdutoRepository->verifyProduct($venda->id, $produto->id);
+
+        if($verifyProduct){
+            $sumProductQuantity = $this
+            ->vendaProdutoRepository
+            ->sumProductQuantity($venda->id, $produto->id);
+
+            if(!$sumProductQuantity){
+                return $this->router->redirect('vendas');
+            }
+    
+            return $this->router->redirect('vendas/'. $venda->uuid .'/produtos');
+        }
+
         $linkProductInSale = $this
             ->vendaProdutoRepository
             ->linkProduct($venda->id, $produto->id);

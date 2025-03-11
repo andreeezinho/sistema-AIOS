@@ -7,6 +7,7 @@ use App\Controllers\Traits\GeneratePdf;
 use App\Controllers\Controller;
 use App\Repositories\Venda\VendaRepository;
 use App\Repositories\Venda\VendaProdutoRepository;
+use App\Repositories\Produto\ProdutoRepository;
 use App\Repositories\User\UserRepository;
 use App\Repositories\Cliente\ClienteRepository;
 
@@ -14,6 +15,7 @@ class VendaController extends Controller {
 
     public $vendaRepository;
     public $vendaProdutoRepository;
+    public $produtoRepository;
     public $usuarioRepository;
     public $clienteRepository;
 
@@ -23,6 +25,7 @@ class VendaController extends Controller {
         parent::__construct();
         $this->vendaRepository = new VendaRepository();
         $this->vendaProdutoRepository = new VendaProdutoRepository();
+        $this->produtoRepository = new ProdutoRepository();
         $this->usuarioRepository = new UserRepository();
         $this->clienteRepository = new ClienteRepository();
     }
@@ -112,6 +115,11 @@ class VendaController extends Controller {
             return $this->router->redirect('vendas/'. $uuid .'/produtos');
         }
 
+        $cliente = $this->clienteRepository->findById($venda->clientes_id);
+        if(!$cliente){
+            return $this->router->redirect('vendas/'. $uuid .'/produtos');
+        }
+
         $vendaProdutos = $this->vendaProdutoRepository->allProductsInSale($venda->id);
 
         $total = priceWithDiscount($vendaProdutos, $venda->desconto);
@@ -120,6 +128,21 @@ class VendaController extends Controller {
 
         if(is_null($finish)){
             return $this->router->redirect('vendas/'. $uuid .'/produtos');
+        }
+
+        $all_products = $this->produtoRepository->all();
+
+        $subtractProduct = $this->produtoRepository->verifyProductQuantity($all_products, $vendaProdutos);
+
+        if(!$subtractProduct){
+            return $this->router->view('venda/venda_produto/index', [
+                'venda' => $venda,
+                'produtos' => $all_products,
+                'vendaProdutos' => $vendaProdutos,
+                'cliente' => $cliente,
+                'total' => $total,
+                'erro' => 'Quantidade acima do disponível no estoque do produto'
+            ]);
         }
 
         return $this->router->redirect('vendas');

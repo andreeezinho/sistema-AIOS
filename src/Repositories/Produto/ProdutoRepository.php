@@ -5,6 +5,7 @@ namespace App\Repositories\Produto;
 use App\Config\Database;
 use App\Repositories\Traits\Find;
 use App\Models\Produto\Produto;
+use App\Repositories\Produto\ProdutoServicoRepository;
 
 class ProdutoRepository {
 
@@ -16,9 +17,12 @@ class ProdutoRepository {
     public $model;
     public $conn;
 
+    public $produtoServicoRepository;
+
     public function __construct(){
         $this->model = new Produto();
         $this->conn = Database::getInstance()->getConnection();
+        $this->produtoServicoRepository = new ProdutoServicoRepository();
     }
 
     public function all(array $params = []){
@@ -149,6 +153,76 @@ class ProdutoRepository {
         ]);
 
         return $delete;
+    }
+
+    public function subtractProduct(int $id, int $quantity){
+        try{
+            
+            $sql = "UPDATE " . self::TABLE . "
+                SET 
+                    estoque = :estoque
+                WHERE
+                    id = :id
+            ";
+
+            $stmt = $this->conn->prepare($sql);
+
+            $update = $stmt->execute([
+                ':estoque' => $quantity,
+                ':id' => $id
+            ]);
+
+            return $update;
+
+        }catch(\Thorwable $th){
+            return null;
+        }finally{
+            Database::getInstance()->closeConnection();
+        }
+    }
+
+    public function verifyProductQuantity($all_products, $vendaProdutos){
+        foreach($all_products as $produto_estoque){
+            foreach($vendaProdutos as $produto){
+                if($produto_estoque->id == $produto->produtos_id){
+                    $quantidade = $produto_estoque->estoque;
+                    if($produto_estoque->estoque > 0){
+                        if(($quantidade - $produto->quantidade) < 0){
+                            return false; break;
+                        }
+
+                        $quantidade = $quantidade - $produto->quantidade;
+                    }
+    
+                    $subtractProduct = $this->subtractProduct($produto->produtos_id, $quantidade);
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public function verifyProductServiceQuantity($all_products, $all_services, $osServices){
+        foreach($all_products as $produto_estoque){
+            foreach($all_services as $services){
+                foreach($osServices as $osService){
+                    $productsInService = $this->produtoServicoRepository->allProductsInService($osService->servicos_id);
+
+                    if($services->id == $osService->servicos_id){
+                        foreach($productsInService as $produto){
+                            if($produto_estoque->id == $produto->produtos_id){
+                                $quantidade = $produto_estoque->estoque;
+                                if($produto_estoque->estoque > 0){
+                                    $quantidade = $quantidade - 1;
+                                }
+                
+                                $subtractProduct = $this->subtractProduct($produto->produtos_id, $quantidade);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
 }
