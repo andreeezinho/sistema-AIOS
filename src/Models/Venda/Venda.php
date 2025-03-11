@@ -28,9 +28,9 @@ class Venda {
         $venda = new Venda();
         $venda->id = $data['id'] ?? null;
         $venda->uuid = $data['uuid'] ?? $this->generateUUID();
-        $venda->desconto = $data['desconto'] ?? 0;
+        $venda->desconto = (!isset($data['desconto']) || $data['desconto'] == "") ? 0 : $data['desconto'];
         $venda->total = $data['total'] ?? null;
-        $venda->situacao = ($data['situacao'] == "") ? "em andamento" : $data['situacao'];
+        $venda->situacao = (!isset($data['situacao']) || $data['situacao'] == "") ? 'em andamento' : $data['situacao'];
         $venda->usuarios_id = $usuario_id ?? null;
         $venda->clientes_id = $cliente_id ?? null;
         $venda->created_at = $data['created_at'] ?? null;

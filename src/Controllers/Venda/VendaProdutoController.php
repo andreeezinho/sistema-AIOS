@@ -34,7 +34,7 @@ class VendaProdutoController extends Controller {
 
         $params = $request->getQueryParams();
 
-        $params = array_merge($params, ['ativo' => 1]);
+        $params = array_merge($params, ['ativo' => 1, 'estoque' => 0]);
 
         $venda = $this->vendaRepository->findByUuid($uuid);
         $cliente = $this->clienteRepository->findById($venda->clientes_id);

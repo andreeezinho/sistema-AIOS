@@ -4,6 +4,7 @@ namespace App\Controllers\Venda;
 
 use App\Request\Request;
 use App\Controllers\Traits\GeneratePdf;
+use App\Controllers\Traits\Validator;
 use App\Controllers\Controller;
 use App\Repositories\Venda\VendaRepository;
 use App\Repositories\Venda\VendaProdutoRepository;
@@ -20,6 +21,7 @@ class VendaController extends Controller {
     public $clienteRepository;
 
     use GeneratePdf;
+    use Validator;
 
     public function __construct(){
         parent::__construct();
@@ -36,7 +38,7 @@ class VendaController extends Controller {
         }
 
         $params = $request->getQueryParams();
-
+        
         $vendas = $this->vendaRepository->all($params);
 
         return $this->router->view('venda/index', [
@@ -65,7 +67,19 @@ class VendaController extends Controller {
 
         $data = $request->getBodyParams();
 
+        if(!$this->required($data, ['cliente'])){
+            return $this->router->view('venda/create', [
+                'erro' => 'Insira um cliente para continuar',
+                'cadastro' => true,
+                'clientes' => $clientes
+            ]);
+        }
+
         $cliente = $this->clienteRepository->findByUuid($data['cliente']);
+
+        if(!$cliente){
+            return $this->router->redirect('');
+        }
 
         $create = $this->vendaRepository->create($data, $_SESSION['user']->id, $cliente->id);
 
