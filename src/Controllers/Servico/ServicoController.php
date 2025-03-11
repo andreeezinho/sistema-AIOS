@@ -3,12 +3,15 @@
 namespace App\Controllers\Servico;
 
 use App\Request\Request;
+use App\Controllers\Traits\Validator;
 use App\Controllers\Controller;
 use App\Repositories\Servico\ServicoRepository;
 
 class ServicoController extends Controller {
 
     public $servicoRepository;
+
+    use Validator;
 
     public function __construct(){
         parent::__construct();
@@ -43,6 +46,12 @@ class ServicoController extends Controller {
         }
 
         $data = $request->getBodyParams();
+
+        if(!$this->required($data, ['nome', 'preco'])){
+            return $this->router->view('servico/create', [
+                'erro' => 'Campo obrigatório em branco'
+            ]);
+        }
 
         $create = $this->servicoRepository->create($data);
 
@@ -84,10 +93,18 @@ class ServicoController extends Controller {
         
         $data = $request->getBodyParams();
 
+        if(!$this->required($data, ['nome', 'preco'])){
+            return $this->router->view('servico/edit', [
+                'servico' => $servico,
+                'erro' => 'Campo obrigatório em branco'
+            ]);
+        }
+
         $update = $this->servicoRepository->update($data, $servico->id);
 
         if(is_null($update)){
             return $this->router->view('servico/edit', [
+                'servico' => $servico,
                 'erro' => 'Não foi possível criar o serviço'
             ]);
         }
@@ -115,10 +132,6 @@ class ServicoController extends Controller {
         }
 
         return $this->router->redirect('servicos');
-    }
-
-    public function updatePrice(float $price, int $id){
-        
     }
 
 }
