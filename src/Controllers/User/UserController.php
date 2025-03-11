@@ -45,8 +45,6 @@ class UserController extends Controller {
 
     public function store(Request $request){
         $data = $request->getBodyParams();
-
-        $data['icone'] = 'default.png';
     
         if(!$this->required($data, ['nome', 'email', 'cpf'])){
             return $this->router->view('user/create', [

@@ -4,6 +4,7 @@ namespace App\Controllers\OS;
 
 use App\Request\Request;
 use App\Controllers\Traits\GeneratePdf;
+use App\Controllers\Traits\Validator;
 use App\Controllers\Controller;
 use App\Repositories\OS\OSRepository;
 use App\Repositories\OS\OSServicoRepository;
@@ -24,6 +25,7 @@ class OSController extends Controller {
     protected $userRepository;
 
     use GeneratePdf;
+    use Validator;
 
     public function __construct(){
         parent::__construct();
@@ -72,8 +74,12 @@ class OSController extends Controller {
 
         $data = $request->getBodyParams();
 
-        if(!is_null($data['situacao'])){
-            $data['situacao'] = 'em andamento';
+        if(!$this->required($data, ['cliente'])){
+            return $this->router->view('os/create', [
+                'erro' => 'Selecione um cliente para continuar',
+                'cadastro' => true,
+                'clientes' => $clientes
+            ]);
         }
 
         $cliente = $this->clienteRepository->findByUuid($data['cliente']);

@@ -32,7 +32,7 @@ class User {
         $user->telefone = $data['telefone'] ?? null;
         $user->senha = password_hash($data['senha'] ?? 'senha123', PASSWORD_BCRYPT);
         $user->ativo = (!isset($data['ativo']) || $data['ativo'] == "") ? 1 : $data['ativo'];
-        $user->icone = (!isset($data['icone'])) ? "default.png" : $data['icone'];
+        $user->icone = (!isset($data['icone']) || $data['icone'] == "") ? 'default.png' : $data['icone'];
         $user->created_at = $data['created_at'] ?? null;
         $user->updated_at = $data['updated_at'] ?? null;
         return $user;
