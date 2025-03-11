@@ -2,10 +2,16 @@
 
 namespace App\Controllers\Traits;
 
-trait Validador {
+trait Validator {
 
     public function required(array $data, $field){
-        
+        foreach($field as $campo){
+            if(empty($data[$campo]) || $data[$campo] == ""){
+                return false;
+            }
+        }
+
+        return true;
     }
 
 }
