@@ -136,11 +136,7 @@ class OSController extends Controller {
 
         $all_services = $this->servicoRepository->all();
 
-        foreach($osServicos as $servico){
-            $productsInService = $this->produtoServicoRepository->allProductsInService($servico->servicos_id);
-
-            $subtractProduct = $this->produtoRepository->verifyProductServiceQuantity($all_products, $all_services, $osServicos, $productsInService);
-        }
+        $subtractProduct = $this->produtoRepository->verifyProductServiceQuantity($all_products, $all_services, $osServicos);
 
         return $this->router->redirect('os'); 
     }

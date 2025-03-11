@@ -5,6 +5,7 @@ namespace App\Repositories\Produto;
 use App\Config\Database;
 use App\Repositories\Traits\Find;
 use App\Models\Produto\Produto;
+use App\Repositories\Produto\ProdutoServicoRepository;
 
 class ProdutoRepository {
 
@@ -16,9 +17,12 @@ class ProdutoRepository {
     public $model;
     public $conn;
 
+    public $produtoServicoRepository;
+
     public function __construct(){
         $this->model = new Produto();
         $this->conn = Database::getInstance()->getConnection();
+        $this->produtoServicoRepository = new ProdutoServicoRepository();
     }
 
     public function all(array $params = []){
@@ -192,10 +196,12 @@ class ProdutoRepository {
         }
     }
 
-    public function verifyProductServiceQuantity($all_products, $all_services, $osServices, $productsInService){
+    public function verifyProductServiceQuantity($all_products, $all_services, $osServices){
         foreach($all_products as $produto_estoque){
             foreach($all_services as $services){
                 foreach($osServices as $osService){
+                    $productsInService = $this->produtoServicoRepository->allProductsInService($osService->servicos_id);
+
                     if($services->id == $osService->servicos_id){
                         foreach($productsInService as $produto){
                             if($produto_estoque->id == $produto->produtos_id){
