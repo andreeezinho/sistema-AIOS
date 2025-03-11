@@ -115,6 +115,11 @@ class VendaController extends Controller {
             return $this->router->redirect('vendas/'. $uuid .'/produtos');
         }
 
+        $cliente = $this->clienteRepository->findById($venda->clientes_id);
+        if(!$cliente){
+            return $this->router->redirect('vendas/'. $uuid .'/produtos');
+        }
+
         $vendaProdutos = $this->vendaProdutoRepository->allProductsInSale($venda->id);
 
         $total = priceWithDiscount($vendaProdutos, $venda->desconto);
@@ -128,6 +133,17 @@ class VendaController extends Controller {
         $all_products = $this->produtoRepository->all();
 
         $subtractProduct = $this->produtoRepository->verifyProductQuantity($all_products, $vendaProdutos);
+
+        if(!$subtractProduct){
+            return $this->router->view('venda/venda_produto/index', [
+                'venda' => $venda,
+                'produtos' => $all_products,
+                'vendaProdutos' => $vendaProdutos,
+                'cliente' => $cliente,
+                'total' => $total,
+                'erro' => 'Quantidade acima do disponível no estoque do produto'
+            ]);
+        }
 
         return $this->router->redirect('vendas');
     }

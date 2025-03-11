@@ -187,6 +187,10 @@ class ProdutoRepository {
                 if($produto_estoque->id == $produto->produtos_id){
                     $quantidade = $produto_estoque->estoque;
                     if($produto_estoque->estoque > 0){
+                        if(($quantidade - $produto->quantidade) < 0){
+                            return false; break;
+                        }
+
                         $quantidade = $quantidade - $produto->quantidade;
                     }
     
@@ -194,6 +198,8 @@ class ProdutoRepository {
                 }
             }
         }
+
+        return true;
     }
 
     public function verifyProductServiceQuantity($all_products, $all_services, $osServices){
