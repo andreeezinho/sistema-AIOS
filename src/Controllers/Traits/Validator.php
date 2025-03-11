@@ -14,4 +14,8 @@ trait Validator {
         return true;
     }
 
+    public function min($data, $field, $lenght){
+        
+    }
+
 }
