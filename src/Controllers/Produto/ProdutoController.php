@@ -3,12 +3,15 @@
 namespace App\Controllers\Produto;
 
 use App\Request\Request;
+use App\Controllers\Traits\Validator;
 use App\Controllers\Controller;
 use App\Repositories\Produto\ProdutoRepository;
 
 class ProdutoController extends Controller {
 
     public $produtoRepository;
+
+    use Validator;
 
     public function __construct(){
         parent::__construct();
@@ -43,6 +46,12 @@ class ProdutoController extends Controller {
         }
 
         $data = $request->getBodyParams();
+
+        if(!$this->required($data, ['nome', 'codigo', 'preco'])){
+            return $this->router->view('produto/create', [
+                'erro' => 'Campo obrigatório em branco'
+            ]);
+        }
 
         $create = $this->produtoRepository->create($data);
 
@@ -84,10 +93,18 @@ class ProdutoController extends Controller {
 
         $data = $request->getBodyParams();
 
+        if(!$this->required($data, ['nome', 'codigo', 'preco'])){
+            return $this->router->view('produto/edit', [
+                'produto' => $produto,
+                'erro' => 'Campo obrigatório em branco'
+            ]);
+        }
+
         $update = $this->produtoRepository->update($data, $produto->id);
 
         if(is_null($update)){
             return $this->router->view('produto/edit', [
+                'produto' => $produto,
                 'erro' => 'Não foi possível editar o produto'
             ]);
         }

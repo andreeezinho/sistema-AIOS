@@ -39,7 +39,7 @@
                         include_once('form.php');
                     ?>
                     <div class="form-group text-center">
-                        <a href="/servicos" class="btn btn-secondary mx-1">Cancelar</a>
+                        <a href="/produtos" class="btn btn-secondary mx-1">Cancelar</a>
                         <button type="submit" class="btn btn-primary mx-1">Confirmar</button>
                     </div>
                 </div>
