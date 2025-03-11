@@ -72,10 +72,13 @@ function priceWithDiscount(array $products, $discount){
 
     foreach($products as $product){
         if(isset($product->quantidade)){
-            $total += ($product->preco * $product->quantidade);
+            $total += $product->preco * $product->quantidade;
         }
 
-        $total += $product->preco;
+
+        if(!isset($product->quantidade)){
+            $total = $total + $product->preco;
+        }
     }
 
     if($discount > 0){
