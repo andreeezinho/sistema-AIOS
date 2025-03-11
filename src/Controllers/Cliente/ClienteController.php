@@ -4,11 +4,14 @@ namespace App\Controllers\Cliente;
 
 use App\Request\Request;
 use App\Controllers\Controller;
+use App\Controllers\Traits\Validator;
 use App\Repositories\Cliente\ClienteRepository;
 
 class ClienteController extends Controller {
 
     protected $clienteRepository;
+
+    use Validator;
 
     public function __construct(){
         parent::__construct();
@@ -39,6 +42,12 @@ class ClienteController extends Controller {
 
     public function store(Request $request){
         $data = $request->getBodyParams();
+
+        if(!$this->required($data, ['nome', 'email', 'documento', 'telefone'])){
+            return $this->router->view('cliente/create', [
+                'erro' => 'Campo obrigatório em branco'
+            ]);
+        }
 
         $create = $this->clienteRepository->create($data);
 
@@ -76,10 +85,18 @@ class ClienteController extends Controller {
 
         $data = $request->getBodyParams();
 
+        if(!$this->required($data, ['nome', 'email', 'documento', 'telefone'])){
+            return $this->router->view('cliente/edit', [
+                'cliente' => $cliente,
+                'erro' => 'Campo obrigatório em branco'
+            ]);
+        }
+
         $update = $this->clienteRepository->edit($data, $cliente->id);
 
         if(is_null($update)){
             return $this->router->view('cliente/edit', [
+                'cliente' => $cliente,
                 'erro' => 'Não foi possível criar o cliente'
             ]);
         }

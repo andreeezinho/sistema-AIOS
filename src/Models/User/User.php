@@ -30,9 +30,9 @@ class User {
         $user->email = $data['email'] ?? null;
         $user->cpf = $data['cpf'] ?? null;
         $user->telefone = $data['telefone'] ?? null;
-        $user->senha = password_hash($data['senha'], PASSWORD_BCRYPT);
-        $user->ativo = ($data['ativo'] == "") ? 1 : $data['ativo'];
-        $user->icone = ($data['icone'] == "") ? "default.png" : $data['icone'];
+        $user->senha = password_hash($data['senha'] ?? 'senha123', PASSWORD_BCRYPT);
+        $user->ativo = (!isset($data['ativo']) || $data['ativo'] == "") ? 1 : $data['ativo'];
+        $user->icone = (!isset($data['icone'])) ? "default.png" : $data['icone'];
         $user->created_at = $data['created_at'] ?? null;
         $user->updated_at = $data['updated_at'] ?? null;
         return $user;
