@@ -7,6 +7,9 @@ use App\Controllers\Traits\GeneratePdf;
 use App\Controllers\Controller;
 use App\Repositories\OS\OSRepository;
 use App\Repositories\OS\OSServicoRepository;
+use App\Repositories\Servico\ServicoRepository;
+use App\Repositories\Produto\ProdutoRepository;
+use App\Repositories\Produto\ProdutoServicoRepository;
 use App\Repositories\Cliente\ClienteRepository;
 use App\Repositories\User\UserRepository;
 
@@ -14,6 +17,9 @@ class OSController extends Controller {
 
     protected $osRepository;
     protected $osServicoRepository;
+    protected $servicoRepository;
+    protected $produtoRepository;
+    protected $produtoServicoRepository;
     protected $clienteRepository;
     protected $userRepository;
 
@@ -23,6 +29,9 @@ class OSController extends Controller {
         parent::__construct();
         $this->osRepository = new OSRepository();
         $this->osServicoRepository = new OSServicoRepository();
+        $this->servicoRepository = new ServicoRepository();
+        $this->produtoRepository = new ProdutoRepository();
+        $this->produtoServicoRepository = new ProdutoServicoRepository();
         $this->clienteRepository = new ClienteRepository();
         $this->userRepository = new UserRepository();
     }
@@ -114,13 +123,23 @@ class OSController extends Controller {
         }
 
         $osServicos = $this->osServicoRepository->allServicesInOS($os->id);
-
+        
         $total = priceWithDiscount($osServicos, $os->desconto);
 
         $finish = $this->osRepository->finish($total, $os->id);
 
         if(is_null($finish)){
             return $this->router->redirect('os/'. $os->uuid . '/servicos');
+        }
+
+        $all_products = $this->produtoRepository->all();
+
+        $all_services = $this->servicoRepository->all();
+
+        foreach($osServicos as $servico){
+            $productsInService = $this->produtoServicoRepository->allProductsInService($servico->servicos_id);
+
+            $subtractProduct = $this->produtoRepository->verifyProductServiceQuantity($all_products, $all_services, $osServicos, $productsInService);
         }
 
         return $this->router->redirect('os'); 

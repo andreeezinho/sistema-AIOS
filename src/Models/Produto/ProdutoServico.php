@@ -13,6 +13,7 @@ class ProdutoServico {
     public $produtos_id;
     public $nome;
     public $codigo;
+    public $quantidade;
     public $preco;
     public $uuidProduto;
     public $servico;
@@ -24,8 +25,8 @@ class ProdutoServico {
         $produto_servico = new ProdutoServico;
         $produto_servico->id = $data['id'] ?? null;
         $produto_servico->uuid = $data['uuid'] ?? $this->generateUUID();
-        $produto_servico->produtos_id = $data['produtos_id'] ?? null;
-        $produto_servico->servicos_id = $data['servicos_id'] ?? null;
+        $produto_servico->produtos_id = $produtos_id ?? null;
+        $produto_servico->servicos_id = $servicos_id ?? null;
         $produto_servico->created_at = $data['created_at'] ?? null;
         $produto_servico->updated_at = $data['updated_at'] ?? null;
         return $produto_servico;

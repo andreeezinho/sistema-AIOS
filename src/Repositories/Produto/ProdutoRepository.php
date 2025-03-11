@@ -192,4 +192,25 @@ class ProdutoRepository {
         }
     }
 
+    public function verifyProductServiceQuantity($all_products, $all_services, $osServices, $productsInService){
+        foreach($all_products as $produto_estoque){
+            foreach($all_services as $services){
+                foreach($osServices as $osService){
+                    if($services->id == $osService->servicos_id){
+                        foreach($productsInService as $produto){
+                            if($produto_estoque->id == $produto->produtos_id){
+                                $quantidade = $produto_estoque->estoque;
+                                if($produto_estoque->estoque > 0){
+                                    $quantidade = $quantidade - 1;
+                                }
+                
+                                $subtractProduct = $this->subtractProduct($produto->produtos_id, $quantidade);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 }

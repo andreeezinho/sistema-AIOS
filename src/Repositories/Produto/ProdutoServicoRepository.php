@@ -17,13 +17,13 @@ class ProdutoServicoRepository {
     protected $model;
 
     public function __construct(){
-        $this->conn = Database::getInstance()->getConnection();
         $this->model = new ProdutoServico();
+        $this->conn = Database::getInstance()->getConnection();
     }
 
     public function allProductsInService(int $servico_id){
         $sql = "SELECT ps.*,
-            p.nome as nome, p.codigo as codigo, p.preco, p.uuid as uuidProduto,
+            p.nome as nome, p.codigo as codigo, p.estoque as quantidade, p.preco, p.uuid as uuidProduto,
             s.id as servico
             FROM " . self::TABLE . " ps
             JOIN produtos p
