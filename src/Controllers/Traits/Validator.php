@@ -14,8 +14,20 @@ trait Validator {
         return true;
     }
 
-    public function min($data, $field, $lenght){
-        
+    public function min($data, $min){
+        if(strlen($data) < $min){
+            return false;
+        }
+
+        return true;
+    }
+
+    public function email($data){
+        if(!filter_var($data, FILTER_VALIDATE_EMAIL)){
+            return false;
+        }
+
+        return true;
     }
 
 }

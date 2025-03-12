@@ -53,6 +53,20 @@ class UserController extends Controller {
             ]);
         }
 
+        if(!$this->min($data['cpf'], 11)){
+            return $this->router->view('user/create', [
+                'perfil' => false,
+                'erro' => 'CPF deve conter ao menos 11 dígitos'
+            ]);
+        }
+
+        if(!$this->email($data['email'])){
+            return $this->router->view('user/create', [
+                'perfil' => false,
+                'erro' => 'Email inválido'
+            ]);
+        }
+
         $create = $this->userRepository->create($data);
 
         if(is_null($create)){
@@ -96,6 +110,22 @@ class UserController extends Controller {
                 'perfil' => false,
                 'usuario' => $usuario,
                 'erro' => 'Campo obrigatório em branco'
+            ]);
+        }
+
+        if(!$this->min($data['cpf'], 11)){
+            return $this->router->view('user/edit', [
+                'perfil' => false,
+                'usuario' => $usuario,
+                'erro' => 'CPF deve conter ao menos 11 dígitos'
+            ]);
+        }
+
+        if(!$this->email($data['email'])){
+            return $this->router->view('user/edit', [
+                'perfil' => false,
+                'usuario' => $usuario,
+                'erro' => 'Email inválido'
             ]);
         }
 
