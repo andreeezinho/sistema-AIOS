@@ -4,6 +4,7 @@ namespace App\Controllers\Permissao;
 
 use App\Request\Request;
 use App\Config\Auth;
+use App\Controllers\Traits\Validator;
 use App\Controllers\Controller;
 use App\Repositories\Permissao\PermissaoRepository;
 use App\Repositories\User\UserRepository;
@@ -12,6 +13,8 @@ class PermissaoController extends Controller {
 
     protected $permissaoRepository;
     protected $userRepository;
+
+    use Validator;
 
     public function __construct(){
         parent::__construct();
@@ -35,7 +38,12 @@ class PermissaoController extends Controller {
 
     public function store(Request $request){
         $data = $request->getBodyParams();
-        
+
+        if(!$this->required($data, ['nome'])){
+            return $this->router->view('permissao/create', [
+                'erro' => 'Insira o nome da permissão'
+            ]);
+        }
 
         $create = $this->permissaoRepository->create($data);
 
@@ -69,16 +77,18 @@ class PermissaoController extends Controller {
 
         $data = $request->getBodyParams();
 
-        if($data['nome'] == "" || $data['tipo'] == ""){
+        if(!$this->required($data, ['nome'])){
             return $this->router->view('permissao/edit', [
-                'erro' => 'Campo obrigatório em branco'
+                'permissao' => $permissao,
+                'erro' => 'Insira o nome da permissão'
             ]);
         }
 
         $update = $this->permissaoRepository->update($data, $permissao->id);
 
         if(is_null($update)){
-            return $this->router->view('permissao/index', [
+            return $this->router->view('permissao/edit', [
+                'permissao' => $permissao,
                 'erro' => 'Não foi possível editar permissão'
             ]);
         }

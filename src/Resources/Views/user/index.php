@@ -94,7 +94,7 @@
                         
                         <p class="mt-3 text-muted"><i class="bi-person-fill"></i> <?= $usuario->nome ?></p>
 
-                        <p class="mt-3 text-muted"><i class="bi-envelope-fill"></i> CPF: <?= $usuario->cpf ?></p>
+                        <p class="mt-3 text-muted"><i class="bi-wallet-fill"></i> CPF: <?= $usuario->cpf ?></p>
                         <p class="mt-3 text-muted"><i class="bi-envelope-fill"></i> Email: <?= $usuario->email ?></p>
                         <p class="mt-3 text-muted">
                             <i class="bi-circle-fill small <?= ($usuario->ativo == 1) ? 'text-success' : 'text-danger' ?>"></i>  

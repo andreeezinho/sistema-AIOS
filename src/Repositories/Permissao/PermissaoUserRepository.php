@@ -88,7 +88,7 @@ class PermissaoUserRepository {
             ':permissoes_id' => $permissao_id,
             ':usuarios_id' => $usuario_id
         ]);
-
+        
         return $delete;
     }
 

@@ -48,7 +48,7 @@ function createImage($arquivo, $dir){
     $arquivo_nome = uniqid() . "_" . time() . "." . $extensao;
     
     if(!is_dir($root_dir)){
-        if(!mkdir($root_dir, 0755, true)){
+        if(!mkdir($root_dir, 0777, true)){
             return null;
         }
     }
@@ -64,5 +64,28 @@ function createImage($arquivo, $dir){
     }
 
     return null;
+}
+
+function priceWithDiscount(array $products, $discount){
+
+    $total = 0;
+
+    foreach($products as $product){
+        if(isset($product->quantidade)){
+            $total += $product->preco * $product->quantidade;
+        }
+
+
+        if(!isset($product->quantidade)){
+            $total = $total + $product->preco;
+        }
+    }
+
+    if($discount > 0){
+        $discount_price = ($discount * $total) / 100;
+        $total -= $discount_price;
+    }
+
+    return $total;
 
 }
