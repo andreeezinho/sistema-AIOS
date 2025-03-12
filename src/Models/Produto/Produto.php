@@ -25,8 +25,8 @@ class Produto {
         $produto->nome = $data['nome'] ?? null;
         $produto->codigo = $data['codigo'] ?? null;
         $produto->preco = $data['preco'] ?? null;
-        $produto->estoque = $data['estoque'] ?? null;
-        $produto->ativo = ($data['ativo'] == "") ? 1 : $data['ativo'];
+        $produto->estoque = (!isset($data['estoque']) || $data['estoque'] == "") ? 0 : $data['estoque'];
+        $produto->ativo = (!isset($data['ativo']) || $data['ativo'] == "") ? 1 : $data['ativo'];
         $produto->created_at = $data['created_at'] ?? null;
         $produto->updated_at = $data['updated_at'] ?? null;
         return $produto;

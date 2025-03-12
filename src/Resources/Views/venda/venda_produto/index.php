@@ -161,7 +161,14 @@
 
                 <div class="d-flex float-start float-md-end">
                     <h5 class="p-0 m-0 mx-2 my-auto">Valor Total: <b>R$ <?= number_format($total,2,",",".") ?></b></h5>
-                    <button type="button" class="btn btn-primary mx-1" data-toggle="modal" data-target="#finalizar"><i class="bi-cart-check-fill"></i> Finalizar</button>
+
+                    <?php
+                        if(count($vendaProdutos) > 0){
+                    ?>
+                        <button type="button" class="btn btn-primary mx-1" data-toggle="modal" data-target="#finalizar"><i class="bi-cart-check-fill"></i> Finalizar</button>
+                    <?php
+                        }
+                    ?>
                 </div>
 
                 <div class="modal fade" id="finalizar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

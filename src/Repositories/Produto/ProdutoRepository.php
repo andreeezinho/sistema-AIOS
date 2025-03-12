@@ -40,6 +40,11 @@ class ProdutoRepository {
             $conditions[] = "preco <= :preco";
             $bindings[':preco'] = number_format($params['preco'],2,".",".");
         }
+
+        if(isset($params['estoque']) && $params['estoque'] != ""){
+            $conditions[] = "estoque > :estoque";
+            $bindings[':estoque'] = $params['estoque'];
+        }
     
         if(isset($params['ativo']) && $params['ativo'] != ""){
             $conditions[] = "ativo = :ativo";

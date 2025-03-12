@@ -4,6 +4,7 @@ namespace App\Controllers\User;
 
 use App\Request\Request;
 use App\Config\Auth;
+use App\Controllers\Traits\Validator;
 use App\Controllers\Controller;
 use App\Repositories\User\UserRepository;
 
@@ -12,6 +13,8 @@ class UserPerfilController extends Controller {
     protected $auth;
     protected $userRepository;
     protected $usuario;
+
+    use Validator;
 
     public function __construct(){
         parent::__construct();
@@ -36,7 +39,7 @@ class UserPerfilController extends Controller {
 
         $dir = "/user/icons";
 
-        if($icone['name'] == ""){
+        if(!$this->required($icone, ['name'])){
             return $this->router->view('user/perfil/index', [
                 'erro' => 'Insira uma imagem para continuar',
                 'perfil' => true,
@@ -62,11 +65,27 @@ class UserPerfilController extends Controller {
     public function updateDados(Request $request){
         $data = $request->getBodyParams();
 
-        if($data['nome'] == "" || $data['email'] == "" || $data['cpf'] == ""){
+        if(!$this->required($data, ['nome', 'email', 'cpf'])){
             return $this->router->view('user/perfil/index', [
-                'erro' => 'Campo obrigatório em branco',
+                'perfil' => false,
+                'usuario' => $this->usuario,
+                'erro' => 'Campo obrigatório em branco'
+            ]);
+        }
+
+        if(!$this->min($data['cpf'], 11)){
+            return $this->router->view('user/perfil/index', [
                 'perfil' => true,
-                'usuario' => $this->usuario
+                'usuario' => $this->usuario,
+                'erro' => 'CPF deve conter ao menos 11 dígitos'
+            ]);
+        }
+
+        if(!$this->email($data['email'])){
+            return $this->router->view('user/perfil/index', [
+                'perfil' => true,
+                'usuario' => $this->usuario,
+                'erro' => 'Email inválido'
             ]);
         }
 
@@ -90,11 +109,19 @@ class UserPerfilController extends Controller {
     public function updateSenha(Request $request){
         $data = $request->getBodyParams();
 
-        if(!isset($data['senha']) || $data['senha'] == ""){
+        if(!$this->required($data, ['senha'])){
             return $this->router->view('user/perfil/index', [
-                'erro' => 'Senha não pode estar em branco',
                 'perfil' => true,
-                'usuario' => $this->usuario
+                'usuario' => $this->usuario,
+                'erro' => 'Digite uma senha para atualizá-la'
+            ]);
+        }
+
+        if(!$this->min($data['senha'], 8)){
+            return $this->router->view('user/perfil/index', [
+                'perfil' => true,
+                'usuario' => $this->usuario,
+                'erro' => 'Sua senha deve conter ao menos 8 dígitos'
             ]);
         }
 

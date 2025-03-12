@@ -5,11 +5,14 @@ namespace App\Controllers\User;
 use App\Request\Request;
 use App\Config\Auth;
 use App\Controllers\Controller;
+use App\Controllers\Traits\Validator;
 use App\Repositories\User\UserRepository;
 
 class UserController extends Controller {
 
     protected $userRepository;
+
+    use Validator;
 
     public function __construct(){
         parent::__construct();
@@ -42,12 +45,25 @@ class UserController extends Controller {
 
     public function store(Request $request){
         $data = $request->getBodyParams();
-
-        $data['icone'] = 'default.png';
     
-        if($data['nome'] == "" || $data['email'] == ""  || $data['cpf'] == ""){
+        if(!$this->required($data, ['nome', 'email', 'cpf'])){
             return $this->router->view('user/create', [
+                'perfil' => false,
                 'erro' => 'Campo obrigatório em branco'
+            ]);
+        }
+
+        if(!$this->min($data['cpf'], 11)){
+            return $this->router->view('user/create', [
+                'perfil' => false,
+                'erro' => 'CPF deve conter ao menos 11 dígitos'
+            ]);
+        }
+
+        if(!$this->email($data['email'])){
+            return $this->router->view('user/create', [
+                'perfil' => false,
+                'erro' => 'Email inválido'
             ]);
         }
 
@@ -55,6 +71,7 @@ class UserController extends Controller {
 
         if(is_null($create)){
             return $this->router->view('user/create', [
+                'perfil' => false,
                 'erro' => 'Não foi possível criar usuário'
             ]);
         }
@@ -88,16 +105,36 @@ class UserController extends Controller {
 
         $data = $request->getBodyParams();
 
-        if($data['nome'] == "" || $data['email'] == "" || $data['cpf'] == ""){
+        if(!$this->required($data, ['nome', 'email', 'cpf'])){
             return $this->router->view('user/edit', [
+                'perfil' => false,
+                'usuario' => $usuario,
                 'erro' => 'Campo obrigatório em branco'
+            ]);
+        }
+
+        if(!$this->min($data['cpf'], 11)){
+            return $this->router->view('user/edit', [
+                'perfil' => false,
+                'usuario' => $usuario,
+                'erro' => 'CPF deve conter ao menos 11 dígitos'
+            ]);
+        }
+
+        if(!$this->email($data['email'])){
+            return $this->router->view('user/edit', [
+                'perfil' => false,
+                'usuario' => $usuario,
+                'erro' => 'Email inválido'
             ]);
         }
 
         $update = $this->userRepository->update($data, $usuario->id);
 
         if(is_null($update)){
-            return $this->router->view('user/index', [
+            return $this->router->view('user/edit', [
+                'perfil' => false,
+                'usuario' => $usuario,
                 'erro' => 'Não foi possível editar usuário'
             ]);
         }

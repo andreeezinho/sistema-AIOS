@@ -31,9 +31,9 @@ class OS {
         $os->clientes_id = $clientes_id ?? null;
         $os->dispositivo = $data['dispositivo'] ?? null;
         $os->observacao = $data['observacao'] ?? null;
-        $os->desconto = $data['desconto'] ?? 0;
+        $os->desconto = (!isset($data['desconto']) || $data['desconto'] == "") ? 0 : $data['desconto'];
         $os->total = $data['total'] ?? null;
-        $os->situacao = $data['situacao'] ?? 'em andamento';
+        $os->situacao = (!isset($data['situacao']) || $data['situacao'] == "") ? 'em andamento' : $data['situacao'];
         $os->usuarios_id = $usuarios_id ?? null;
         $os->created_at = $data['created_at'] ?? null;
         $os->updated_at = $data['updated_at'] ?? null;
