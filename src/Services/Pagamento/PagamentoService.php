@@ -13,7 +13,7 @@ class PagamentoService {
     private $request_options;
 
     public function __construct(){
-        MercadoPagoConfig::setAccessToken("APP_USR-3294321174722593-072420-2dfc4d1f81aa12110063e7b743ae0494-2577048617");
+        MercadoPagoConfig::setAccessToken(MP_TOKEN);
         MercadoPagoConfig::setRuntimeEnviroment(MercadoPagoConfig::LOCAL);
 
         $this->client = new PaymentClient();
