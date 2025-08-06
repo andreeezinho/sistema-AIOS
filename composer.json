@@ -10,6 +10,8 @@
         ]
     },
     "require": {
+        "php": ">=8.0",
+        "mercadopago/dx-php": "^3.5.1",
         "dompdf/dompdf": "^3.1"
     }
 }

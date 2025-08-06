@@ -19,6 +19,7 @@ class ComposerStaticInitd751713988987e9331980363e24189ce
         ),
         'M' => 
         array (
+            'MercadoPago\\' => 12,
             'Masterminds\\' => 12,
         ),
         'F' => 
@@ -43,6 +44,10 @@ class ComposerStaticInitd751713988987e9331980363e24189ce
         'Sabberworm\\CSS\\' => 
         array (
             0 => __DIR__ . '/..' . '/sabberworm/php-css-parser/src',
+        ),
+        'MercadoPago\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mercadopago/dx-php/src/MercadoPago',
         ),
         'Masterminds\\' => 
         array (
