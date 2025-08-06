@@ -157,6 +157,7 @@
             <div class="col-12 form-group text-center mt-3">
                 <div class="d-flex float-start">
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelar"><i class="bi-x-circle-fill"></i> Cancelar</button>
+                    <a href="/vendas/<?= $venda->uuid ?>/gerar" class="btn btn-secondary mx-2">Ver Orçamento <i class="bi-file-text-fill"></i></a>
                 </div>
 
                 <div class="d-flex float-start float-md-end">

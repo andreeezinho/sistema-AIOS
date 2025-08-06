@@ -6,3 +6,5 @@
     const DB_NAME = '';
     const DB_USER = '';
     const DB_PASSWORD = '';
+
+    const MP_TOKEN = '';
