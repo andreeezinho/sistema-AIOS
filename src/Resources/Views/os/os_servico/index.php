@@ -159,6 +159,7 @@
             <div class="col-12 form-group text-center mt-3">
                 <div class="d-flex float-start">
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelar"><i class="bi-x-circle-fill"></i> Cancelar</button>
+                    <a href="/os/58d146b1-8e00-454c-9853-eafe3245de94/gerar" class="btn btn-secondary mx-2">Ver Orçamento <i class="bi-file-text-fill"></i></a>
                 </div>
 
                 <div class="d-flex float-start float-md-end">

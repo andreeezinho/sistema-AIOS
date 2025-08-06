@@ -10,6 +10,9 @@
     <title>Ordem de Serviço</title>
 
     <style>
+        *{
+            margin: 0;
+        }
 
         .bg-services{
             background-color: #EBEBEB;
@@ -40,37 +43,36 @@
 
     <div class="container">
         <div class="col-12">
-            <p style="font-size: 30px;margin-bottom:20px"
-                <img src="data:image/png;base64,<?=base64_encode(file_get_contents($_SERVER['DOCUMENT_ROOT'].'/public/img/site/logo-pdf.jpg'))?>" width="100" style="margin-right:80px;">
-                Orçamento
+            <p style="font-size: 30px;margin-bottom:20px" 
+                <img src="data:image/png;base64,<?=base64_encode(file_get_contents($_SERVER['DOCUMENT_ROOT'].'/public/img/site/logo-pdf.jpg'))?>" width="100" style="margin-right:130px;">
+                Ordem de Serviço
             </p>
         </div>
 
         
         <table>
             <tr>
-                <td width="300px" height="25px" class="colunas"><b>Data:</b> <?= date('d/m/Y - h:i', strtotime($os->created_at)) ?></td>
+                <td width="500px" height="50px" class="colunas"><b>Cliente:</b> <?= $nome_cliente ?></td>
+                <td width="500px" height="50px" class="colunas"><b>Doc.:</b> <?= $doc_cliente ?></td>
             </tr>
 
             <tr>
-                <td width="350px" height="50px" class="colunas"><b>Cliente:</b> <?= $nome_cliente ?></td>
-                <td width="200px" height="50px" class="colunas"><b>Doc.:</b> <?= $doc_cliente ?></td>
-            </tr>
-            
-            <tr>
-                <td width="300px" height="25px" class="colunas"><b>Dispositivo:</b> <?= $os->dispositivo ?></td>
+                <td width="500px" height="25px" class="colunas"><b>Dispositivo:</b> <?= $os->dispositivo ?></td>
+                <td width="500px" height="25px" class="colunas"><b>Data:</b> <?= date('d/m/Y - h:i', strtotime($os->updated_at)) ?></td>
             </tr>
         </table>
 
-        <div class="col-12 text-center">
-            <p style='font-size: 20px; margin: 30px 0 30px 0'>Serviços</p>
+        <div class="col-12">
+            <p style='font-size: 20px; margin: 30px 0 0 0' class="text-center">Serviços</p>
+            <p style='font-size: 12px;'><b>OBS:</b> <?= $os->observacao ?></p>
         </div>
 
         <div class="services-container bg-services">
             <table class="" style="border-collapse:collapse;">
                 <thead>
                     <tr>
-                        <td width="400px" height="60px" class="colunas borda borda-linha-titulo"><b style="font-size: 18px">Serviço</b></td>
+                        <td width="250px" height="60px" class="colunas borda borda-linha-titulo"><b style="font-size: 18px">Serviço</b></td>
+                        <td width="316px" height="60px" class="colunas borda borda-linha-titulo"><b style="font-size: 18px">Descrição</b></td>
                         <td width="115px" height="60px" class="colunas borda-linha-titulo"><b style="font-size: 18px">Preço</b></td>
                     </tr>
                 </thead>
@@ -80,7 +82,8 @@
                         foreach($servicos as $servico){
                 ?>
                     <tr>
-                        <td width="400px" height="50px" class="colunas borda borda-linha"><?= $servico->nome ?></td>
+                        <td width="250px" height="50px" class="colunas borda borda-linha"><?= $servico->nome ?></td>
+                        <td width="316px" height="50px" class="colunas borda borda-linha"><?= $servico->descricao ?></td>
                         <td width="115px" height="50px" class="colunas borda-linha">R$ <?= number_format($servico->preco,2,",",".") ?></td>
                     </tr>
                 <?php
@@ -97,14 +100,21 @@
 
         <div class="col-12 pt-3">
             <div class="float-start">
-                <p style="font-size: 18px" class="my-1"><b>PIX:</b> 103.171.015-95</p>
-                <p style="font-size: 18px" class="my-1"><b>Contato:</b> (75) 99116-4106</p>
+                <?php
+                    if(!is_null($qr_code)){
+                ?>
+                    <img src="data:image/png;base64,<?= $qr_code ?>" width="100" style="">
+                <?php
+                    }
+                ?>
             </div>
 
             <div class="float-end">
                 <p style="font-size: 18px" class="my-1"><b>Desconto:</b> <?= $os->desconto ?>%</p>
                 <p style="font-size: 18px" class="my-1"><b>Total:</b> R$: <?= number_format($os->total,2,",",".") ?></p>
             </div>
+            
+            <p style="word-wrap: break-word; white-space: normal; width: 100%; font-size: 14px;" class="my-1"><?= $code ?></p>
         </div>
 
     </div>

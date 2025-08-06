@@ -9,6 +9,7 @@
             "src/Utils/helpers.php"
         ]
     },
+    
     "require": {
         "php": ">=8.0",
         "mercadopago/dx-php": "^3.5.1",

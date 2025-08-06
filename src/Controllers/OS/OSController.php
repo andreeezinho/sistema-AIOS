@@ -13,6 +13,7 @@ use App\Repositories\Produto\ProdutoRepository;
 use App\Repositories\Produto\ProdutoServicoRepository;
 use App\Repositories\Cliente\ClienteRepository;
 use App\Repositories\User\UserRepository;
+use App\Services\Pagamento\PagamentoService;
 
 class OSController extends Controller {
 
@@ -23,6 +24,7 @@ class OSController extends Controller {
     protected $produtoServicoRepository;
     protected $clienteRepository;
     protected $userRepository;
+    protected $pagamentoService;
 
     use GeneratePdf;
     use Validator;
@@ -36,6 +38,7 @@ class OSController extends Controller {
         $this->produtoServicoRepository = new ProdutoServicoRepository();
         $this->clienteRepository = new ClienteRepository();
         $this->userRepository = new UserRepository();
+        $this->pagamentoService = new PagamentoService();
     }
 
     public function index(Request $request){
@@ -186,7 +189,11 @@ class OSController extends Controller {
 
         $services = $this->osServicoRepository->allServicesInOS($os->id);
 
-        $pdf = $this->generateOs($cliente, $os, $services);
+        if($os->situacao == 'em andamento'){
+            $generatePayment = $this->pagamentoService->requestPayment($os->total, $os->uuid, $cliente->email);
+        }
+
+        $pdf = $this->generateOs($cliente, $os, $services, $generatePayment['codigo'] ?? null, $generatePayment['qr_code'] ?? null);
 
         if(!$pdf){
             return $this->router->redirect('');

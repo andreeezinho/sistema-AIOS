@@ -8,17 +8,19 @@ use Dompdf\Options;
 
 trait GeneratePdf {
 
-    public function generateOs($clientes, $os, $servicos) : bool{
+    public function generateOs($clientes, $os, $servicos, $code = null, $qr_code = null) : bool{
         $path = __DIR__ . '/../../Resources/pdf/os.php';
 
         $nome_cliente = $clientes->nome;
         $doc_cliente = $clientes->documento;
-
+        
         ob_start();
             extract((array)$nome_cliente);
             extract((array)$doc_cliente);
             extract((array)$os);
             extract((array)$servicos);
+            extract((array)$code);
+            extract((array)$qr_code);
             
             include $path;
         $pdf = ob_get_clean();
