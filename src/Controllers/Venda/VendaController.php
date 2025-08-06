@@ -11,6 +11,7 @@ use App\Repositories\Venda\VendaProdutoRepository;
 use App\Repositories\Produto\ProdutoRepository;
 use App\Repositories\User\UserRepository;
 use App\Repositories\Cliente\ClienteRepository;
+use App\Services\Pagamento\PagamentoService;
 
 class VendaController extends Controller {
 
@@ -19,6 +20,7 @@ class VendaController extends Controller {
     public $produtoRepository;
     public $usuarioRepository;
     public $clienteRepository;
+    public $pagamentoService;
 
     use GeneratePdf;
     use Validator;
@@ -30,6 +32,7 @@ class VendaController extends Controller {
         $this->produtoRepository = new ProdutoRepository();
         $this->usuarioRepository = new UserRepository();
         $this->clienteRepository = new ClienteRepository();
+        $this->pagamentoService = new PagamentoService();
     }
 
     public function index(Request $request){
@@ -201,7 +204,11 @@ class VendaController extends Controller {
 
         $produtos = $this->vendaProdutoRepository->allProductsInSale($venda->id);
 
-        $pdf = $this->generateSale($cliente, $venda, $produtos);
+        if($venda->situacao == 'em andamento'){
+            $generatePayment = $this->pagamentoService->requestPayment($venda->total, $venda->uuid, $cliente->email);
+        }
+
+        $pdf = $this->generateSale($cliente, $venda, $produtos, $generatePayment['codigo'] ?? null, $generatePayment['qr_code'] ?? null);
 
         if(!$pdf){
             return $this->router->redirect('');

@@ -37,7 +37,7 @@ trait GeneratePdf {
         return true;
     }
 
-    public function generateSale($clientes, $venda, $produtos) : bool{
+    public function generateSale($clientes, $venda, $produtos, $code = null, $qr_code = null) : bool{
         $path = __DIR__ . '/../../Resources/pdf/venda.php';
 
         $nome_cliente = $clientes->nome;
@@ -48,6 +48,8 @@ trait GeneratePdf {
             extract((array)$doc_cliente);
             extract((array)$venda);
             extract((array)$produtos);
+            extract((array)$code);
+            extract((array)$qr_code);
             
             include $path;
         $pdf = ob_get_clean();
